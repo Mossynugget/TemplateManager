@@ -2,17 +2,22 @@
 
 internal class ReplacementVariable
 {
-    internal string Key;
+  internal string Key;
 
-    internal string? Value { get; private set; }
+  internal string? Value { get; private set; }
 
-    public ReplacementVariable(string key)
-    {
-        Key = key;
-    }
+  public ReplacementVariable(string key)
+  {
+    Key = key;
+  }
 
-    internal void SetValue(string value)
-    {
-        Value = value;
-    }
+  internal void SetValue(string value)
+  {
+    Value = value;
+  }
+
+  internal KeyValuePair<string, string?> ToKeyValuePair()
+  {
+    return new KeyValuePair<string, string?>(Key, Value);
+  }
 }

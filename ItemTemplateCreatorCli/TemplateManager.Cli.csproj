@@ -1,11 +1,19 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+		<PackAsTool>true</PackAsTool>
+		<PackAsTool>tpm</PackAsTool>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="TestLocation\**" />
+    <EmbeddedResource Remove="TestLocation\**" />
+    <None Remove="TestLocation\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="ItemTemplates\NavigateDown\Navigate down again\TemplateFour.cs" />
@@ -34,7 +42,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="TestLocation\" />
+    <ProjectReference Include="..\TemplateManagerModels\TemplateManagerModels.csproj" />
   </ItemGroup>
 
 </Project>

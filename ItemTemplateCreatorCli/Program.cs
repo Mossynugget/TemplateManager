@@ -1,17 +1,19 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using ItemTemplateCreatorApi.Helpers;
 using System.Text.RegularExpressions;
+using TemplateManagerModels.Models;
 
 try
 {
   string selectedFile = SelectFile();
-  string contents = LoadFileContents(selectedFile);
   string fileName = SelectFileName();
-  contents = ReplaceFileNameInFile(selectedFile, contents, fileName);
-  Dictionary<string, string> replacementDictionary = LoadReplacementDictionary(contents);
-  GetReplacementDictionary(replacementDictionary);
-  contents = ReplaceVariablesInFile(contents, replacementDictionary);
-  await GenerateFile(contents, fileName);
+
+  TemplateFileGenerator templateFileGenerator = new(selectedFile, fileName);
+
+  var replacementDictionary = templateFileGenerator.GetReplacementDictionary();
+  requestReplacementDictionaryValues(replacementDictionary);
+  templateFileGenerator.SaveReplacementDictionary(replacementDictionary);2
+  await templateFileGenerator.GenerateFiles().ConfigureAwait(false);
 }
 // Used as an exit method.
 catch (InvalidOperationException ex)
@@ -87,11 +89,6 @@ static void NavigateBack(ref List<string> navigationOptions, ref string currentD
   navigationOptions = GetNavigationList(currentDirectory);
 }
 
-static string LoadFileContents(string selectedFile)
-{
-  return File.ReadAllText(selectedFile);
-}
-
 static string SelectFileName()
 {
   Console.WriteLine($"Please provide a file name.");
@@ -99,46 +96,11 @@ static string SelectFileName()
   return fileName;
 }
 
-static string ReplaceFileNameInFile(string selectedFile, string contents, string fileName)
-{
-  contents = contents.Replace(Path.GetFileNameWithoutExtension(selectedFile), fileName);
-  return contents;
-}
-
-static Dictionary<string, string> LoadReplacementDictionary(string contents)
-{
-  string regexExpression = @"\$[a-zA-Z-0-9]*\$";
-  MatchCollection matchedVariables = Regex.Matches(contents, regexExpression);
-  Dictionary<string, string> replacementDictionary = new();
-
-  for (int count = 0; count < matchedVariables.Count; count++)
-  {
-    replacementDictionary[matchedVariables[count].Value] = string.Empty;
-  }
-
-  return replacementDictionary;
-}
-
-static void GetReplacementDictionary(Dictionary<string, string> replacementDictionary)
+static void requestReplacementDictionaryValues(Dictionary<string, string> replacementDictionary)
 {
   foreach (var replacement in replacementDictionary)
   {
     Console.WriteLine($"Please enter a value for {replacement.Key.Replace("$", "").AddSpacesToSentence()}");
     replacementDictionary[replacement.Key] = Console.ReadLine();
   }
-}
-
-static string ReplaceVariablesInFile(string contents, Dictionary<string, string> replacementDictionary)
-{
-  foreach (var replacement in replacementDictionary)
-  {
-    contents = contents.Replace(replacement.Key, replacement.Value);
-  }
-
-  return contents;
-}
-
-static async Task GenerateFile(string contents, string fileName)
-{
-  await File.WriteAllTextAsync($"D:/Clients/ItemTemplateMauiApp/ItemTemplateCreatorApi/ItemTemplateCreatorApi/TestLocation/{fileName}.cs", contents);
 }

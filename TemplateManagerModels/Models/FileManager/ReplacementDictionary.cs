@@ -2,13 +2,17 @@
 
 namespace TemplateManagerModels.Models.FileManager;
 
-public class ReplacementDictionary
+internal class ReplacementDictionary
 {
-  private List<ReplacementVariable> ReplacementVariableList { get; set; }
+  internal List<ReplacementVariable> ReplacementVariableList { get; set; }
 
-  internal ReplacementDictionary()
+  internal ReplacementDictionary(string? contents = null)
   {
     ReplacementVariableList = new();
+    if (contents != null)
+    {
+      this.CreateReplacementVariableList(contents);
+    }
   }
 
   internal void CreateReplacementVariableList(string contents)
@@ -30,8 +34,12 @@ public class ReplacementDictionary
     }
   }
 
-  public void AddReplacementValue(string variableKey, string variableValue)
+  internal void AddReplacementValue(string variableKey, string? variableValue)
   {
+    if (variableValue == null)
+    {
+      return;
+    }
     var replacementVariable = ReplacementVariableList.Find(x => x.Key == variableKey);
     if (replacementVariable == null)
     {
@@ -39,5 +47,24 @@ public class ReplacementDictionary
     }
 
     replacementVariable.SetValue(variableValue);
+  }
+
+  internal Dictionary<string, string?> GetReplacementVariablesAsDictionary()
+  {
+    IDictionary<string, string?> result = new Dictionary<string, string?>();
+    foreach (var replacementVariable in this.ReplacementVariableList)
+    {
+      result.Add(replacementVariable.ToKeyValuePair());
+    }
+
+    return (Dictionary<string, string?>)result;
+  }
+
+  internal void MapDictionaryToReplacementVariables(Dictionary<string, string?> replacementDictionary)
+  {
+    foreach (var keyValuePair in replacementDictionary)
+    {
+      this.AddReplacementValue(keyValuePair.Key, keyValuePair.Value);
+    }
   }
 }

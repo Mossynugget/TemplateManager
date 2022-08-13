@@ -19,5 +19,21 @@
         this.ReplacementDictionary.CreateReplacementVariableList(fileTemplate.Contents);
       }
     }
+
+    internal FileTemplateDictionary(string templateName, string fileName)
+    {
+      this.FileTemplateList = new();
+      this.FileTemplateList.Add(new FileTemplate(templateName, fileName));
+      this.ReplacementDictionary = new(this.FileTemplateList[0].Contents);
+    }
+
+    internal async Task GenerateFiles()
+    {
+      foreach (var fileTemplate in this.FileTemplateList)
+      {
+        fileTemplate.ApplyReplacementVariableDictionary(this.ReplacementDictionary);
+        await fileTemplate.GenerateFileAsync().ConfigureAwait(false);
+      }
+    }
   }
 }
