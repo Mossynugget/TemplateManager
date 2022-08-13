@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="ItemTemplates\NavigateDown\Navigate down again\TemplateFour.cs" />
+    <Compile Remove="ItemTemplates\NavigateDown\TemplateThree.cs" />
+    <Compile Remove="ItemTemplates\TemplateOne.cs" />
+    <Compile Remove="ItemTemplates\TemplateTwo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="ItemTemplates\NavigateDown\Navigate down again\TemplateFour.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ItemTemplates\NavigateDown\TemplateThree.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ItemTemplates\TemplateTwo.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ItemTemplates\TemplateOne.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Collections" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="TestLocation\" />
+  </ItemGroup>
+
+</Project>

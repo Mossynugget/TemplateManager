@@ -1,0 +1,8 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/ItemTemplateCreatorCli/obj
+/ItemTemplateCreatorCli/bin/Debug/net6.0
+/TemplateManagerModels/obj
