@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -6,14 +6,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 		<PackAsTool>true</PackAsTool>
-		<PackAsTool>tpm</PackAsTool>
+		<PackAsTool>templates</PackAsTool>
+		<PackageOutputPath>./nupkg</PackageOutputPath>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="TestLocation\**" />
-    <EmbeddedResource Remove="TestLocation\**" />
-    <None Remove="TestLocation\**" />
-  </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="ItemTemplates\NavigateDown\Navigate down again\TemplateFour.cs" />
@@ -29,16 +24,12 @@
     <Content Include="ItemTemplates\NavigateDown\TemplateThree.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="ItemTemplates\TemplateTwo.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="ItemTemplates\TemplateOne.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="System.Collections" Version="4.3.0" />
+    <Content Include="ItemTemplates\TemplateTwo.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

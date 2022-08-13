@@ -1,4 +1,4 @@
-﻿namespace ItemTemplateCreatorApi.Helpers;
+﻿namespace TemplateManager.Cli.Helpers;
 
 using System.Text;
 
