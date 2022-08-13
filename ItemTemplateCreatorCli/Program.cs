@@ -12,7 +12,7 @@ try
 
   var replacementDictionary = templateFileGenerator.GetReplacementDictionary();
   requestReplacementDictionaryValues(replacementDictionary);
-  templateFileGenerator.SaveReplacementDictionary(replacementDictionary);2
+  templateFileGenerator.SaveReplacementDictionary(replacementDictionary);
   await templateFileGenerator.GenerateFiles().ConfigureAwait(false);
 }
 // Used as an exit method.
