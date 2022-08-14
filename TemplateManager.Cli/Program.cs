@@ -2,6 +2,8 @@
 
 using TemplateManager.Cli.Helpers;
 using System.Threading.Tasks;
+using TemplateManagerModels.Models.Dtos;
+using TemplateManagerModels.Models;
 
 class TestClass
 {
@@ -10,13 +12,11 @@ class TestClass
     try
     {
       string selectedFile = SelectFile();
-      string fileName = SelectFileName();
 
-      TemplateManagerModels.Models.TemplateFileGenerator templateFileGenerator = new(selectedFile, fileName);
+      TemplateFileGenerator templateFileGenerator = new(selectedFile);
 
-      var replacementDictionary = templateFileGenerator.GetReplacementDictionary();
-      requestReplacementDictionaryValues(replacementDictionary);
-      templateFileGenerator.SaveReplacementDictionary(replacementDictionary);
+      GetFileSettingsValues(templateFileGenerator);
+      GetReplacementDictionaryValues(templateFileGenerator);
       await templateFileGenerator.GenerateFiles().ConfigureAwait(false);
     }
     // Used as an exit method.
@@ -27,7 +27,7 @@ class TestClass
 
     static string SelectFile()
     {
-      string baseDirectory = "./ItemTemplates/"; // This will be updated to an appsetting
+      string baseDirectory = "D:\\Clients\\ItemTemplateMauiApp\\ItemTemplateCreatorApi\\TemplateManager.Cli\\ItemTemplates\\"; // This will be updated to an appsetting
       string currentDirectory = baseDirectory;
       List<string> navigationOptions = GetNavigationList(currentDirectory);
 
@@ -93,20 +93,35 @@ class TestClass
       navigationOptions = GetNavigationList(currentDirectory);
     }
 
-    static string SelectFileName()
+    static void GetFileSettingsValues(TemplateFileGenerator templateFileGenerator)
     {
-      Console.WriteLine($"Please provide a file name.");
-      var fileName = Console.ReadLine();
-      return fileName;
+      var fileSettingsDtoList = templateFileGenerator.GetFileTemplateSettings();
+
+      if (fileSettingsDtoList.Count == 1)
+      {
+        fileSettingsDtoList[0].Destination = Environment.CurrentDirectory;
+      }
+
+      foreach (var fileSettingsDto in fileSettingsDtoList)
+      {
+        Console.WriteLine($"Please provide a file name.");
+        fileSettingsDto.FileName = Console.ReadLine();
+      }
+
+      templateFileGenerator.MapFileTemplateSettings(fileSettingsDtoList);
     }
 
-    static void requestReplacementDictionaryValues(Dictionary<string, string> replacementDictionary)
+    static void GetReplacementDictionaryValues(TemplateFileGenerator templateFileGenerator)
     {
+      var replacementDictionary = templateFileGenerator.GetReplacementDictionary();
+
       foreach (var replacement in replacementDictionary)
       {
         Console.WriteLine($"Please enter a value for {replacement.Key.Replace("$", "").AddSpacesToSentence()}");
         replacementDictionary[replacement.Key] = Console.ReadLine();
       }
+
+      templateFileGenerator.MapReplacementDictionary(replacementDictionary);
     }
   }
 }

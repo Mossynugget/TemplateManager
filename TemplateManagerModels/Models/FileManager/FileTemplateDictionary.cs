@@ -1,30 +1,49 @@
-﻿namespace TemplateManagerModels.Models.FileManager
+﻿using TemplateManagerModels.Models.Dtos;
+
+namespace TemplateManagerModels.Models.FileManager
 {
   internal class FileTemplateDictionary
   {
     internal ReplacementDictionary ReplacementDictionary { get; set; }
     internal List<FileTemplate> FileTemplateList { get; set; }
 
-    internal FileTemplateDictionary(string[] templateNameList)
+    internal FileTemplateDictionary()
     {
       this.FileTemplateList = new();
       this.ReplacementDictionary = new();
+    }
 
-      foreach (var templateName in templateNameList)
-      {
-        this.FileTemplateList.Add(new FileTemplate(templateName));
-      }
+    internal void AddTemplateFile(string templateName)
+    {
+      this.addFileTemplate(templateName);
+    }
+
+    internal List<FileSettingsDto> GetFileSettingDtoList()
+    {
+      var fileSettingsDtoList = new List<FileSettingsDto>();
       foreach (var fileTemplate in this.FileTemplateList)
       {
-        this.ReplacementDictionary.CreateReplacementVariableList(fileTemplate.Contents);
+        fileSettingsDtoList.Add(new FileSettingsDto(fileTemplate));
+      }
+
+      return fileSettingsDtoList;
+    }
+
+    internal void MapFileTemplateSettings(List<FileSettingsDto> fileSettingsDtoList)
+    {
+      foreach (var fileSettingDto in fileSettingsDtoList)
+      {
+        this.FileTemplateList
+          .First(x => x.TemplateFilePath == fileSettingDto.Template)
+          .SetFileSettings(fileSettingDto);
       }
     }
 
-    internal FileTemplateDictionary(string templateName, string fileName)
+    private void addFileTemplate(string templateName)
     {
-      this.FileTemplateList = new();
-      this.FileTemplateList.Add(new FileTemplate(templateName, fileName));
-      this.ReplacementDictionary = new(this.FileTemplateList[0].Contents);
+      var fileTemplate = new FileTemplate(templateName);
+      this.FileTemplateList.Add(fileTemplate);
+      this.ReplacementDictionary.CreateReplacementVariableList(fileTemplate.Contents);
     }
 
     internal async Task GenerateFiles()

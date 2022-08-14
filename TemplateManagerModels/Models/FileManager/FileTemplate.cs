@@ -1,39 +1,39 @@
-﻿using Microsoft.VisualBasic;
+﻿using TemplateManagerModels.Models.Dtos;
 
 namespace TemplateManagerModels.Models.FileManager;
 
 internal class FileTemplate
 {
-  internal string TemplateFilePath;
-  internal string Name;
-  internal string FileExtension;
+  internal readonly string TemplateFilePath;
+  internal readonly string FileExtension;
+  internal string? FileName;
   internal string Contents;
   internal string Destination = "D:/Clients/ItemTemplateMauiApp/ItemTemplateCreatorApi/TestFileGenerationLocation/";
   private string _finalPath {
     get 
     {
-      var finalPath = Path.Combine(Destination, Name);
+      var finalPath = Path.Combine(Destination, FileName);
       finalPath = Path.ChangeExtension(finalPath, FileExtension);
       return finalPath;
     } 
   }
 
-  internal FileTemplate(string templateFilePath, string fileName = "")
+  internal FileTemplate(string templateFilePath)
   {
     TemplateFilePath = templateFilePath;
-    Name = fileName;
     FileExtension = Path.GetExtension(templateFilePath);
     Contents = File.ReadAllText(templateFilePath);
   }
 
-  internal void SetDestination(string destination)
+  internal void SetFileSettings(FileSettingsDto fileSettings)
   {
-    this.Destination = destination;
+    this.Destination = fileSettings.Destination;
+    this.FileName = fileSettings.FileName;
   }
 
   internal void ApplyReplacementVariableDictionary(ReplacementDictionary replacementDictionary)
   {
-    Contents = Contents.Replace(Path.GetFileNameWithoutExtension(TemplateFilePath), Name);
+    Contents = Contents.Replace(Path.GetFileNameWithoutExtension(TemplateFilePath), FileName);
 
     foreach (var replacementVariable in replacementDictionary.ReplacementVariableList)
     {
