@@ -1,4 +1,4 @@
-﻿namespace TemplateManager.Cli.Helpers;
+﻿namespace TemplateManagerModels.Models.Helpers;
 
 using System.Text;
 
@@ -28,5 +28,10 @@ public static class StringExtensions
       return str;
 
     return char.ToLower(str[0]) + str.Substring(1);
+  }
+
+  public static string RemoveMultiLineStringEscapeCharacters(this string contents)
+  {
+    return contents.Replace("\r\n", "");
   }
 }

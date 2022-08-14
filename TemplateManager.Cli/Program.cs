@@ -1,9 +1,8 @@
 ﻿namespace TemplateManager.Cli;
 
-using TemplateManager.Cli.Helpers;
 using System.Threading.Tasks;
-using TemplateManagerModels.Models.Dtos;
 using TemplateManagerModels.Models;
+using TemplateManagerModels.Models.Helpers;
 
 class TestClass
 {
@@ -18,11 +17,12 @@ class TestClass
       GetFileSettingsValues(templateFileGenerator);
       GetReplacementDictionaryValues(templateFileGenerator);
       await templateFileGenerator.GenerateFiles().ConfigureAwait(false);
+      Console.WriteLine($"file(s) generated.");
     }
     // Used as an exit method.
     catch (InvalidOperationException ex)
     {
-      Console.WriteLine($"{ex.Message} \nThank you, come again.");
+      Console.WriteLine($"{ex.Message}.");
     }
 
     static string SelectFile()
@@ -99,12 +99,12 @@ class TestClass
 
       if (fileSettingsDtoList.Count == 1)
       {
-        fileSettingsDtoList[0].Destination = Environment.CurrentDirectory;
+        // fileSettingsDtoList[0].Destination = Environment.CurrentDirectory;
       }
 
       foreach (var fileSettingsDto in fileSettingsDtoList)
       {
-        Console.WriteLine($"Please provide a file name.");
+        Console.WriteLine($"Please provide a file name for {fileSettingsDto.TemplateName}.");
         fileSettingsDto.FileName = Console.ReadLine();
       }
 
@@ -117,8 +117,15 @@ class TestClass
 
       foreach (var replacement in replacementDictionary)
       {
-        Console.WriteLine($"Please enter a value for {replacement.Key.Replace("$", "").AddSpacesToSentence()}");
-        replacementDictionary[replacement.Key] = Console.ReadLine();
+        if (replacement.allowedType == TypeCode.Boolean)
+        {
+          Console.WriteLine($"Would you like to {replacement.Key.Replace("$", "").AddSpacesToSentence()}?\nPlease use 'y' for yes and 'n' for no.");
+        }
+        else
+        {
+          Console.WriteLine($"Please enter a value for {replacement.Key.Replace("$", "").AddSpacesToSentence()}");
+        }
+        replacement.SetValue(Console.ReadLine());
       }
 
       templateFileGenerator.MapReplacementDictionary(replacementDictionary);

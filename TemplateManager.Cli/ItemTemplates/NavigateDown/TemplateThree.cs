@@ -8,8 +8,8 @@
 
   internal class TemplateOne
   {
-    $test$
+    $if:includeContent$ $test$
     $test$
     $Test2$
-  }
+  }$endif:includeContent$
 }

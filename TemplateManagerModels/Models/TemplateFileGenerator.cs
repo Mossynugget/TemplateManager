@@ -28,12 +28,12 @@ public class TemplateFileGenerator
     this.FileTemplateDictionary.MapFileTemplateSettings(fileSettings);
   }
 
-  public Dictionary<string, string?> GetReplacementDictionary()
+  public List<ReplacementVariableDto> GetReplacementDictionary()
   {
     return this.FileTemplateDictionary.ReplacementDictionary.GetReplacementVariablesAsDictionary();
   }
 
-  public void MapReplacementDictionary(Dictionary<string, string?> replacementDictionary)
+  public void MapReplacementDictionary(List<ReplacementVariableDto> replacementDictionary)
   {
     this.FileTemplateDictionary.ReplacementDictionary.MapDictionaryToReplacementVariables(replacementDictionary);
   }

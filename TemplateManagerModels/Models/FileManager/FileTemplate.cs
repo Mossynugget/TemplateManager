@@ -1,4 +1,5 @@
 ﻿using TemplateManagerModels.Models.Dtos;
+using TemplateManagerModels.Models.FileManager.VariableReplacement;
 
 namespace TemplateManagerModels.Models.FileManager;
 
@@ -8,7 +9,7 @@ internal class FileTemplate
   internal readonly string FileExtension;
   internal string? FileName;
   internal string Contents;
-  internal string Destination = "D:/Clients/ItemTemplateMauiApp/ItemTemplateCreatorApi/TestFileGenerationLocation/";
+  internal string Destination = "D:/Clients/TemplatingTests/";
   private string _finalPath {
     get 
     {
@@ -33,12 +34,9 @@ internal class FileTemplate
 
   internal void ApplyReplacementVariableDictionary(ReplacementDictionary replacementDictionary)
   {
-    Contents = Contents.Replace(Path.GetFileNameWithoutExtension(TemplateFilePath), FileName);
+    Contents = replacementDictionary.ReplaceContents(Contents);
 
-    foreach (var replacementVariable in replacementDictionary.ReplacementVariableList)
-    {
-      Contents = Contents.Replace(replacementVariable.Key, replacementVariable.Value);
-    }
+    Contents = Contents.Replace(Path.GetFileNameWithoutExtension(TemplateFilePath), FileName);
   }
 
   internal async Task GenerateFileAsync()

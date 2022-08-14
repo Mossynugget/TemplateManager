@@ -7,9 +7,9 @@
   using System.Threading.Tasks;
 
   internal class TemplateOne
-  {
-    $test$
-    $test$
+  {$if:includeString$Hello there, this is string$test$
+    $test$ $endif:includeString$
     $Test2$
-  }
+  }$if:includeClosingBrace$
 }
+$endif:includeClosingBrace$
