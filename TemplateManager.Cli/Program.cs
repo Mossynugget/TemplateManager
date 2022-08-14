@@ -1,6 +1,5 @@
 ﻿namespace TemplateManager.Cli;
 
-using TemplateManagerModels.Models;
 using TemplateManager.Cli.Helpers;
 using System.Threading.Tasks;
 
@@ -13,7 +12,7 @@ class TestClass
       string selectedFile = SelectFile();
       string fileName = SelectFileName();
 
-      TemplateFileGenerator templateFileGenerator = new(selectedFile, fileName);
+      TemplateManagerModels.Models.TemplateFileGenerator templateFileGenerator = new(selectedFile, fileName);
 
       var replacementDictionary = templateFileGenerator.GetReplacementDictionary();
       requestReplacementDictionaryValues(replacementDictionary);

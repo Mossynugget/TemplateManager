@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 		<PackAsTool>true</PackAsTool>
-		<PackAsTool>templates</PackAsTool>
+		<ToolCommandName>Template</ToolCommandName>
 		<PackageOutputPath>./nupkg</PackageOutputPath>
   </PropertyGroup>
 
@@ -33,7 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TemplateManagerModels\TemplateManagerModels.csproj" />
+    <ProjectReference Include="..\TemplateManagerModels\TemplateManagerModels.csproj" PrivateAssets="All"/>
   </ItemGroup>
 
 </Project>
