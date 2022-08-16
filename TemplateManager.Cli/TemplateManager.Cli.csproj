@@ -5,16 +5,16 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-		<PackAsTool>true</PackAsTool>
-		<ToolCommandName>tmplt</ToolCommandName>
-		<PackageOutputPath>./nupkg</PackageOutputPath>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>tmplt</ToolCommandName>
+    <PackageOutputPath>./nupkg</PackageOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="ItemTemplates\NavigateDown\Navigate down again\TemplateFour.cs" />
     <Compile Remove="ItemTemplates\NavigateDown\TemplateThree.cs" />
-    <Compile Remove="ItemTemplates\TemplateOne.cs" />
     <Compile Remove="ItemTemplates\TemplateTwo.cs" />
+    <Compile Remove="TemplateNavigation\TemplateExample\TemplateOne.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,7 +24,7 @@
     <Content Include="ItemTemplates\NavigateDown\TemplateThree.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="ItemTemplates\TemplateOne.cs">
+    <Content Include="TemplateNavigation\TemplateExample\TemplateOne.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="ItemTemplates\TemplateTwo.cs">
@@ -33,7 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TemplateManagerModels\TemplateManagerModels.csproj" PrivateAssets="All"/>
+    <ProjectReference Include="..\TemplateManagerModels\TemplateManagerModels.csproj" PrivateAssets="All" />
   </ItemGroup>
 
 </Project>
