@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualBasic;
-
-namespace TemplateManager.Cli.TemplateNavigation;
+﻿namespace TemplateManager.Cli.TemplateNavigation;
 
 internal class TemplateNavigator
 {
@@ -48,9 +46,13 @@ internal class TemplateNavigator
     {
       WriteOptions();
 
-      int navigationIndex = int.Parse(Console.ReadLine() ?? "-1");
+      int navigationIndex = int.Parse(Console.ReadLine()) - 1;
 
-      if (navigationIndex == -1)
+      if (navigationIndex == -2 && this.directoryNavigator.ContainsAllTemplateOptionsInd == false && this.directoryNavigator.navigationList.Any(x => x.isTemplateInd == false))
+      {
+        this.directoryNavigator = this.directoryNavigator.GetAllTemplateOptions();
+      }
+      else if (navigationIndex == -1)
       {
         if (this.directoryNavigator.ParentNavigation == null)
         {
@@ -67,18 +69,24 @@ internal class TemplateNavigator
 
   private void WriteOptions()
   {
+    Console.WriteLine($"\n{this.directoryNavigator!.path}");
     if (this.directoryNavigator!.ParentNavigation == null)
     {
-      Console.WriteLine($"[-1]: Exit");
+      Console.WriteLine($"[0]: Exit");
     }
     else
     {
-      Console.WriteLine($"[-1]: Go Back");
+      Console.WriteLine($"[0]: Go Back");
     }
 
-    for (int i = 0; i < this.directoryNavigator.navigationList.Count; i++)
+    for (int i = 1; i < this.directoryNavigator.navigationList.Count + 1; i++)
     {
-      Console.WriteLine($"[{i}]: {this.directoryNavigator.navigationList[i].name}");
+      Console.WriteLine($"[{i}]: {this.directoryNavigator.navigationList[i - 1].name}");
+    }
+
+    if (this.directoryNavigator.ContainsAllTemplateOptionsInd == false && this.directoryNavigator.navigationList.Any(x => x.isTemplateInd == false))
+    {
+      Console.WriteLine($"[-1]: Get All Options");
     }
   }
 }
