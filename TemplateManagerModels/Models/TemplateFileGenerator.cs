@@ -1,4 +1,7 @@
-﻿using TemplateManagerModels.Models.Dtos;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Text;
+using TemplateManagerModels.Models.Dtos;
 using TemplateManagerModels.Models.FileManager;
 
 namespace TemplateManagerModels.Models;
@@ -7,9 +10,9 @@ public class TemplateFileGenerator
 {
   private FileTemplateDictionary FileTemplateDictionary;
 
-  public TemplateFileGenerator(string fileTemplate)
+  public  TemplateFileGenerator(string fileTemplate)
   {
-    FileTemplateDictionary = new FileTemplateDictionary();
+    this.FileTemplateDictionary = new FileTemplateDictionary();
     this.FileTemplateDictionary.AddTemplateFile(fileTemplate);
   }
 

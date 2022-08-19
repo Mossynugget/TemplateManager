@@ -1,4 +1,5 @@
-﻿using TemplateManagerModels.Models.Dtos;
+﻿using Newtonsoft.Json;
+using TemplateManagerModels.Models.Dtos;
 using TemplateManagerModels.Models.FileManager.VariableReplacement;
 
 namespace TemplateManagerModels.Models.FileManager;
@@ -16,7 +17,19 @@ internal class FileTemplateDictionary
 
   internal void AddTemplateFile(string templateName)
   {
-    this.addFileTemplate(templateName);
+    if (Path.GetExtension(templateName) == ".json" && Path.GetFileNameWithoutExtension(templateName).StartsWith("group"))
+    {
+      using (StreamReader r = new StreamReader(templateName))
+      {
+        string json = r.ReadToEnd();
+        List<FileGroupDto> fileTemplates = JsonConvert.DeserializeObject<List<FileGroupDto>>(json);
+        this.addFileTemplates(fileTemplates, Path.GetDirectoryName(templateName));
+      }
+    }
+    else
+    {
+      this.addFileTemplate(templateName);
+    }
   }
 
   internal List<FileSettingsDto> GetFileSettingDtoList()
@@ -45,6 +58,21 @@ internal class FileTemplateDictionary
     var fileTemplate = new FileTemplate(templateName);
     this.FileTemplateList.Add(fileTemplate);
     this.ReplacementDictionary.CreateReplacementList(fileTemplate.Contents);
+  }
+
+  private void addFileTemplates(List<FileGroupDto> fileGroupDtos, string templateGroupDirectory)
+  {
+    foreach (var fileGroupDto in fileGroupDtos)
+    {
+      string fullFilePath = Path.Combine(templateGroupDirectory, fileGroupDto.TemplateName);
+      var fileTemplate = new FileTemplate(fullFilePath);
+      fileTemplate.CalulatedDestination = fileGroupDto.Destination;
+      fileTemplate.FileName = fileGroupDto.FileName;
+      this.FileTemplateList.Add(fileTemplate);
+      this.ReplacementDictionary.CreateReplacementList(fileTemplate.Contents);
+      this.ReplacementDictionary.CreateReplacementList(fileTemplate.FileName);
+      this.ReplacementDictionary.CreateReplacementList(fileTemplate.CalulatedDestination);
+    }
   }
 
   internal async Task GenerateFiles()

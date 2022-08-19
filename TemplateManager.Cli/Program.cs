@@ -30,15 +30,14 @@ class TestClass
     {
       var fileSettingsDtoList = templateFileGenerator.GetFileTemplateSettings();
 
-      if (fileSettingsDtoList.Count == 1)
-      {
-        // fileSettingsDtoList[0].Destination = Environment.CurrentDirectory;
-      }
-
       foreach (var fileSettingsDto in fileSettingsDtoList)
       {
-        Console.WriteLine($"Please provide a file name for {fileSettingsDto.TemplateName}.");
-        fileSettingsDto.FileName = Console.ReadLine();
+        // fileSettingsDto.Destination = Environment.CurrentDirectory;
+      }
+      if (fileSettingsDtoList.Count == 1)
+      {
+        Console.WriteLine($"Please provide a file name for {fileSettingsDtoList[0].TemplateName}.");
+        fileSettingsDtoList[0].Destination = Environment.CurrentDirectory;
       }
 
       templateFileGenerator.MapFileTemplateSettings(fileSettingsDtoList);

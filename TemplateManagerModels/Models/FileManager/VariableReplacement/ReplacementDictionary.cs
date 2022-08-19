@@ -47,6 +47,11 @@ internal class ReplacementDictionary
 
   private string replaceValueContents(string contents)
   {
+    if (string.IsNullOrEmpty(contents))
+    {
+      return contents;
+    }
+
     foreach (var replacementVariable in this.ReplacementVariableList)
     {
       contents = contents.Replace(replacementVariable.Key, replacementVariable.Value);

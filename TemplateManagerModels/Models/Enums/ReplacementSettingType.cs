@@ -6,4 +6,14 @@ public record ReplacementSettingType
   /// Used to determine the namespace from the string provided.
   /// </summary>
   public const string Namespace = "$setting:namespace$";
+
+  /// <summary>
+  /// Used to determine the solution path from the string provided.
+  /// </summary>
+  public const string SolutionPath = "$setting:solutionPath$";
+
+  /// <summary>
+  /// Used to determine the solution path from the string provided.
+  /// </summary>
+  public const string Solution = "$setting:solution$";
 }
