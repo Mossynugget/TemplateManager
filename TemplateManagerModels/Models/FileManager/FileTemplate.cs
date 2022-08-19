@@ -1,4 +1,5 @@
 ﻿using TemplateManagerModels.Models.Dtos;
+using TemplateManagerModels.Models.FileManager.FileReplacementHelpers;
 using TemplateManagerModels.Models.FileManager.VariableReplacement;
 
 namespace TemplateManagerModels.Models.FileManager;
@@ -9,7 +10,7 @@ internal class FileTemplate
   internal readonly string FileExtension;
   internal string? FileName;
   internal string Contents;
-  internal string Destination = "D:/Clients/TemplatingTests/";
+  internal string Destination = "D:\\Clients\\TemplatingTests\\subfolder\\";
   private string _finalPath {
     get 
     {
@@ -36,11 +37,17 @@ internal class FileTemplate
   {
     Contents = replacementDictionary.ReplaceContents(Contents);
 
-    Contents = Contents.Replace(Path.GetFileNameWithoutExtension(TemplateFilePath), FileName);
+    this.loadAdditionalReplacements();
   }
 
   internal async Task GenerateFileAsync()
   {
     await File.WriteAllTextAsync(_finalPath, Contents).ConfigureAwait(false);
+  }
+
+  private void loadAdditionalReplacements()
+  {
+    Contents = Contents.Replace(Path.GetFileNameWithoutExtension(TemplateFilePath), FileName);
+    Contents = Contents.ReplaceNamespace(this.Destination);
   }
 }

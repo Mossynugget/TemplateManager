@@ -1,4 +1,4 @@
-﻿namespace ItemTemplateCreatorApi.ItemTemplates
+﻿namespace $setting:namespace$
 {
   using System;
   using System.Collections.Generic;
@@ -8,7 +8,7 @@
 
   internal class TemplateOne
   {$if:includeString$Hello there, this is string$test$
-    $test$ $endif:includeString$
+    $test$$endif:includeString$
     $Test2$
   }$if:includeClosingBrace$
 }

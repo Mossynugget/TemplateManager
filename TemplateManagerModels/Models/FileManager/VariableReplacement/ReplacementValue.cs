@@ -5,7 +5,7 @@ internal class ReplacementValue : ReplacementVariableAbstract
   internal string? Value { get; private set; }
 
   public ReplacementValue(string key) :
-    base(key, Enums.ReplacementVariableTypeEnum.VariableType, TypeCode.String)
+    base(key, Enums.ReplacementVariableType.Value, TypeCode.String)
   {
   }
 

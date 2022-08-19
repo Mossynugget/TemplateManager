@@ -13,7 +13,7 @@ internal class ReplacementIf : ReplacementVariableAbstract
   internal int EndifLength => ElseString.Length;
 
   public ReplacementIf(string key, int indexStart, int indexEnd) :
-    base(key, ReplacementVariableTypeEnum.IfType, TypeCode.Boolean)
+    base(key, ReplacementVariableType.If, TypeCode.Boolean)
   {
     IndexStart = indexStart;
     IndexEnd = indexEnd;

@@ -1,8 +1,6 @@
-﻿using Microsoft.VisualBasic;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using TemplateManagerModels.Models.Dtos;
 using TemplateManagerModels.Models.Enums;
-using TemplateManagerModels.Models.Helpers;
 
 namespace TemplateManagerModels.Models.FileManager.VariableReplacement;
 
@@ -123,10 +121,10 @@ internal class ReplacementDictionary
     {
       switch (replacementVariable.ReplacementDictionaryType)
       {
-        case ReplacementVariableTypeEnum.VariableType:
+        case ReplacementVariableType.Value:
           this.AddReplacementValue(replacementVariable.Key, replacementVariable.Value);
           break;
-        case ReplacementVariableTypeEnum.IfType:
+        case ReplacementVariableType.If:
           this.AddReplacementIf(replacementVariable.Key, replacementVariable.Value);
           break;
       }

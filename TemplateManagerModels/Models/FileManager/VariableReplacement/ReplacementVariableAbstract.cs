@@ -5,10 +5,10 @@ namespace TemplateManagerModels.Models.FileManager.VariableReplacement;
 internal abstract class ReplacementVariableAbstract
 {
   public string Key { get; set; }
-  public ReplacementVariableTypeEnum ReplacementVariableTypeEnum { get; }
+  public ReplacementVariableType ReplacementVariableTypeEnum { get; }
   public TypeCode TypeCode { get; }
 
-  internal ReplacementVariableAbstract(string Key, ReplacementVariableTypeEnum ReplacementVariableTypeEnum, TypeCode TypeCode)
+  internal ReplacementVariableAbstract(string Key, ReplacementVariableType ReplacementVariableTypeEnum, TypeCode TypeCode)
   {
     this.Key = Key;
     this.ReplacementVariableTypeEnum = ReplacementVariableTypeEnum;

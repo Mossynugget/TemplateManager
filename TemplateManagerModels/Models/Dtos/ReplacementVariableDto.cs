@@ -9,7 +9,7 @@ namespace TemplateManagerModels.Models.Dtos
     internal dynamic? Value { get; private set; }
     public TypeCode allowedType { get; private set; }
 
-    internal readonly ReplacementVariableTypeEnum ReplacementDictionaryType;
+    internal readonly ReplacementVariableType ReplacementDictionaryType;
 
     internal ReplacementVariableDto(ReplacementVariableAbstract replacementDictionaryVariable)
     {

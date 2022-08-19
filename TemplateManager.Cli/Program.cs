@@ -58,7 +58,7 @@ class TestClass
         {
           Console.WriteLine($"Please enter a value for {replacement.Key.Replace("$", "").AddSpacesToSentence()}");
         }
-        replacement.SetValue(Console.ReadLine());
+        replacement.SetValue(Console.ReadLine() ?? string.Empty);
       }
 
       templateFileGenerator.MapReplacementDictionary(replacementDictionary);
