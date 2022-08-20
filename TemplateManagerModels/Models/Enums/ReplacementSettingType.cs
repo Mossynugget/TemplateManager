@@ -16,4 +16,9 @@ public record ReplacementSettingType
   /// Used to determine the solution path from the string provided.
   /// </summary>
   public const string Solution = "$setting:solution$";
+
+  /// <summary>
+  /// Used to determine the project from the string provided.
+  /// </summary>
+  public const string ProjectName = "$setting:projectName$";
 }

@@ -17,41 +17,18 @@ internal static class CalculateNamespace
       return content;
     }
 
-    string currentPath = destination;
-    string namespaceString;
-    do
-    {
-      currentPath = getParentPath(currentPath);
-      namespaceString = getNamespaceString(currentPath, destination);
-    }
-    while (string.IsNullOrEmpty(namespaceString));
-
+    var projectFilePath = FindFileTypeHelper.GetFilePath(destination, ReplacementSettingFileTypes.CsProject);
+    var namespaceString = getNamespaceString(projectFilePath, destination);
     content = content.Replace(ReplacementSettingType.Namespace, namespaceString);
+
     return content;
   }
 
-  private static string getParentPath(string currentPath)
+  private static string getNamespaceString(string projectFilePath, string destination)
   {
-    string? parentDirectory = Directory.GetParent(currentPath).FullName;
-    if (parentDirectory is null)
-    {
-      throw new InvalidOperationException("The namespace can't be calculated for the file because the destination isn't a part of a project.");
-    }
-    return parentDirectory;
-  }
-
-  private static string getNamespaceString(string currentPath, string destination)
-  {
-    string namespaceString = string.Empty;
-    string[] presentProjects = Directory.GetFiles(currentPath, "*.csproj", SearchOption.TopDirectoryOnly);
-    
-    if (presentProjects.Count() > 0) 
-    {
-      string projectAsNamespace = Path.GetFileNameWithoutExtension(presentProjects[0]);
-      string pathAsNamespace = destination.Replace(currentPath, "").Replace("\\", ".").TrimEnd('.');
-      namespaceString = $"{projectAsNamespace}{pathAsNamespace}";
-    }
-
-    return namespaceString;
+    string projectAsNamespace = Path.GetFileNameWithoutExtension(projectFilePath);
+    string projectPath = Path.GetDirectoryName(projectFilePath);
+    string pathAsNamespace = destination.Replace(projectPath, "").Replace("\\", ".").TrimEnd('.');
+    return $"{projectAsNamespace}{pathAsNamespace}";
   }
 }

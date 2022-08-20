@@ -22,7 +22,7 @@ internal class ReplacementDictionary
   internal string ReplaceContents(string contents)
   {
     contents = replaceIfContents(contents);
-    contents = replaceValueContents(contents);
+    contents = ReplaceValueContents(contents);
 
     return contents;
   }
@@ -45,7 +45,7 @@ internal class ReplacementDictionary
     return contents;
   }
 
-  private string replaceValueContents(string contents)
+  public string ReplaceValueContents(string contents)
   {
     if (string.IsNullOrEmpty(contents))
     {
@@ -55,6 +55,7 @@ internal class ReplacementDictionary
     foreach (var replacementVariable in this.ReplacementVariableList)
     {
       contents = contents.Replace(replacementVariable.Key, replacementVariable.Value);
+      contents = contents.Replace(replacementVariable.KeyComment, replacementVariable.ValueComment);
     }
 
     return contents;

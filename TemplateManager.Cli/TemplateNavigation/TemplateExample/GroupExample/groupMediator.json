@@ -1,0 +1,14 @@
+[
+  {
+    "FileName": "$EventName$.cs",
+    "TemplateName": "requestTemplate.cs",
+    "Destination": "$setting:solutionPath$\\$setting:solution$.App\\$Domain$\\Contracts\\Queries",
+    "Type": "File"
+  },
+  {
+    "FileName": "$EventName$Handler.cs",
+    "TemplateName": "handlerTemplate.cs",
+    "Destination": "$setting:solutionPath$\\$setting:solution$.App\\$Domain$\\Handlers\\Queries",
+    "Type": "File"
+  }
+]

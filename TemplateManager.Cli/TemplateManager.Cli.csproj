@@ -11,29 +11,29 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="ItemTemplates\NavigateDown\Navigate down again\TemplateFour.cs" />
-    <Compile Remove="ItemTemplates\NavigateDown\TemplateThree.cs" />
-    <Compile Remove="ItemTemplates\TemplateTwo.cs" />
     <Compile Remove="TemplateNavigation\TemplateExample\TemplateOne.cs" />
+		<Compile Remove="TemplateNavigation\TemplateExample\GroupExample\TemplateOne.cs" />
+		<Compile Remove="TemplateNavigation\TemplateExample\GroupExample\handlerTemplate.cs" />
+		<Compile Remove="TemplateNavigation\TemplateExample\GroupExample\requestTemplate.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="ItemTemplates\NavigateDown\Navigate down again\TemplateFour.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ItemTemplates\NavigateDown\TemplateThree.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="TemplateNavigation\TemplateExample\TemplateOne.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ItemTemplates\TemplateTwo.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\TemplateManagerModels\TemplateManagerModels.csproj" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="TemplateNavigation\TemplateExample\GroupExample\handlerTemplate.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="TemplateNavigation\TemplateExample\GroupExample\requestTemplate.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
   </ItemGroup>
 
 </Project>
