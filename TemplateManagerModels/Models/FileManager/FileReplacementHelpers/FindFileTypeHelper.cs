@@ -12,8 +12,8 @@ internal static class FindFileTypeHelper
     string filePath;
     do
     {
-      destination = getParentPath(destination);
       filePath = getSolutionString(destination, fileType);
+      destination = getParentPath(destination);
     }
     while (string.IsNullOrEmpty(filePath));
 

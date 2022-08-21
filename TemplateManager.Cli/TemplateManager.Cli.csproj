@@ -11,6 +11,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ItemTemplates\**" />
+    <EmbeddedResource Remove="ItemTemplates\**" />
+    <None Remove="ItemTemplates\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="TemplateNavigation\TemplateExample\TemplateOne.cs" />
 		<Compile Remove="TemplateNavigation\TemplateExample\GroupExample\TemplateOne.cs" />
 		<Compile Remove="TemplateNavigation\TemplateExample\GroupExample\handlerTemplate.cs" />
