@@ -1,6 +1,6 @@
 ﻿namespace TemplateManagerModels.Models.Enums;
 
-internal enum ReplacementVariableType
+public enum ReplacementVariableType
 {
   /// <summary>
   /// A type denoting a value to be replaced in the file.

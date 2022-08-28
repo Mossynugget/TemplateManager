@@ -5,9 +5,9 @@
   using MediatR;
 
   /// <summary>
-  /// Request to $EventName$
+  /// Request to $ContractName:Comment$
   /// </summary>
-  public partial class $EventName$ : IRequest<$ReturnedObject$>
+  public partial class $ContractName$ : IRequest<$ReturnedObject$>
   {
   }
 }

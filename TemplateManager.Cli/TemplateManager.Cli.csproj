@@ -17,6 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="TemplateNavigation\TemplateExample\GroupExample\GroupMediatorFiles\handlerTemplate.cs" />
+    <Compile Remove="TemplateNavigation\TemplateExample\GroupExample\GroupMediatorFiles\requestTemplate.cs" />
     <Compile Remove="TemplateNavigation\TemplateExample\TemplateOne.cs" />
 		<Compile Remove="TemplateNavigation\TemplateExample\GroupExample\TemplateOne.cs" />
 		<Compile Remove="TemplateNavigation\TemplateExample\GroupExample\handlerTemplate.cs" />
@@ -41,5 +43,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
   </ItemGroup>
+
+  <ItemGroup>
+    <None Include="TemplateNavigation\TemplateExample\GroupExample\GroupMediatorFiles\handlerTemplate.cs" />
+    <None Include="TemplateNavigation\TemplateExample\GroupExample\GroupMediatorFiles\requestTemplate.cs" />
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties templatenavigation_4templateexample_4groupexample_4groupmediator_1json__JsonSchema="https://github.com/fbecart/zinoma/releases/latest/download/zinoma-schema.json" /></VisualStudio></ProjectExtensions>
 
 </Project>

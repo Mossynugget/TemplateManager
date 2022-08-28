@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using TemplateManagerModels.Models.Dtos;
+using TemplateManagerModels.Models.Dtos.ImportGroup;
 using TemplateManagerModels.Models.FileManager.VariableReplacement;
 
 namespace TemplateManagerModels.Models.FileManager;
@@ -22,8 +23,9 @@ internal class FileTemplateDictionary
       using (StreamReader r = new StreamReader(templateName))
       {
         string json = r.ReadToEnd();
-        List<FileGroupDto> fileTemplates = JsonConvert.DeserializeObject<List<FileGroupDto>>(json);
-        this.addFileTemplates(fileTemplates, Path.GetDirectoryName(templateName));
+        FileGroupDto fileGroup = JsonConvert.DeserializeObject<FileGroupDto>(json) ?? new();
+        this.ReplacementDictionary.AddReplacementValues(fileGroup.ReplacementValues);
+        this.addFileTemplates(fileGroup.Files, Path.GetDirectoryName(templateName));
       }
     }
     else
@@ -60,7 +62,7 @@ internal class FileTemplateDictionary
     this.ReplacementDictionary.CreateReplacementList(fileTemplate.Contents);
   }
 
-  private void addFileTemplates(List<FileGroupDto> fileGroupDtos, string templateGroupDirectory)
+  private void addFileTemplates(List<FileGroupFileDto> fileGroupDtos, string templateGroupDirectory)
   {
     foreach (var fileGroupDto in fileGroupDtos)
     {

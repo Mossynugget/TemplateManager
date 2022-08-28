@@ -6,17 +6,23 @@ namespace TemplateManagerModels.Models.FileManager.VariableReplacement;
 
 internal class ReplacementDictionary
 {
-  internal List<ReplacementValue> ReplacementVariableList { get; set; }
+  internal List<ReplacementValue> ReplacementValueList { get; set; }
   internal List<ReplacementIf> ReplacementIfList { get; set; }
 
   internal ReplacementDictionary(string? contents = null)
   {
-    ReplacementVariableList = new();
+    ReplacementValueList = new();
     ReplacementIfList = new();
     if (contents != null)
     {
       CreateReplacementList(contents);
     }
+  }
+
+  internal void AddReplacementValues(List<ReplacementValue>? replacementValues)
+  {
+    if((replacementValues != null) && replacementValues.Any())
+      this.ReplacementValueList.AddRange(replacementValues);
   }
 
   internal string ReplaceContents(string contents)
@@ -52,7 +58,7 @@ internal class ReplacementDictionary
       return contents;
     }
 
-    foreach (var replacementVariable in this.ReplacementVariableList)
+    foreach (var replacementVariable in this.ReplacementValueList)
     {
       contents = contents.Replace(replacementVariable.Key, replacementVariable.Value);
       contents = contents.Replace(replacementVariable.KeyComment, replacementVariable.ValueComment);
@@ -75,9 +81,9 @@ internal class ReplacementDictionary
     for (int count = 0; count < matchedVariables.Count; count++)
     {
       var keyName = matchedVariables[count].Value;
-      if (ReplacementVariableList.Any(x => x.Key == keyName) == false)
+      if (ReplacementValueList.Any(x => x.Key == keyName) == false)
       {
-        ReplacementVariableList.Add(new ReplacementValue(keyName));
+        ReplacementValueList.Add(new ReplacementValue(keyName));
       }
     }
   }
@@ -102,7 +108,7 @@ internal class ReplacementDictionary
   {
     var replacementVariableDtoList = new List<ReplacementVariableDto>();
 
-    foreach (var replacementVariable in this.ReplacementVariableList)
+    foreach (var replacementVariable in this.ReplacementValueList.Where(x => string.IsNullOrEmpty(x.Value)))
     {
       if (replacementVariableDtoList.Any(x => x.Key == replacementVariable.Key) == false)
       {
@@ -143,7 +149,7 @@ internal class ReplacementDictionary
     {
       return;
     }
-    var replacementVariable = ReplacementVariableList.Find(x => x.Key == variableKey);
+    var replacementVariable = ReplacementValueList.Find(x => x.Key == variableKey);
     if (replacementVariable == null)
     {
       throw new InvalidOperationException("The specified replacement variable key doesn't exist.");

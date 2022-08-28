@@ -1,8 +1,9 @@
-﻿using TemplateManagerModels.Models.Helpers;
+﻿using Newtonsoft.Json;
+using TemplateManagerModels.Models.Helpers;
 
 namespace TemplateManagerModels.Models.FileManager.VariableReplacement;
 
-internal class ReplacementValue : ReplacementVariableAbstract
+public class ReplacementValue : ReplacementVariableAbstract
 {
   internal string? Value { get; private set; }
   internal string? KeyComment => $"{this.Key.TrimEnd('$')}:comment$";
@@ -11,6 +12,13 @@ internal class ReplacementValue : ReplacementVariableAbstract
   public ReplacementValue(string key) :
     base(key, Enums.ReplacementVariableType.Value, TypeCode.String)
   {
+  }
+
+  [JsonConstructor]
+  public ReplacementValue(string key, string value) :
+    base(key, Enums.ReplacementVariableType.Value, TypeCode.String)
+  {
+    Value = value;
   }
 
   internal void SetValue(string value)

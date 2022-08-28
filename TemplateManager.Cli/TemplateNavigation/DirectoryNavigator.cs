@@ -41,14 +41,14 @@ internal class DirectoryNavigator
       return;
     }
 
-    foreach (var file in Directory.GetDirectories(this.path, "*", SearchOption.TopDirectoryOnly))
-    {
-      this.navigationList.Add(new DirectoryNavigator(file, this));
-    }
-
     foreach (var file in Directory.GetFiles(this.path, "*", SearchOption.TopDirectoryOnly))
     {
       this.navigationList.Add(new DirectoryNavigator(file, this, true));
+    }
+
+    foreach (var file in Directory.GetDirectories(this.path, "*", SearchOption.TopDirectoryOnly))
+    {
+      this.navigationList.Add(new DirectoryNavigator(file, this));
     }
   }
 

@@ -2,7 +2,7 @@
 
 namespace TemplateManagerModels.Models.FileManager.VariableReplacement;
 
-internal abstract class ReplacementVariableAbstract
+public abstract class ReplacementVariableAbstract
 {
   public string Key { get; set; }
   public ReplacementVariableType ReplacementVariableTypeEnum { get; }

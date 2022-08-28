@@ -1,14 +1,22 @@
-[
-  {
-    "FileName": "$EventName$.cs",
-    "TemplateName": "requestTemplate.cs",
-    "Destination": "$setting:solutionPath$\\$setting:solution$.App\\$Domain$\\Contracts\\Queries",
-    "Type": "File"
-  },
-  {
-    "FileName": "$EventName$Handler.cs",
-    "TemplateName": "handlerTemplate.cs",
-    "Destination": "$setting:solutionPath$\\$setting:solution$.App\\$Domain$\\Handlers\\Queries",
-    "Type": "File"
-  }
-]
+{
+  "ReplacementValues": [
+    {
+      "Key": "$RequestType$",
+      "Value": "Queries"
+    }
+  ],
+  "Files": [
+    {
+      "FileName": "$ContractName$.cs",
+      "TemplateName": "MediatorFiles\\requestTemplate.cs",
+      "Destination": "$setting:solutionPath$\\$setting:solution$.App\\$Domain$\\Contracts\\Queries",
+      "Type": "File"
+    },
+    {
+      "FileName": "$ContractName$Handler.cs",
+      "TemplateName": "MediatorFiles\\handlerTemplate.cs",
+      "Destination": "$setting:solutionPath$\\$setting:solution$.App\\$Domain$\\Handlers\\QueryHandlers",
+      "Type": "File"
+    }
+  ]
+}

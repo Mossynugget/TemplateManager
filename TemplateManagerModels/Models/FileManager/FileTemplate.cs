@@ -16,7 +16,7 @@ internal class FileTemplate
   private string _finalPath {
     get 
     {
-      var finalPath = Path.Combine(CalulatedDestination ?? Destination, FileName);
+      var finalPath = Path.Combine(CalulatedDestination ?? Destination, FileName ?? string.Empty);
       finalPath = Path.ChangeExtension(finalPath, FileExtension);
       return finalPath;
     } 
