@@ -21,4 +21,9 @@ public record ReplacementSettingType
   /// Used to determine the project from the string provided.
   /// </summary>
   public const string ProjectName = "$setting:projectName$";
+
+  /// <summary>
+  /// Used to get the destination variable.
+  /// </summary>
+  public const string Destination = "$setting:destination$";
 }

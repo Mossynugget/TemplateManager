@@ -39,7 +39,7 @@ internal class FileTemplate
   {
     Contents = replacementDictionary.ReplaceContents(Contents);
     FileName = replacementDictionary.ReplaceValueContents(FileName);
-    CalulatedDestination = replacementDictionary.ReplaceValueContents(CalulatedDestination ?? string.Empty);
+
     this.loadAdditionalReplacements(replacementDictionary);
   }
 
@@ -52,10 +52,24 @@ internal class FileTemplate
   {
     Contents = Contents.Replace(Path.GetFileNameWithoutExtension(TemplateFilePath), FileName);
     LoadSolutionPathVariables();
-    CalulatedDestination = CalulatedDestination != null ? replacementDictionary.ReplaceValueContents(CalulatedDestination) : Destination;
+    this.calculateDestination(replacementDictionary);
     validateFolderExists(_finalPath);
     LoadProjectNameVariables();
     Contents = Contents.ReplaceNamespace(CalulatedDestination);
+  }
+
+  private void calculateDestination(ReplacementDictionary replacementDictionary)
+  {
+    this.CalulatedDestination = replacementDictionary.ReplaceValueContents(CalulatedDestination ?? string.Empty);
+
+    if (this.CalulatedDestination.Contains(ReplacementSettingType.Destination))
+    {
+      this.CalulatedDestination = this.CalulatedDestination.Replace(ReplacementSettingType.Destination, string.Empty);
+      this.CalulatedDestination = $"{this.Destination}{this.CalulatedDestination}";
+    }
+
+    this.CalulatedDestination = CalulatedDestination != null ? replacementDictionary.ReplaceValueContents(CalulatedDestination) : Destination;
+    this.CalulatedDestination = this.CalulatedDestination.Replace("\\\\", "\\");
   }
 
   private void LoadSolutionPathVariables()

@@ -13,9 +13,15 @@
       "Type": "File"
     },
     {
+      "Destination": "$setting:solutionPath$\\$setting:solution$.App\\$Domain$\\Handlers\\QueryHandlers",
       "FileName": "$ContractName$Handler.cs",
       "TemplateName": "MediatorFiles\\handlerTemplate.cs",
-      "Destination": "$setting:solutionPath$\\$setting:solution$.App\\$Domain$\\Handlers\\QueryHandlers",
+      "Type": "File"
+    },
+    {
+      "Destination": "{setting:destination}\\Test\\",
+      "FileName": "$ContractName$Handler.cs",
+      "TemplateName": "MediatorFiles\\handlerTemplate.cs",
       "Type": "File"
     }
   ]
