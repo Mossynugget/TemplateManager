@@ -35,16 +35,51 @@ internal class ReplacementDictionary
 
   private string replaceIfContents(string contents)
   {
-    foreach (var replacementVariable in this.ReplacementIfList.OrderByDescending(x => x.IndexEnd))
+    for (int count = 0; count < ReplacementIfList.Count; count++)
+    {
+      ReplacementIf? replacementVariable = this.ReplacementIfList[count];
+      Dictionary<int, int> indexDictionary = GetIfVariableIndexDictionaryForContents(contents, replacementVariable);
+      contents = ApplyIfStatements(contents, replacementVariable, indexDictionary);
+    }
+
+    return contents;
+  }
+
+  /// <summary>
+  /// Gets the start and end of each instance of an if statement and returns a dictionary of key being the start index and value being the end index.
+  /// </summary>
+  private static Dictionary<int, int> GetIfVariableIndexDictionaryForContents(string contents, ReplacementIf replacementVariable)
+  {
+    Dictionary<int, int> indexDictionary = new();
+    string regexExpressionStart = $@"\$(if):({replacementVariable.Key})\$";
+    string regexExpressionEnd = $@"\$(endif):({replacementVariable.Key})\$";
+
+    MatchCollection matchedIfStarts = Regex.Matches(contents, regexExpressionStart);
+    MatchCollection matchedIfEnds = Regex.Matches(contents, regexExpressionEnd);
+
+    for (int count = 0; count < matchedIfStarts.Count; count++)
+    {
+      Match firstMatch = matchedIfStarts[0];
+      Match secondMatch = matchedIfEnds[0];
+
+      indexDictionary.Add(firstMatch.Index, secondMatch.Index + secondMatch.Length);
+    }
+
+    return indexDictionary;
+  }
+
+  private static string ApplyIfStatements(string contents, ReplacementIf replacementVariable, Dictionary<int, int> indexDictionary)
+  {
+    foreach (KeyValuePair<int, int> item in indexDictionary.OrderByDescending(x => x.Value))
     {
       if (replacementVariable.Value)
       {
-        contents = contents.Remove(replacementVariable.IndexEnd - replacementVariable.EndifLength, replacementVariable.EndifLength);
-        contents = contents.Remove(replacementVariable.IndexStart, replacementVariable.IfLength);
+        contents = contents.Remove(item.Value - replacementVariable.EndifLength, replacementVariable.EndifLength);
+        contents = contents.Remove(item.Key, replacementVariable.IfLength);
       }
       else
       {
-        contents = contents.Remove(replacementVariable.IndexStart, replacementVariable.IndexEnd - replacementVariable.IndexStart);
+        contents = contents.Remove(item.Key, item.Value - item.Key);
       }
     }
 
@@ -91,15 +126,12 @@ internal class ReplacementDictionary
   private void CreatePlacementIfList(string contents)
   {
     string regexExpressionStart = @"\$(if):([a-zA-Z-0-9]*)\$";
-    string regexExpressionEnd = @"\$(endif):([a-zA-Z-0-9]*)\$";
     MatchCollection matchedIfStarts = Regex.Matches(contents, regexExpressionStart);
-    MatchCollection matchedIfEnds = Regex.Matches(contents, regexExpressionEnd);
 
     for (int count = 0; count < matchedIfStarts.Count; count++)
     {
-      Match firstMatch = matchedIfStarts[count];
-      Match secondMatch = matchedIfEnds[count];
-      var replacementIf = new ReplacementIf(firstMatch.Groups[2].Value, firstMatch.Index, secondMatch.Index + secondMatch.Length);
+      Match ifMatch = matchedIfStarts[count];
+      var replacementIf = new ReplacementIf(ifMatch.Groups[2].Value);
       ReplacementIfList.Add(replacementIf);
     }
   }
@@ -134,16 +166,16 @@ internal class ReplacementDictionary
       switch (replacementVariable.ReplacementDictionaryType)
       {
         case ReplacementVariableType.Value:
-          this.AddReplacementValue(replacementVariable.Key, replacementVariable.Value);
+          this.AddReplacementValueValue(replacementVariable.Key, replacementVariable.Value);
           break;
         case ReplacementVariableType.If:
-          this.AddReplacementIf(replacementVariable.Key, replacementVariable.Value);
+          this.AddReplacementIfValue(replacementVariable.Key, replacementVariable.Value);
           break;
       }
     }
   }
 
-  private void AddReplacementValue(string variableKey, string? variableValue)
+  private void AddReplacementValueValue(string variableKey, string? variableValue)
   {
     if (variableValue == null)
     {
@@ -158,7 +190,7 @@ internal class ReplacementDictionary
     replacementVariable.SetValue(variableValue);
   }
 
-  private void AddReplacementIf(string variableKey, bool? variableValue)
+  private void AddReplacementIfValue(string variableKey, bool? variableValue)
   {
     if (variableValue == null)
     {
