@@ -59,7 +59,7 @@ internal class FileTemplateDictionary
   {
     var fileTemplate = new FileTemplate(templateName);
     this.FileTemplateList.Add(fileTemplate);
-    this.ReplacementDictionary.CreateReplacementList(fileTemplate.Contents);
+    this.ReplacementDictionary.CreateReplacementLists(fileTemplate.Contents);
   }
 
   private void addFileTemplates(List<FileGroupFileDto> fileGroupDtos, string templateGroupDirectory)
@@ -71,9 +71,9 @@ internal class FileTemplateDictionary
       fileTemplate.CalulatedDestination = fileGroupDto.Destination;
       fileTemplate.FileName = fileGroupDto.FileName;
       this.FileTemplateList.Add(fileTemplate);
-      this.ReplacementDictionary.CreateReplacementList(fileTemplate.Contents);
-      this.ReplacementDictionary.CreateReplacementList(fileTemplate.FileName);
-      this.ReplacementDictionary.CreateReplacementList(fileTemplate.CalulatedDestination);
+      this.ReplacementDictionary.CreateReplacementLists(fileTemplate.Contents);
+      this.ReplacementDictionary.CreateReplacementLists(fileTemplate.FileName);
+      this.ReplacementDictionary.CreateReplacementLists(fileTemplate.CalulatedDestination);
     }
   }
 

@@ -16,4 +16,6 @@ public abstract class ReplacementVariableAbstract
   }
 
   internal abstract void SetValue(dynamic value);
+
+  internal abstract string ApplyReplacementVariable(string contents);
 }

@@ -15,7 +15,7 @@ internal class ReplacementDictionary
     ReplacementIfList = new();
     if (contents != null)
     {
-      CreateReplacementList(contents);
+      CreateReplacementLists(contents);
     }
   }
 
@@ -27,60 +27,18 @@ internal class ReplacementDictionary
 
   internal string ReplaceContents(string contents)
   {
-    contents = replaceIfContents(contents);
+    contents = ReplaceIfContents(contents);
     contents = ReplaceValueContents(contents);
 
     return contents;
   }
 
-  private string replaceIfContents(string contents)
+  private string ReplaceIfContents(string contents)
   {
-    for (int count = 0; count < ReplacementIfList.Count; count++)
+    foreach (var replacementIf in this.ReplacementIfList)
     {
-      ReplacementIf? replacementVariable = this.ReplacementIfList[count];
-      Dictionary<int, int> indexDictionary = GetIfVariableIndexDictionaryForContents(contents, replacementVariable);
-      contents = ApplyIfStatements(contents, replacementVariable, indexDictionary);
-    }
-
-    return contents;
-  }
-
-  /// <summary>
-  /// Gets the start and end of each instance of an if statement and returns a dictionary of key being the start index and value being the end index.
-  /// </summary>
-  private static Dictionary<int, int> GetIfVariableIndexDictionaryForContents(string contents, ReplacementIf replacementVariable)
-  {
-    Dictionary<int, int> indexDictionary = new();
-    string regexExpressionStart = $@"\$(if):({replacementVariable.Key})\$";
-    string regexExpressionEnd = $@"\$(endif):({replacementVariable.Key})\$";
-
-    MatchCollection matchedIfStarts = Regex.Matches(contents, regexExpressionStart);
-    MatchCollection matchedIfEnds = Regex.Matches(contents, regexExpressionEnd);
-
-    for (int count = 0; count < matchedIfStarts.Count; count++)
-    {
-      Match firstMatch = matchedIfStarts[0];
-      Match secondMatch = matchedIfEnds[0];
-
-      indexDictionary.Add(firstMatch.Index, secondMatch.Index + secondMatch.Length);
-    }
-
-    return indexDictionary;
-  }
-
-  private static string ApplyIfStatements(string contents, ReplacementIf replacementVariable, Dictionary<int, int> indexDictionary)
-  {
-    foreach (KeyValuePair<int, int> item in indexDictionary.OrderByDescending(x => x.Value))
-    {
-      if (replacementVariable.Value)
-      {
-        contents = contents.Remove(item.Value - replacementVariable.EndifLength, replacementVariable.EndifLength);
-        contents = contents.Remove(item.Key, replacementVariable.IfLength);
-      }
-      else
-      {
-        contents = contents.Remove(item.Key, item.Value - item.Key);
-      }
+      ReplacementIf? replacementVariable = replacementIf;
+      contents = replacementVariable.ApplyReplacementVariable(contents);
     }
 
     return contents;
@@ -95,45 +53,16 @@ internal class ReplacementDictionary
 
     foreach (var replacementVariable in this.ReplacementValueList)
     {
-      contents = contents.Replace(replacementVariable.Key, replacementVariable.Value);
-      contents = contents.Replace(replacementVariable.KeyComment, replacementVariable.ValueComment);
+      contents = replacementVariable.ApplyReplacementVariable(contents);
     }
 
     return contents;
   }
 
-  internal void CreateReplacementList(string contents)
+  internal void CreateReplacementLists(string contents)
   {
-    CreateReplacementValueList(contents);
-    CreatePlacementIfList(contents);
-  }
-
-  private void CreateReplacementValueList(string contents)
-  {
-    string regexExpression = @"\$[a-zA-Z-0-9]*\$";
-    MatchCollection matchedVariables = Regex.Matches(contents, regexExpression);
-
-    for (int count = 0; count < matchedVariables.Count; count++)
-    {
-      var keyName = matchedVariables[count].Value;
-      if (ReplacementValueList.Any(x => x.Key == keyName) == false)
-      {
-        ReplacementValueList.Add(new ReplacementValue(keyName));
-      }
-    }
-  }
-
-  private void CreatePlacementIfList(string contents)
-  {
-    string regexExpressionStart = @"\$(if):([a-zA-Z-0-9]*)\$";
-    MatchCollection matchedIfStarts = Regex.Matches(contents, regexExpressionStart);
-
-    for (int count = 0; count < matchedIfStarts.Count; count++)
-    {
-      Match ifMatch = matchedIfStarts[count];
-      var replacementIf = new ReplacementIf(ifMatch.Groups[2].Value);
-      ReplacementIfList.Add(replacementIf);
-    }
+    ReplacementValueList.AddRange(ReplacementValue.CreateVariableListFromContents(contents));
+    ReplacementIfList.AddRange(ReplacementIf.CreateVariableListFromContents(contents));
   }
 
   internal List<ReplacementVariableDto> GetReplacementVariablesAsDictionary()
