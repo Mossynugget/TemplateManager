@@ -61,8 +61,10 @@ internal class ReplacementDictionary
 
   internal void CreateReplacementLists(string contents)
   {
-    ReplacementValueList.AddRange(ReplacementValue.CreateVariableListFromContents(contents));
-    ReplacementIfList.AddRange(ReplacementIf.CreateVariableListFromContents(contents));
+    var replacementValueList = ReplacementValue.CreateVariableListFromContents(contents);
+    ReplacementValueList.AddRange(replacementValueList.Where(rl => ReplacementValueList.Any(rvl => rvl.Key == rl.Key) == false));
+    var replacementIfList = ReplacementIf.CreateVariableListFromContents(contents);
+    ReplacementIfList.AddRange(replacementIfList.Where(rl => ReplacementIfList.Any(rvl => rvl.Key == rl.Key) == false));
   }
 
   internal List<ReplacementVariableDto> GetReplacementVariablesAsDictionary()
@@ -77,7 +79,7 @@ internal class ReplacementDictionary
       }
     }
 
-    foreach (var replacementVariable in ReplacementIfList)
+    foreach (var replacementVariable in ReplacementIfList.Where(x => x == null))
     {
       if (replacementVariableDtoList.Any(x => x.Key == replacementVariable.Key) == false)
       {

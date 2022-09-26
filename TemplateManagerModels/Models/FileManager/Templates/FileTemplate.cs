@@ -3,7 +3,7 @@ using TemplateManagerModels.Models.Enums;
 using TemplateManagerModels.Models.FileManager.FileReplacementHelpers;
 using TemplateManagerModels.Models.FileManager.VariableReplacement;
 
-namespace TemplateManagerModels.Models.FileManager;
+namespace TemplateManagerModels.Models.FileManager.Templates;
 
 internal class FileTemplate
 {
@@ -13,13 +13,14 @@ internal class FileTemplate
   internal string Contents;
   internal string Destination = "D:\\Clients\\TemplatingTests\\subfolder\\";
   internal string? CalulatedDestination = null;
-  private string _finalPath {
-    get 
+  private string _finalPath
+  {
+    get
     {
       var finalPath = Path.Combine(CalulatedDestination ?? Destination, FileName ?? string.Empty);
       finalPath = Path.ChangeExtension(finalPath, FileExtension);
       return finalPath;
-    } 
+    }
   }
 
   internal FileTemplate(string templateFilePath)
@@ -31,8 +32,8 @@ internal class FileTemplate
 
   internal void SetFileSettings(FileSettingsDto fileSettings)
   {
-    this.Destination = fileSettings.Destination;
-    this.FileName = fileSettings.FileName ?? this.FileName;
+    Destination = fileSettings.Destination;
+    FileName = fileSettings.FileName ?? FileName;
   }
 
   internal void ApplyReplacementVariableDictionary(ReplacementDictionary replacementDictionary)
@@ -40,7 +41,7 @@ internal class FileTemplate
     Contents = replacementDictionary.ReplaceContents(Contents);
     FileName = replacementDictionary.ReplaceValueContents(FileName);
 
-    this.loadAdditionalReplacements(replacementDictionary);
+    loadAdditionalReplacements(replacementDictionary);
   }
 
   internal async Task GenerateFileAsync()
@@ -52,7 +53,7 @@ internal class FileTemplate
   {
     Contents = Contents.Replace(Path.GetFileNameWithoutExtension(TemplateFilePath), FileName);
     LoadSolutionPathVariables();
-    this.calculateDestination(replacementDictionary);
+    calculateDestination(replacementDictionary);
     validateFolderExists(_finalPath);
     LoadProjectNameVariables();
     Contents = Contents.ReplaceNamespace(CalulatedDestination);
@@ -60,25 +61,25 @@ internal class FileTemplate
 
   private void calculateDestination(ReplacementDictionary replacementDictionary)
   {
-    this.CalulatedDestination = replacementDictionary.ReplaceValueContents(CalulatedDestination ?? string.Empty);
+    CalulatedDestination = replacementDictionary.ReplaceValueContents(CalulatedDestination ?? string.Empty);
 
-    if (this.CalulatedDestination.Contains(ReplacementSettingType.Destination))
+    if (CalulatedDestination.Contains(ReplacementSettingType.Destination))
     {
-      this.CalulatedDestination = this.CalulatedDestination.Replace(ReplacementSettingType.Destination, string.Empty);
-      this.CalulatedDestination = $"{this.Destination}{this.CalulatedDestination}";
+      CalulatedDestination = CalulatedDestination.Replace(ReplacementSettingType.Destination, string.Empty);
+      CalulatedDestination = $"{Destination}{CalulatedDestination}";
     }
 
-    this.CalulatedDestination = CalulatedDestination != null ? replacementDictionary.ReplaceValueContents(CalulatedDestination) : Destination;
-    this.CalulatedDestination = this.CalulatedDestination.Replace("\\\\", "\\");
+    CalulatedDestination = CalulatedDestination != null ? replacementDictionary.ReplaceValueContents(CalulatedDestination) : Destination;
+    CalulatedDestination = CalulatedDestination.Replace("\\\\", "\\");
   }
 
   private void LoadSolutionPathVariables()
   {
-    if (this.Contents.Contains(ReplacementSettingType.Solution)
-      || this.FileName!.Contains(ReplacementSettingType.Solution)
-      || (this.CalulatedDestination?.Contains(ReplacementSettingType.Solution) ?? false))
+    if (Contents.Contains(ReplacementSettingType.Solution)
+      || FileName!.Contains(ReplacementSettingType.Solution)
+      || (CalulatedDestination?.Contains(ReplacementSettingType.Solution) ?? false))
     {
-      var solutionPathString = CalculateSolutionPathName.GetSolutionPath(this.Destination);
+      var solutionPathString = CalculateSolutionPathName.GetSolutionPath(Destination);
 
       Contents = Contents.Replace(ReplacementSettingType.SolutionPath, solutionPathString);
       FileName = FileName?.Replace(ReplacementSettingType.SolutionPath, solutionPathString);
@@ -93,11 +94,11 @@ internal class FileTemplate
 
   private void LoadProjectNameVariables()
   {
-    if (this.Contents.Contains(ReplacementSettingType.ProjectName)
-      || this.FileName!.Contains(ReplacementSettingType.ProjectName)
-      || (this.CalulatedDestination?.Contains(ReplacementSettingType.ProjectName) ?? false))
+    if (Contents.Contains(ReplacementSettingType.ProjectName)
+      || FileName!.Contains(ReplacementSettingType.ProjectName)
+      || (CalulatedDestination?.Contains(ReplacementSettingType.ProjectName) ?? false))
     {
-      var projectName = CalculateProjectName.GetProjectName(this.Destination);
+      var projectName = CalculateProjectName.GetProjectName(Destination);
 
       Contents = Contents.Replace(ReplacementSettingType.ProjectName, projectName);
       FileName = FileName?.Replace(ReplacementSettingType.ProjectName, projectName);

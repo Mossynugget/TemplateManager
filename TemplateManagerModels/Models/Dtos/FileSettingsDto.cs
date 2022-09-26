@@ -1,8 +1,8 @@
-﻿using TemplateManagerModels.Models.FileManager;
+﻿using TemplateManagerModels.Models.FileManager.Templates;
 
 namespace TemplateManagerModels.Models.Dtos
 {
-  public class FileSettingsDto
+    public class FileSettingsDto
   {
     public readonly string Template;
     public string TemplateName => Path.GetFileName(Template);

@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using TemplateManagerModels.Models.Dtos;
 using TemplateManagerModels.Models.Dtos.ImportGroup;
+using TemplateManagerModels.Models.FileManager.Templates;
 using TemplateManagerModels.Models.FileManager.VariableReplacement;
 
 namespace TemplateManagerModels.Models.FileManager;
