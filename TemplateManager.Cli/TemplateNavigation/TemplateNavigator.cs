@@ -38,12 +38,20 @@ internal class TemplateNavigator
     var yesNo = Console.ReadLine();
     if (yesNo?.StartsWith("y", StringComparison.OrdinalIgnoreCase) ?? false)
     {
-      Directory.CreateDirectory(_baseDirectory);
-      var templateExample = File.ReadAllText("TemplateNavigation\\TemplateExample\\TemplateOne.cs");
-      await File.WriteAllTextAsync($"{_baseDirectory}ExampleFile.cs", templateExample).ConfigureAwait(false);
+      await GenerateExampleFiles().ConfigureAwait(false);
       return;
     }
-    throw new InvalidOperationException("No directory present.");
+    throw new InvalidOperationException("No directory present."); 
+  }
+
+  private async Task GenerateExampleFiles()
+  {
+    Directory.CreateDirectory(_baseDirectory);
+    Directory.CreateDirectory($"{_baseDirectory}\\Examples\\");
+    var directoryCollection = File.ReadAllText("TemplateNavigation\\TemplateExample\\TemplateCollections.json");
+    var templateExample = File.ReadAllText("TemplateNavigation\\TemplateExample\\TemplateOne.cs");
+    await File.WriteAllTextAsync($"{_baseDirectory}TemplateCollections.json", directoryCollection).ConfigureAwait(false);
+    await File.WriteAllTextAsync($"{_baseDirectory}\\Examples\\ExampleFile.cs", templateExample).ConfigureAwait(false);
   }
 
   private void templateNavigation()
