@@ -21,9 +21,9 @@ class TestClass
       Console.WriteLine($"file(s) generated.");
     }
     // Used as an exit method.
-    catch (InvalidOperationException ex)
+    catch (Exception ex)
     {
-      Console.WriteLine($"{ex.Message}.");
+      ExceptionHandler.ExceptionHandler.HandleException(ex);
     }
 
     static void GetFileSettingsValues(TemplateFileGenerator templateFileGenerator)

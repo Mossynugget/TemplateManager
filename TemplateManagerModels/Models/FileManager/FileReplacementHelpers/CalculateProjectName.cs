@@ -1,4 +1,5 @@
-﻿using TemplateManagerModels.Models.Enums;
+﻿using TemplateManagerModels.Exceptions;
+using TemplateManagerModels.Models.Enums;
 
 namespace TemplateManagerModels.Models.FileManager.FileReplacementHelpers;
 
@@ -13,7 +14,15 @@ internal static class CalculateProjectName
   public static string GetProjectName(string destination)
   {
     string projectFilePath;
-    projectFilePath = FindFileTypeHelper.GetFilePath(destination, ReplacementSettingFileTypes.CsProject);
+
+    try
+    {
+      projectFilePath = FindFileTypeHelper.GetFilePath(destination, ReplacementSettingFileTypes.CsProject);
+    }
+    catch
+    {
+      throw new InvalidSettingVariableException($"There was no project path identified originating from the path {destination}.");
+    }
 
     return Path.GetFileNameWithoutExtension(projectFilePath);
   }

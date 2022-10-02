@@ -1,4 +1,5 @@
-﻿using TemplateManagerModels.Models.Enums;
+﻿using TemplateManagerModels.Exceptions;
+using TemplateManagerModels.Models.Enums;
 
 namespace TemplateManagerModels.Models.FileManager.FileReplacementHelpers;
 
@@ -12,7 +13,16 @@ internal static class CalculateSolutionPathName
   public static string GetSolutionPath(string destination)
   {
     string solutionPathString;
-    solutionPathString = FindFileTypeHelper.GetFilePath(destination, ReplacementSettingFileTypes.Solution);
+    
+    try
+    {
+      solutionPathString = FindFileTypeHelper.GetFilePath(destination, ReplacementSettingFileTypes.Solution);
+    }
+    catch
+    {
+      throw new InvalidSettingVariableException($"There was no solution path identified originating from the path {destination}.");
+    }
+
     var directoryName = Path.GetDirectoryName(solutionPathString);
     return directoryName;
   }
