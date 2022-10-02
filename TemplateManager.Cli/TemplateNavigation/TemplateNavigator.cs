@@ -1,19 +1,25 @@
-﻿namespace TemplateManager.Cli.TemplateNavigation;
+﻿using TemplateManager.Cli.TemplateNavigation.DTOs;
+
+namespace TemplateManager.Cli.TemplateNavigation;
 
 internal class TemplateNavigator
 {
-  private string baseDirectory;
+  private string _baseDirectory = "C:\\CodeTemplates\\";
+  private string _templateCollectionsFileName = "TemplateCollections.json";
+  private string _templateCollectionsPath;
   private DirectoryNavigator? directoryNavigator;
 
-  public TemplateNavigator(string baseDirectory = "D:\\CodeTemplates\\")
+  public TemplateNavigator(string? baseDirectory = null)
   {
-    this.baseDirectory = baseDirectory;
-  }
+    _baseDirectory = baseDirectory ?? _baseDirectory;
+    _templateCollectionsPath = Path.Combine(_baseDirectory, _templateCollectionsFileName);
+}
 
   public async Task<string> SelectTemplate()
   {
     await this.validateFolderExists();
-    this.directoryNavigator = new(this.baseDirectory);
+    var templateCollections = TemplateCollection.GenerateTemplateCollection(_templateCollectionsPath);
+    this.directoryNavigator = new(templateCollections);
 
     Console.WriteLine($"Please navigate to the template you wish to implement.");
 
@@ -23,18 +29,18 @@ internal class TemplateNavigator
 
   private async Task validateFolderExists()
   {
-    if (Directory.Exists(this.baseDirectory))
+    if (Directory.Exists(_baseDirectory))
     {
       return;
     }
 
-    Console.WriteLine($"The base directory \"({this.baseDirectory})\" doesn't exist, would you like us to create it for you?\n (y) for yes and (n) for no.");
+    Console.WriteLine($"The base directory \"({_baseDirectory})\" doesn't exist, would you like us to create it for you?\n (y) for yes and (n) for no.");
     var yesNo = Console.ReadLine();
     if (yesNo?.StartsWith("y", StringComparison.OrdinalIgnoreCase) ?? false)
     {
-      Directory.CreateDirectory(this.baseDirectory);
+      Directory.CreateDirectory(_baseDirectory);
       var templateExample = File.ReadAllText("TemplateNavigation\\TemplateExample\\TemplateOne.cs");
-      await File.WriteAllTextAsync($"{this.baseDirectory}ExampleFile.cs", templateExample).ConfigureAwait(false);
+      await File.WriteAllTextAsync($"{_baseDirectory}ExampleFile.cs", templateExample).ConfigureAwait(false);
       return;
     }
     throw new InvalidOperationException("No directory present.");
@@ -48,7 +54,8 @@ internal class TemplateNavigator
 
       int navigationIndex = int.Parse(Console.ReadLine()) - 1;
 
-      if (navigationIndex == -2 && this.directoryNavigator.ContainsAllTemplateOptionsInd == false && this.directoryNavigator.navigationList.Any(x => x.isTemplateInd == false))
+      if (navigationIndex == -2
+        && CanGetAllTemplates())
       {
         this.directoryNavigator = this.directoryNavigator.GetAllTemplateOptions();
       }
@@ -58,6 +65,7 @@ internal class TemplateNavigator
         {
           throw new InvalidOperationException("No template selected");
         }
+
         this.directoryNavigator = this.directoryNavigator.ParentNavigation;
       }
       else
@@ -84,9 +92,16 @@ internal class TemplateNavigator
       Console.WriteLine($"[{i}]: {this.directoryNavigator.navigationList[i - 1].name}");
     }
 
-    if (this.directoryNavigator.ContainsAllTemplateOptionsInd == false && this.directoryNavigator.navigationList.Any(x => x.isTemplateInd == false))
+    if (CanGetAllTemplates())
     {
       Console.WriteLine($"[-1]: Get All Options");
     }
+  }
+
+  private bool CanGetAllTemplates()
+  {
+    return this.directoryNavigator!.ParentNavigation != null
+          && this.directoryNavigator.ContainsAllTemplateOptionsInd == false
+          && this.directoryNavigator.navigationList.Any(x => x.isTemplateInd == false);
   }
 }

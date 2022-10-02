@@ -1,19 +1,33 @@
-﻿namespace TemplateManager.Cli.TemplateNavigation;
+﻿using TemplateManager.Cli.TemplateNavigation.DTOs;
+
+namespace TemplateManager.Cli.TemplateNavigation;
 
 internal class DirectoryNavigator
 {
   internal DirectoryNavigator? ParentNavigation;
   internal readonly bool isTemplateInd = false;
   internal List<DirectoryNavigator> navigationList;
-  internal string path;
-  internal string name => Path.GetFileName(path) + (this.isTemplateInd ? string.Empty : "/");
+  internal string? path;
+  internal string name => nameOverride ?? Path.GetFileName(path) + (this.isTemplateInd ? string.Empty : "/");
+  internal string? nameOverride { get; set; }
   internal bool ContainsAllTemplateOptionsInd = false;
 
-  internal DirectoryNavigator(string path, DirectoryNavigator? parentNavigation = null, bool isTemplateInd = false) {
+  internal DirectoryNavigator(List<TemplateCollection> templateCollections)
+  {
+    navigationList = new List<DirectoryNavigator>();
+    this.nameOverride = "Route";
+    foreach (var templateCollection in templateCollections)
+    {
+      this.navigationList.Add(new(templateCollection.Path, this, nameOverride: templateCollection.Name));
+    }
+  }
+
+  internal DirectoryNavigator(string path, DirectoryNavigator? parentNavigation = null, bool isTemplateInd = false, string? nameOverride = null) {
     navigationList = new List<DirectoryNavigator>();
     this.path = path;
     ParentNavigation = parentNavigation;
     this.isTemplateInd = isTemplateInd;
+    this.nameOverride = nameOverride;
     loadNavigationList();
   }
 
