@@ -1,4 +1,5 @@
-﻿using TemplateManager.Cli.TemplateNavigation.DTOs;
+﻿using Sharprompt;
+using TemplateManager.Cli.TemplateNavigation.DTOs;
 
 namespace TemplateManager.Cli.TemplateNavigation;
 
@@ -8,6 +9,9 @@ internal class TemplateNavigator
   private string _templateCollectionsFileName = "TemplateCollections.json";
   private string _templateCollectionsPath;
   private DirectoryNavigator? directoryNavigator;
+  private const string exit = "Exit";
+  private const string goBack = "Go Back";
+  private const string showAllOptions = "Show All Options";
 
   public TemplateNavigator(string? baseDirectory = null)
   {
@@ -58,16 +62,15 @@ internal class TemplateNavigator
   {
     while(this.directoryNavigator!.isTemplateInd == false)
     {
-      WriteOptions();
+      string[] options = GetOptions();
+      var template = Prompt.Select("Select your template", options);
 
-      int navigationIndex = int.Parse(Console.ReadLine()) - 1;
-
-      if (navigationIndex == -2
+      if (template == showAllOptions
         && CanGetAllTemplates())
       {
         this.directoryNavigator = this.directoryNavigator.GetAllTemplateOptions();
       }
-      else if (navigationIndex == -1)
+      else if (template == exit || template == goBack)
       {
         if (this.directoryNavigator.ParentNavigation == null)
         {
@@ -78,32 +81,35 @@ internal class TemplateNavigator
       }
       else
       {
-        this.directoryNavigator = this.directoryNavigator.navigationList[navigationIndex];
+        this.directoryNavigator = this.directoryNavigator.navigationList.Find(x => x.name == template);
       }
     }
   }
-
-  private void WriteOptions()
+  
+  private string[] GetOptions()
   {
+    List<string> options = new();
     Console.WriteLine($"\n{this.directoryNavigator!.path}");
     if (this.directoryNavigator!.ParentNavigation == null)
     {
-      Console.WriteLine($"[0]: Exit");
+      options.Add(exit);
     }
     else
     {
-      Console.WriteLine($"[0]: Go Back");
+      options.Add(goBack);
     }
 
     for (int i = 1; i < this.directoryNavigator.navigationList.Count + 1; i++)
     {
-      Console.WriteLine($"[{i}]: {this.directoryNavigator.navigationList[i - 1].name}");
+      options.Add($"{this.directoryNavigator.navigationList[i - 1].name}");
     }
 
     if (CanGetAllTemplates())
     {
-      Console.WriteLine($"[-1]: Get All Options");
+      options.Add(showAllOptions);
     }
+
+    return options.ToArray();
   }
 
   private bool CanGetAllTemplates()

@@ -1,5 +1,6 @@
 ﻿namespace TemplateManager.Cli;
 
+using Sharprompt;
 using System.Threading.Tasks;
 using TemplateManager.Cli.TemplateNavigation;
 using TemplateManagerModels.Models;
@@ -32,7 +33,7 @@ class TestClass
 
       foreach (var fileSettingsDto in fileSettingsDtoList)
       {
-        // fileSettingsDto.Destination = Environment.CurrentDirectory;
+        fileSettingsDto.Destination = Environment.CurrentDirectory;
       }
       if (fileSettingsDtoList.Count == 1)
       {
@@ -51,13 +52,12 @@ class TestClass
       {
         if (replacement.allowedType == TypeCode.Boolean)
         {
-          Console.WriteLine($"Would you like to {replacement.Key.Replace("$", "").AddSpacesToSentence()}?\nPlease use 'y' for yes and 'n' for no.");
+          replacement.SetValue(Prompt.Confirm($"Would you like to {replacement.Key.Replace("$", "").AddSpacesToSentence()}?", defaultValue: true));
         }
         else
         {
-          Console.WriteLine($"Please enter a value for {replacement.Key.Replace("$", "").AddSpacesToSentence()}");
+          replacement.SetValue(Prompt.Input<string>($"Please enter a value for {replacement.Key.Replace("$", "").AddSpacesToSentence()}"));
         }
-        replacement.SetValue(Console.ReadLine() ?? string.Empty);
       }
 
       templateFileGenerator.MapReplacementDictionary(replacementDictionary);

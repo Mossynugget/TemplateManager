@@ -50,6 +50,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Sharprompt" Version="2.4.5" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="TemplateNavigation\TemplateExample\TemplateCollections.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
