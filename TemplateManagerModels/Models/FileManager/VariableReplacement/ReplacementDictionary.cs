@@ -142,22 +142,4 @@ internal class ReplacementDictionary
   {
     return x => x.Key == variableKey;
   }
-
-  //private void AddReplacementValueValue(string variableKey, string variableValue)
-  //{
-  //  var replacementVariable = ReplacementValueList.First(findKeyPredicate(variableKey));
-  //  replacementVariable.SetValue(variableValue);
-  //}
-
-  //private void AddReplacementIfValue(string variableKey, bool variableValue)
-  //{
-  //  var replacementIf = ReplacementIfList.First(x => x.Key == variableKey);
-  //  replacementIf.SetValue(variableValue);
-  //}
-
-  //private void AddReplacementSelectValue(string variableKey, bool variableValue)
-  //{
-  //  var replacementSelect = ReplacementSelectList.First(x => x.Key == variableKey);
-  //  replacementSelect.SetValue(variableValue);
-  //}
 }
