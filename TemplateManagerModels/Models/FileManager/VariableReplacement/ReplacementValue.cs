@@ -12,13 +12,13 @@ public class ReplacementValue : ReplacementVariableAbstract
   internal string? ValueComment => Value?.AddSpacesToSentence() ?? string.Empty;
 
   public ReplacementValue(string key) :
-    base(key, Enums.ReplacementVariableType.Value, TypeCode.String)
+    base(key, Enums.ReplacementVariableType.Value, TypeCode.String, true)
   {
   }
 
   [JsonConstructor]
   public ReplacementValue(string key, string value) :
-    base(key, Enums.ReplacementVariableType.Value, TypeCode.String)
+    base(key, Enums.ReplacementVariableType.Value, TypeCode.String, false)
   {
     Value = value;
   }
@@ -28,12 +28,12 @@ public class ReplacementValue : ReplacementVariableAbstract
     Value = value;
   }
 
-  internal override void SetValue(dynamic value)
+  public override void SetValue(dynamic value)
   {
     Value = value;
   }
 
-  internal override string ApplyReplacementVariable(string contents)
+  public override string ApplyReplacementVariable(string contents)
   {
     contents = contents.Replace(this.Key, this.Value);
     contents = contents.Replace(this.KeyComment, this.ValueComment);

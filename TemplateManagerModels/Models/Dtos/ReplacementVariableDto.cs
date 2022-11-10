@@ -6,14 +6,16 @@ namespace TemplateManagerModels.Models.Dtos
   public class ReplacementVariableDto
   {
     public readonly string Key;
-    internal dynamic? Value { get; private set; }
+    public dynamic? Value { get; private set; }
+    public string[]? Options { get; private set; }
     public TypeCode allowedType { get; private set; }
 
     internal readonly ReplacementVariableType ReplacementDictionaryType;
 
-    internal ReplacementVariableDto(ReplacementVariableAbstract replacementDictionaryVariable)
+    internal ReplacementVariableDto(ReplacementVariableAbstract replacementDictionaryVariable, string[]? options = null)
     {
       this.Key = replacementDictionaryVariable.Key;
+      this.Options = options;
       this.allowedType = replacementDictionaryVariable.TypeCode;
       this.ReplacementDictionaryType = replacementDictionaryVariable.ReplacementVariableTypeEnum;
     }
@@ -22,7 +24,7 @@ namespace TemplateManagerModels.Models.Dtos
     {
       if (this.allowedType == TypeCode.Boolean && value.GetType().Name == TypeCode.String.ToString())
       {
-        this.Value = "y".Equals(value);
+        this.Value = value || "y".Equals(value);
       }
       else if (value.GetType().Name != this.allowedType.ToString())
       {

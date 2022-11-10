@@ -4,7 +4,7 @@ using TemplateManagerModels.Models.Enums;
 
 namespace TemplateManagerModels.Models.FileManager.VariableReplacement;
 
-internal class ReplacementIf : ReplacementVariableAbstract
+internal class ReplacementIf : ReplacementVariableAbstract, IReplacementVariable
 {
   internal bool Value { get; private set; } = false;
   internal string IfString => $"$if:{Key}$";
@@ -13,11 +13,11 @@ internal class ReplacementIf : ReplacementVariableAbstract
   internal int EndifLength => ElseString.Length;
 
   public ReplacementIf(string key) :
-    base(key, ReplacementVariableType.If, TypeCode.Boolean)
+    base(key, ReplacementVariableType.If, TypeCode.Boolean, true)
   {
   }
 
-  internal override void SetValue(dynamic value)
+  public override void SetValue(dynamic value)
   {
     Value = value;
   }
@@ -32,14 +32,18 @@ internal class ReplacementIf : ReplacementVariableAbstract
     for (int count = 0; count < matchedIfStarts.Count; count++)
     {
       Match ifMatch = matchedIfStarts[count];
-      var replacementIf = new ReplacementIf(ifMatch.Groups[2].Value);
-      replacementValues.Add(replacementIf);
+      string keyName = ifMatch.Groups[2].Value;
+      if (replacementValues.Any(x => x.Key == keyName) == false)
+      {
+        var replacementIf = new ReplacementIf(keyName);
+        replacementValues.Add(replacementIf);
+      }
     }
 
     return replacementValues;
   }
 
-  internal override string ApplyReplacementVariable(string contents)
+  public override string ApplyReplacementVariable(string contents)
   {
     Dictionary<int, int> indexDictionary = GetIfVariableIndexDictionaryForContents(contents);
     contents = ApplyIfStatements(contents, indexDictionary);

@@ -6,7 +6,7 @@ namespace TemplateManager.Cli.TemplateNavigation;
 internal class TemplateNavigator
 {
   private string _baseDirectory = "C:\\CodeTemplates\\";
-  private string _templateCollectionsFileName = "TemplateCollections.json";
+  private string _templateCollectionsFileName = "TemplateCollections.tmplt";
   private string _templateCollectionsPath;
   private DirectoryNavigator? directoryNavigator;
   private const string exit = "Exit";
@@ -52,9 +52,9 @@ internal class TemplateNavigator
   {
     Directory.CreateDirectory(_baseDirectory);
     Directory.CreateDirectory($"{_baseDirectory}\\Examples\\");
-    var directoryCollection = File.ReadAllText("TemplateNavigation\\TemplateExample\\TemplateCollections.json");
+    var directoryCollection = File.ReadAllText("TemplateNavigation\\TemplateExample\\TemplateCollections.tmplt");
     var templateExample = File.ReadAllText("TemplateNavigation\\TemplateExample\\TemplateOne.cs");
-    await File.WriteAllTextAsync($"{_baseDirectory}TemplateCollections.json", directoryCollection).ConfigureAwait(false);
+    await File.WriteAllTextAsync($"{_baseDirectory}TemplateCollections.tmplt", directoryCollection).ConfigureAwait(false);
     await File.WriteAllTextAsync($"{_baseDirectory}\\Examples\\ExampleFile.cs", templateExample).ConfigureAwait(false);
   }
 
@@ -70,13 +70,12 @@ internal class TemplateNavigator
       {
         this.directoryNavigator = this.directoryNavigator.GetAllTemplateOptions();
       }
-      else if (template == exit || template == goBack)
+      else if (template == exit)
       {
-        if (this.directoryNavigator.ParentNavigation == null)
-        {
-          throw new InvalidOperationException("No template selected");
-        }
-
+        throw new InvalidOperationException("No template selected");
+      }
+      else if (template == goBack)
+      {
         this.directoryNavigator = this.directoryNavigator.ParentNavigation;
       }
       else

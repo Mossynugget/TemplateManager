@@ -1,4 +1,4 @@
-﻿using System.Text.RegularExpressions;
+﻿using TemplateManagerModels.Helpers;
 using TemplateManagerModels.Models.Dtos;
 using TemplateManagerModels.Models.Enums;
 
@@ -8,11 +8,14 @@ internal class ReplacementDictionary
 {
   internal List<ReplacementValue> ReplacementValueList { get; set; }
   internal List<ReplacementIf> ReplacementIfList { get; set; }
+  internal List<ReplacementSelect> ReplacementSelectList { get; set; }
 
   internal ReplacementDictionary(string? contents = null)
   {
     ReplacementValueList = new();
     ReplacementIfList = new();
+    ReplacementSelectList = new();
+
     if (contents != null)
     {
       CreateReplacementLists(contents);
@@ -25,10 +28,16 @@ internal class ReplacementDictionary
       this.ReplacementValueList.AddRange(replacementValues);
   }
 
-  internal string ReplaceContents(string contents)
+  internal string ApplyAllReplaceLists(string contents)
   {
+    if (string.IsNullOrEmpty(contents))
+    {
+      return contents;
+    }
+
     contents = ReplaceIfContents(contents);
     contents = ReplaceValueContents(contents);
+    contents = ReplaceSelectContents(contents);
 
     return contents;
   }
@@ -37,8 +46,7 @@ internal class ReplacementDictionary
   {
     foreach (var replacementIf in this.ReplacementIfList)
     {
-      ReplacementIf? replacementVariable = replacementIf;
-      contents = replacementVariable.ApplyReplacementVariable(contents);
+      contents = replacementIf.ApplyReplacementVariable(contents);
     }
 
     return contents;
@@ -46,12 +54,17 @@ internal class ReplacementDictionary
 
   public string ReplaceValueContents(string contents)
   {
-    if (string.IsNullOrEmpty(contents))
+    foreach (var replacementVariable in this.ReplacementValueList)
     {
-      return contents;
+      contents = replacementVariable.ApplyReplacementVariable(contents);
     }
 
-    foreach (var replacementVariable in this.ReplacementValueList)
+    return contents;
+  }
+
+  public string ReplaceSelectContents(string contents)
+  {
+    foreach (var replacementVariable in this.ReplacementSelectList)
     {
       contents = replacementVariable.ApplyReplacementVariable(contents);
     }
@@ -62,16 +75,18 @@ internal class ReplacementDictionary
   internal void CreateReplacementLists(string contents)
   {
     var replacementValueList = ReplacementValue.CreateVariableListFromContents(contents);
-    ReplacementValueList.AddRange(replacementValueList.Where(rl => ReplacementValueList.Any(rvl => rvl.Key == rl.Key) == false));
+    ReplacementValueList.AddRange(replacementValueList.Where(rl => ReplacementValueList.None(rvl => rvl.Key == rl.Key)));
     var replacementIfList = ReplacementIf.CreateVariableListFromContents(contents);
-    ReplacementIfList.AddRange(replacementIfList.Where(rl => ReplacementIfList.Any(rvl => rvl.Key == rl.Key) == false));
+    ReplacementIfList.AddRange(replacementIfList.Where(rl => ReplacementIfList.None(rvl => rvl.Key == rl.Key)));
+    var replacementSelectList = ReplacementSelect.CreateVariableListFromContents(contents);
+    ReplacementSelectList.AddRange(replacementSelectList.Where(rl => ReplacementSelectList.None(rvl => rvl.Key == rl.Key)));
   }
 
   internal List<ReplacementVariableDto> GetReplacementVariablesAsDictionary()
   {
     var replacementVariableDtoList = new List<ReplacementVariableDto>();
 
-    foreach (var replacementVariable in this.ReplacementValueList.Where(x => string.IsNullOrEmpty(x.Value)))
+    foreach (var replacementVariable in this.ReplacementValueList.Where(x => x.RequiresInput))
     {
       if (replacementVariableDtoList.Any(x => x.Key == replacementVariable.Key) == false)
       {
@@ -79,11 +94,19 @@ internal class ReplacementDictionary
       }
     }
 
-    foreach (var replacementVariable in ReplacementIfList.Where(x => x == null))
+    foreach (var replacementVariable in ReplacementIfList.Where(x => x.RequiresInput))
     {
       if (replacementVariableDtoList.Any(x => x.Key == replacementVariable.Key) == false)
       {
         replacementVariableDtoList.Add(new ReplacementVariableDto(replacementVariable));
+      }
+    }
+
+    foreach (var replacementVariable in ReplacementSelectList.Where(x => x.RequiresInput))
+    {
+      if (replacementVariableDtoList.Any(x => x.Key == replacementVariable.Key) == false)
+      {
+        replacementVariableDtoList.Add(new ReplacementVariableDto(replacementVariable, replacementVariable.Options));
       }
     }
 
@@ -92,48 +115,49 @@ internal class ReplacementDictionary
 
   internal void MapDictionaryToReplacementVariables(List<ReplacementVariableDto> replacementDictionary)
   {
-    foreach (var replacementVariable in replacementDictionary)
+    foreach (var replacementVariableDto in replacementDictionary)
     {
-      switch (replacementVariable.ReplacementDictionaryType)
+      if (replacementVariableDto.Value == null) continue;
+
+      ReplacementVariableAbstract replacementVariable; 
+
+      switch (replacementVariableDto.ReplacementDictionaryType)
       {
-        case ReplacementVariableType.Value:
-          this.AddReplacementValueValue(replacementVariable.Key, replacementVariable.Value);
-          break;
         case ReplacementVariableType.If:
-          this.AddReplacementIfValue(replacementVariable.Key, replacementVariable.Value);
+          replacementVariable = ReplacementIfList.First(findKeyPredicate(replacementVariableDto.Key));
+          break;
+        case ReplacementVariableType.Select:
+          replacementVariable = ReplacementSelectList.First(findKeyPredicate(replacementVariableDto.Key));
+          break;
+        default:
+          replacementVariable = ReplacementValueList.First(findKeyPredicate(replacementVariableDto.Key));
           break;
       }
+
+      replacementVariable!.SetValue(replacementVariableDto.Value);
     }
   }
 
-  private void AddReplacementValueValue(string variableKey, string? variableValue)
+  private static Func<ReplacementVariableAbstract, bool> findKeyPredicate(string variableKey)
   {
-    if (variableValue == null)
-    {
-      return;
-    }
-    var replacementVariable = ReplacementValueList.Find(x => x.Key == variableKey);
-    if (replacementVariable == null)
-    {
-      throw new InvalidOperationException("The specified replacement variable key doesn't exist.");
-    }
-
-    replacementVariable.SetValue(variableValue);
+    return x => x.Key == variableKey;
   }
 
-  private void AddReplacementIfValue(string variableKey, bool? variableValue)
-  {
-    if (variableValue == null)
-    {
-      return;
-    }
+  //private void AddReplacementValueValue(string variableKey, string variableValue)
+  //{
+  //  var replacementVariable = ReplacementValueList.First(findKeyPredicate(variableKey));
+  //  replacementVariable.SetValue(variableValue);
+  //}
 
-    foreach (var replacementIf in this.ReplacementIfList)
-    {
-      if (replacementIf.Key == variableKey)
-      {
-        replacementIf.SetValue(variableValue);
-      }
-    }
-  }
+  //private void AddReplacementIfValue(string variableKey, bool variableValue)
+  //{
+  //  var replacementIf = ReplacementIfList.First(x => x.Key == variableKey);
+  //  replacementIf.SetValue(variableValue);
+  //}
+
+  //private void AddReplacementSelectValue(string variableKey, bool variableValue)
+  //{
+  //  var replacementSelect = ReplacementSelectList.First(x => x.Key == variableKey);
+  //  replacementSelect.SetValue(variableValue);
+  //}
 }

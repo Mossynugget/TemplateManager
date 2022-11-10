@@ -2,20 +2,22 @@
 
 namespace TemplateManagerModels.Models.FileManager.VariableReplacement;
 
-public abstract class ReplacementVariableAbstract
+public abstract class ReplacementVariableAbstract : IReplacementVariable
 {
   public string Key { get; set; }
+  public bool RequiresInput { get; set; }
   public ReplacementVariableType ReplacementVariableTypeEnum { get; }
   public TypeCode TypeCode { get; }
 
-  internal ReplacementVariableAbstract(string Key, ReplacementVariableType ReplacementVariableTypeEnum, TypeCode TypeCode)
+  public ReplacementVariableAbstract(string Key, ReplacementVariableType ReplacementVariableTypeEnum, TypeCode TypeCode, bool requiresInput)
   {
     this.Key = Key;
     this.ReplacementVariableTypeEnum = ReplacementVariableTypeEnum;
     this.TypeCode = TypeCode;
+    this.RequiresInput = requiresInput;
   }
 
-  internal abstract void SetValue(dynamic value);
+  public abstract void SetValue(dynamic value);
 
-  internal abstract string ApplyReplacementVariable(string contents);
+  public abstract string ApplyReplacementVariable(string contents);
 }

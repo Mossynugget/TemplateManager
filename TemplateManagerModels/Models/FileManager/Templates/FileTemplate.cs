@@ -38,7 +38,7 @@ internal class FileTemplate
 
   internal void ApplyReplacementVariableDictionary(ReplacementDictionary replacementDictionary)
   {
-    Contents = replacementDictionary.ReplaceContents(Contents);
+    Contents = replacementDictionary.ApplyAllReplaceLists(Contents);
     FileName = replacementDictionary.ReplaceValueContents(FileName);
 
     loadAdditionalReplacements(replacementDictionary);
@@ -61,7 +61,7 @@ internal class FileTemplate
 
   private void calculateDestination(ReplacementDictionary replacementDictionary)
   {
-    CalulatedDestination = replacementDictionary.ReplaceValueContents(CalulatedDestination ?? string.Empty);
+    CalulatedDestination = replacementDictionary.ApplyAllReplaceLists(CalulatedDestination ?? string.Empty);
 
     if (CalulatedDestination.Contains(ReplacementSettingType.Destination))
     {

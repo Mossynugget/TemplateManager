@@ -19,7 +19,7 @@ internal class FileTemplateDictionary
 
   internal void AddTemplateFile(string templateName)
   {
-    if (Path.GetExtension(templateName) == ".json" && Path.GetFileNameWithoutExtension(templateName).StartsWith("group"))
+    if (Path.GetExtension(templateName) == ".tmplt")
     {
       using (StreamReader r = new StreamReader(templateName))
       {

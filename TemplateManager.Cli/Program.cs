@@ -50,7 +50,11 @@ class TestClass
 
       foreach (var replacement in replacementDictionary)
       {
-        if (replacement.allowedType == TypeCode.Boolean)
+        if (replacement.Options != null)
+        {
+          replacement.SetValue(Prompt.Select<string>($"Please select a {replacement.Key.Replace("$", "").AddSpacesToSentence()}", replacement.Options));
+        }
+        else if (replacement.allowedType == TypeCode.Boolean)
         {
           replacement.SetValue(Prompt.Confirm($"Would you like to {replacement.Key.Replace("$", "").AddSpacesToSentence()}?", defaultValue: true));
         }
