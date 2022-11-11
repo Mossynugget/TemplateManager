@@ -39,7 +39,7 @@ internal class FileTemplate
   internal void ApplyReplacementVariableDictionary(ReplacementDictionary replacementDictionary)
   {
     Contents = replacementDictionary.ApplyAllReplaceLists(Contents);
-    FileName = replacementDictionary.ReplaceValueContents(FileName);
+    FileName = replacementDictionary.ApplyAllReplaceLists(FileName);
 
     loadAdditionalReplacements(replacementDictionary);
   }
@@ -69,7 +69,7 @@ internal class FileTemplate
       CalulatedDestination = $"{Destination}{CalulatedDestination}";
     }
 
-    CalulatedDestination = CalulatedDestination != null ? replacementDictionary.ReplaceValueContents(CalulatedDestination) : Destination;
+    CalulatedDestination = string.IsNullOrEmpty(CalulatedDestination) == false ? replacementDictionary.ReplaceValueContents(CalulatedDestination) : Destination;
     CalulatedDestination = CalulatedDestination.Replace("\\\\", "\\");
   }
 

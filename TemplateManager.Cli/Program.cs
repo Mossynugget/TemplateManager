@@ -37,8 +37,7 @@ class TestClass
       }
       if (fileSettingsDtoList.Count == 1)
       {
-        Console.WriteLine($"Please provide a file name for {fileSettingsDtoList[0].TemplateName}.");
-        fileSettingsDtoList[0].Destination = Environment.CurrentDirectory;
+        fileSettingsDtoList[0].FileName = Prompt.Input<string>($"Please provide a file name for {fileSettingsDtoList[0].TemplateName}");
       }
 
       templateFileGenerator.MapFileTemplateSettings(fileSettingsDtoList);

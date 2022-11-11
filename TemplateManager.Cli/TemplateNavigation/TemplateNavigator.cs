@@ -1,4 +1,5 @@
 ﻿using Sharprompt;
+using System.Reflection;
 using TemplateManager.Cli.TemplateNavigation.DTOs;
 
 namespace TemplateManager.Cli.TemplateNavigation;
@@ -38,9 +39,8 @@ internal class TemplateNavigator
       return;
     }
 
-    Console.WriteLine($"The base directory \"({_baseDirectory})\" doesn't exist, would you like us to create it for you?\n (y) for yes and (n) for no.");
-    var yesNo = Console.ReadLine();
-    if (yesNo?.StartsWith("y", StringComparison.OrdinalIgnoreCase) ?? false)
+    var yesNo = Prompt.Confirm($"The base directory \"({_baseDirectory})\" doesn't exist, would you like us to create it for you?");
+    if (yesNo)
     {
       await GenerateExampleFiles().ConfigureAwait(false);
       return;
@@ -50,12 +50,30 @@ internal class TemplateNavigator
 
   private async Task GenerateExampleFiles()
   {
-    Directory.CreateDirectory(_baseDirectory);
     Directory.CreateDirectory($"{_baseDirectory}\\Examples\\");
-    var directoryCollection = File.ReadAllText("TemplateNavigation\\TemplateExample\\TemplateCollections.tmplt");
-    var templateExample = File.ReadAllText("TemplateNavigation\\TemplateExample\\TemplateOne.cs");
-    await File.WriteAllTextAsync($"{_baseDirectory}TemplateCollections.tmplt", directoryCollection).ConfigureAwait(false);
-    await File.WriteAllTextAsync($"{_baseDirectory}\\Examples\\ExampleFile.cs", templateExample).ConfigureAwait(false);
+
+    var assembly = Assembly.GetExecutingAssembly();
+    var test = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceNames();
+
+    await this.WriteFileToDestination("TemplateManager.Cli.TemplateNavigation.TemplateExample.TemplateCollections.tmplt"
+        , $"{_baseDirectory}TemplateCollections.tmplt").ConfigureAwait(false);
+
+    await this.WriteFileToDestination("TemplateManager.Cli.TemplateNavigation.TemplateExample.TemplateOne.cs"
+        , $"{_baseDirectory}\\Examples\\ExampleFile.cs").ConfigureAwait(false);
+  }
+  
+  private async Task WriteFileToDestination(string resourceName, string destination)
+  {
+    Stream s = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName);
+    FileStream resourceFile = new FileStream(destination, FileMode.Create);
+    
+    byte[] b = new byte[s.Length + 1];
+    s.Read(b, 0, Convert.ToInt32(s.Length));
+    resourceFile.Write(b, 0, Convert.ToInt32(b.Length - 1));
+    resourceFile.Flush();
+    resourceFile.Close();
+    
+    resourceFile = null;
   }
 
   private void templateNavigation()

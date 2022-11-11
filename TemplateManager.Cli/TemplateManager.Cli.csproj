@@ -26,9 +26,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="TemplateNavigation\TemplateExample\TemplateOne.cs">
+    <None Remove="TemplateNavigation\TemplateExample\GroupExample\Mediator.tmplt" />
+    <None Remove="TemplateNavigation\TemplateExample\TemplateCollections.tmplt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="TemplateNavigation\TemplateExample\TemplateOne.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
@@ -45,18 +50,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="TemplateNavigation\TemplateExample\GroupExample\GroupMediatorFiles\handlerTemplate.cs" />
-    <None Include="TemplateNavigation\TemplateExample\GroupExample\GroupMediatorFiles\requestTemplate.cs" />
+    <EmbeddedResource Include="TemplateNavigation\TemplateExample\GroupExample\GroupMediatorFiles\handlerTemplate.cs" />
+    <EmbeddedResource Include="TemplateNavigation\TemplateExample\GroupExample\GroupMediatorFiles\requestTemplate.cs" />
+    <EmbeddedResource Include="TemplateNavigation\TemplateExample\GroupExample\Mediator.tmplt" />
+    <EmbeddedResource Include="TemplateNavigation\TemplateExample\TemplateCollections.tmplt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Sharprompt" Version="2.4.5" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="TemplateNavigation\TemplateExample\TemplateCollections.tmplt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
