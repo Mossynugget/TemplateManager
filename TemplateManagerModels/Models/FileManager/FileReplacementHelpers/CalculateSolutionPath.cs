@@ -23,7 +23,6 @@ internal static class CalculateSolutionPathName
       throw new InvalidSettingVariableException($"There was no solution path identified originating from the path {destination}.");
     }
 
-    var directoryName = Path.GetDirectoryName(solutionPathString);
-    return directoryName;
+    return solutionPathString;
   }
 }

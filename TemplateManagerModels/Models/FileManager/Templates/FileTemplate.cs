@@ -80,12 +80,14 @@ internal class FileTemplate
       || (CalulatedDestination?.Contains(ReplacementSettingType.Solution) ?? false))
     {
       var solutionPathString = CalculateSolutionPathName.GetSolutionPath(Destination);
+      var directoryPath = Path.GetDirectoryName(solutionPathString);
 
-      Contents = Contents.Replace(ReplacementSettingType.SolutionPath, solutionPathString);
-      FileName = FileName?.Replace(ReplacementSettingType.SolutionPath, solutionPathString);
-      CalulatedDestination = CalulatedDestination?.Replace(ReplacementSettingType.SolutionPath, solutionPathString);
+      Contents = Contents.Replace(ReplacementSettingType.SolutionPath, directoryPath);
+      FileName = FileName?.Replace(ReplacementSettingType.SolutionPath, directoryPath);
+      CalulatedDestination = CalulatedDestination?.Replace(ReplacementSettingType.SolutionPath, directoryPath);
 
-      var solutionString = Path.GetFileName(solutionPathString);
+      var solutionString = Path.GetFileNameWithoutExtension(solutionPathString);
+
       Contents = Contents.Replace(ReplacementSettingType.Solution, solutionString);
       FileName = FileName?.Replace(ReplacementSettingType.Solution, solutionString);
       CalulatedDestination = CalulatedDestination?.Replace(ReplacementSettingType.Solution, solutionString);

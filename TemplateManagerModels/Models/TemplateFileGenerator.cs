@@ -1,7 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System.Text;
-using TemplateManagerModels.Models.Dtos;
+﻿using TemplateManagerModels.Models.Dtos;
 using TemplateManagerModels.Models.FileManager;
 
 namespace TemplateManagerModels.Models;

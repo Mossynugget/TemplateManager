@@ -13,6 +13,7 @@ namespace TemplateManagerModels.Models.Dtos
     {
       this.Template = template.TemplateFilePath;
       this.Destination = template.Destination;
+      this.FileName = template.FileName;
     }
   }
 }

@@ -35,7 +35,7 @@ class TestClass
       {
         fileSettingsDto.Destination = Environment.CurrentDirectory;
       }
-      if (fileSettingsDtoList.Count == 1)
+      if (fileSettingsDtoList.Count == 1 && string.IsNullOrEmpty(fileSettingsDtoList[0].FileName))
       {
         fileSettingsDtoList[0].FileName = Prompt.Input<string>($"Please provide a file name for {fileSettingsDtoList[0].TemplateName}");
       }
