@@ -55,14 +55,14 @@ internal class TemplateNavigator
     var assembly = Assembly.GetExecutingAssembly();
     var test = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceNames();
 
-    await this.WriteFileToDestination("TemplateManager.Cli.TemplateNavigation.TemplateExample.TemplateCollections.tmplt"
-        , $"{_baseDirectory}TemplateCollections.tmplt").ConfigureAwait(false);
+    this.WriteFileToDestination("TemplateManager.Cli.TemplateNavigation.TemplateExample.TemplateCollections.tmplt"
+        , $"{_baseDirectory}TemplateCollections.tmplt");
 
-    await this.WriteFileToDestination("TemplateManager.Cli.TemplateNavigation.TemplateExample.TemplateOne.cs"
-        , $"{_baseDirectory}\\Examples\\ExampleFile.cs").ConfigureAwait(false);
+    this.WriteFileToDestination("TemplateManager.Cli.TemplateNavigation.TemplateExample.TemplateOne.cs"
+        , $"{_baseDirectory}\\Examples\\ExampleFile.cs");
   }
   
-  private async Task WriteFileToDestination(string resourceName, string destination)
+  private void WriteFileToDestination(string resourceName, string destination)
   {
     Stream s = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName);
     FileStream resourceFile = new FileStream(destination, FileMode.Create);
