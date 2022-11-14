@@ -10,6 +10,10 @@ public class ReplacementValue : ReplacementVariableAbstract
   internal string? Value { get; private set; }
   internal string KeyComment => $"{this.Key.TrimEnd('$')}:comment$";
   internal string? ValueComment => Value?.AddSpacesToSentence() ?? string.Empty;
+  internal string KeyUpperCaseUnderscore => $"{this.Key.TrimEnd('$')}:uppercaseUnderscore$";
+  internal string? ValueUppercaseUnderscore => Value?.AddUnderscoresToSentence().ToUpper() ?? string.Empty;
+  internal string KeyUnderscore => $"{this.Key.TrimEnd('$')}:underscore$";
+  internal string? ValueUnderscore => Value?.AddUnderscoresToSentence() ?? string.Empty;
 
   public ReplacementValue(string key) :
     base(key, Enums.ReplacementVariableType.Value, TypeCode.String, true)
@@ -37,6 +41,8 @@ public class ReplacementValue : ReplacementVariableAbstract
   {
     contents = contents.Replace(this.Key, this.Value);
     contents = contents.Replace(this.KeyComment, this.ValueComment);
+    contents = contents.Replace(this.KeyUpperCaseUnderscore, this.ValueUppercaseUnderscore);
+    contents = contents.Replace(this.KeyUnderscore, this.ValueUnderscore);
     return contents;
   }
 
