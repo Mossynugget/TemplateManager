@@ -4,7 +4,7 @@ using Sharprompt;
 using System.Threading.Tasks;
 using TemplateManager.Cli.TemplateNavigation;
 using TemplateManagerModels.Models;
-using TemplateManagerModels.Models.Helpers;
+using TemplateManagerModels.Models.Dtos;
 
 class TestClass
 {
@@ -47,23 +47,36 @@ class TestClass
     {
       var replacementDictionary = templateFileGenerator.GetReplacementDictionary();
 
-      foreach (var replacement in replacementDictionary)
+      ApplyIfStatements(replacementDictionary);
+
+      foreach (var replacement in replacementDictionary.Where(x => x.allowedType != TypeCode.Boolean))
       {
         if (replacement.Options != null)
         {
-          replacement.SetValue(Prompt.Select<string>($"Please select a {replacement.Key.Replace("$", "").AddSpacesToSentence()}", replacement.Options));
-        }
-        else if (replacement.allowedType == TypeCode.Boolean)
-        {
-          replacement.SetValue(Prompt.Confirm($"Would you like to {replacement.Key.Replace("$", "").AddSpacesToSentence()}?", defaultValue: true));
+          replacement.SetValue(Prompt.Select<string>($"Please select a {replacement.ReadableKey}", replacement.Options));
         }
         else
         {
-          replacement.SetValue(Prompt.Input<string>($"Please enter a value for {replacement.Key.Replace("$", "").AddSpacesToSentence()}"));
+          replacement.SetValue(Prompt.Input<string>($"Please enter a value for {replacement.ReadableKey}"));
         }
       }
 
       templateFileGenerator.MapReplacementDictionary(replacementDictionary);
+    }
+  }
+
+  private static void ApplyIfStatements(List<ReplacementVariableDto> replacementDictionary)
+  {
+    var selectedProperties = Prompt.MultiSelect("Which of these would you like to apply?",
+      replacementDictionary
+      .Where(x => x.allowedType == TypeCode.Boolean)
+      .Select(x => x.ReadableKey)
+      .ToArray(),
+      minimum: 0);
+
+    foreach (var replacementIf in replacementDictionary.Where(x => selectedProperties.Contains(x.ReadableKey)))
+    {
+      replacementIf.SetValue(true);
     }
   }
 }

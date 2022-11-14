@@ -49,7 +49,7 @@ public class ReplacementValue : ReplacementVariableAbstract
   internal static List<ReplacementValue> CreateVariableListFromContents(string contents)
   {
     var replacementValues = new List<ReplacementValue>();
-    string regexExpression = @"\$[a-zA-Z-0-9]*\$";
+    string regexExpression = @"\$[a-zA-Z-0-9]+\$";
     MatchCollection matchedVariables = Regex.Matches(contents, regexExpression);
 
     for (int count = 0; count < matchedVariables.Count; count++)

@@ -57,6 +57,7 @@ internal class ReplacementIf : ReplacementVariableAbstract, IReplacementVariable
   private Dictionary<int, int> GetIfVariableIndexDictionaryForContents(string contents)
   {
     Dictionary<int, int> indexDictionary = new();
+
     string regexExpressionStart = $@"\$(if):({this.Key})\$";
     string regexExpressionEnd = $@"\$(endif):({this.Key})\$";
 
@@ -65,8 +66,8 @@ internal class ReplacementIf : ReplacementVariableAbstract, IReplacementVariable
 
     for (int count = 0; count < matchedIfStarts.Count; count++)
     {
-      Match firstMatch = matchedIfStarts[0];
-      Match secondMatch = matchedIfEnds[0];
+      Match firstMatch = matchedIfStarts[count];
+      Match secondMatch = matchedIfEnds[count];
 
       indexDictionary.Add(firstMatch.Index, secondMatch.Index + secondMatch.Length);
     }
