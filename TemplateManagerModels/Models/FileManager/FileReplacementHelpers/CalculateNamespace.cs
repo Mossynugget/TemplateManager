@@ -9,7 +9,7 @@ internal static class CalculateNamespace
   /// </summary>
   /// <param name="destination"></param>
   /// <param name="content"></param>
-  /// <returns></returns>
+  /// <returns>The namespace based on the destination's rlation to the cs project's destination.</returns>
   public static string ReplaceNamespace(this string content, string destination)
   {
     if (content.Contains(ReplacementSettingType.Namespace) == false)

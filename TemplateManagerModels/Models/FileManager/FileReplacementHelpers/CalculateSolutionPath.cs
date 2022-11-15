@@ -9,7 +9,7 @@ internal static class CalculateSolutionPathName
   /// A method used to replace the namespace variable in contents with the calculated namespace.
   /// </summary>
   /// <param name="destination">The destination of where the template fetch was initially called.</param>
-  /// <returns></returns>
+  /// <returns>The sln path including the file name.</returns>
   public static string GetSolutionPath(string destination)
   {
     string solutionPathString;

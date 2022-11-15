@@ -11,4 +11,9 @@ public record ReplacementSettingFileTypes
   /// String containing the search string for solutions.
   /// </summary>
   public const string Solution = "*.sln";
+
+  /// <summary>
+  /// Use to identify the source folder.
+  /// </summary>
+  public const string Source = "src";
 }

@@ -26,4 +26,9 @@ public record ReplacementSettingType
   /// Used to get the destination variable.
   /// </summary>
   public const string Destination = "$setting:destination$";
+
+  /// <summary>
+  /// Used to get the src variable.
+  /// </summary>
+  public const string Source = "$setting:src$";
 }

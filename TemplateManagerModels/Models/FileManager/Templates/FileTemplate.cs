@@ -69,7 +69,15 @@ internal class FileTemplate
       CalulatedDestination = $"{Destination}{CalulatedDestination}";
     }
 
-    CalulatedDestination = string.IsNullOrEmpty(CalulatedDestination) == false ? replacementDictionary.ReplaceValueContents(CalulatedDestination) : Destination;
+    if (CalulatedDestination.Contains(ReplacementSettingType.Source))
+    {
+      string sourcePath = CalculateSrcPath.GetSrcPath(Destination);
+      CalulatedDestination = CalulatedDestination.Replace(ReplacementSettingType.Source, sourcePath);
+    }
+
+    CalulatedDestination = string.IsNullOrEmpty(CalulatedDestination) == false
+      ? replacementDictionary.ReplaceValueContents(CalulatedDestination)
+      : Destination;
     CalulatedDestination = CalulatedDestination.Replace("\\\\", "\\");
   }
 

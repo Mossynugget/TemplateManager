@@ -1,12 +1,13 @@
 ﻿using Sharprompt;
 using System.Reflection;
 using TemplateManager.Cli.TemplateNavigation.DTOs;
+using TemplateManagerModels.Helpers;
 
 namespace TemplateManager.Cli.TemplateNavigation;
 
 internal class TemplateNavigator
 {
-  private string _baseDirectory = "C:\\CodeTemplates\\";
+  private string _baseDirectory = PathExtensions.GetRoot();
   private string _templateCollectionsFileName = "TemplateCollections.tmplt";
   private string _templateCollectionsPath;
   private DirectoryNavigator? directoryNavigator;
@@ -18,7 +19,7 @@ internal class TemplateNavigator
   {
     _baseDirectory = baseDirectory ?? _baseDirectory;
     _templateCollectionsPath = Path.Combine(_baseDirectory, _templateCollectionsFileName);
-}
+  }
 
   public async Task<string> SelectTemplate()
   {
@@ -45,7 +46,7 @@ internal class TemplateNavigator
       await GenerateExampleFiles().ConfigureAwait(false);
       return;
     }
-    throw new InvalidOperationException("No directory present."); 
+    throw new InvalidOperationException("No directory present.");
   }
 
   private async Task GenerateExampleFiles()
@@ -53,7 +54,7 @@ internal class TemplateNavigator
     Directory.CreateDirectory($"{_baseDirectory}\\Examples\\");
 
     var assembly = Assembly.GetExecutingAssembly();
-    var test = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceNames();
+    var test = Assembly.GetExecutingAssembly().GetManifestResourceNames();
 
     this.WriteFileToDestination("TemplateManager.Cli.TemplateNavigation.TemplateExample.TemplateCollections.tmplt"
         , $"{_baseDirectory}TemplateCollections.tmplt");
@@ -61,24 +62,24 @@ internal class TemplateNavigator
     this.WriteFileToDestination("TemplateManager.Cli.TemplateNavigation.TemplateExample.TemplateOne.cs"
         , $"{_baseDirectory}\\Examples\\ExampleFile.cs");
   }
-  
+
   private void WriteFileToDestination(string resourceName, string destination)
   {
     Stream s = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName);
     FileStream resourceFile = new FileStream(destination, FileMode.Create);
-    
+
     byte[] b = new byte[s.Length + 1];
     s.Read(b, 0, Convert.ToInt32(s.Length));
     resourceFile.Write(b, 0, Convert.ToInt32(b.Length - 1));
     resourceFile.Flush();
     resourceFile.Close();
-    
+
     resourceFile = null;
   }
 
   private void templateNavigation()
   {
-    while(this.directoryNavigator!.isTemplateInd == false)
+    while (this.directoryNavigator!.isTemplateInd == false)
     {
       string[] options = GetOptions();
       var template = Prompt.Select("Select your template", options);
@@ -102,7 +103,7 @@ internal class TemplateNavigator
       }
     }
   }
-  
+
   private string[] GetOptions()
   {
     List<string> options = new();

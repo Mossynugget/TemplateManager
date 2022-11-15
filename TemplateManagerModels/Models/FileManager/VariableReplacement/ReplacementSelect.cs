@@ -30,7 +30,7 @@ internal class ReplacementSelect : ReplacementVariableAbstract
     var replacementValues = new List<ReplacementSelect>();
 
     // Used to identify strings such as: $select:ContractType:Query|Request$
-    string regexExpression = @"\$(select):([a-zA-Z-0-9]*):(([a-zA-Z-0-9]|)*(\||\$))*";
+    string regexExpression = @"\$(select):([a-zA-Z-0-9]*):(([a-zA-Z-0-9<>]|)*(\||\$))*";
     MatchCollection matchedVariables = Regex.Matches(contents, regexExpression);
 
     for (int count = 0; count < matchedVariables.Count; count++)
