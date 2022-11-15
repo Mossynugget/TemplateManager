@@ -3,6 +3,7 @@
 using Sharprompt;
 using System.Threading.Tasks;
 using TemplateManager.Cli.TemplateNavigation;
+using TemplateManagerModels.Helpers;
 using TemplateManagerModels.Models;
 using TemplateManagerModels.Models.Dtos;
 
@@ -67,6 +68,8 @@ class TestClass
 
   private static void ApplyIfStatements(List<ReplacementVariableDto> replacementDictionary)
   {
+    if (replacementDictionary.None(x => x.allowedType == TypeCode.Boolean)) return;
+
     var selectedProperties = Prompt.MultiSelect("Which of these would you like to apply?",
       replacementDictionary
       .Where(x => x.allowedType == TypeCode.Boolean)
