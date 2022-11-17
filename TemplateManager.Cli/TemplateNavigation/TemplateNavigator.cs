@@ -2,34 +2,56 @@
 using System.Reflection;
 using TemplateManager.Cli.TemplateNavigation.DTOs;
 using TemplateManagerModels.Helpers;
+using TemplateManagerModels.Models.FileManager.FileReplacementHelpers;
 
 namespace TemplateManager.Cli.TemplateNavigation;
 
 internal class TemplateNavigator
 {
   private string _baseDirectory = PathExtensions.GetRoot();
+  private string _rootFolderName = "CodeTemplates";
   private string _templateCollectionsFileName = "TemplateCollections.tmplt";
-  private string _templateCollectionsPath;
+  private string _templateCollectionsPath => Path.Combine(_baseDirectory, _templateCollectionsFileName);
   private DirectoryNavigator? directoryNavigator;
   private const string exit = "Exit";
   private const string goBack = "Go Back";
   private const string showAllOptions = "Show All Options";
+  private const string navigateToRoot = "Navigate To Root";
 
   public TemplateNavigator(string? baseDirectory = null)
   {
-    _baseDirectory = baseDirectory ?? _baseDirectory;
-    _templateCollectionsPath = Path.Combine(_baseDirectory, _templateCollectionsFileName);
+    calculateBaseDirectory(baseDirectory);
+  }
+
+  private void calculateBaseDirectory(string? baseDirectory = null)
+  {
+    if (string.IsNullOrEmpty(baseDirectory) == false)
+    {
+      _baseDirectory = baseDirectory;
+    }
+    try
+    {
+      _baseDirectory = Environment.CurrentDirectory.FindDirectory(_rootFolderName);
+    }
+    catch { }
   }
 
   public async Task<string> SelectTemplate()
   {
     await this.validateFolderExists();
     var templateCollections = TemplateCollection.GenerateTemplateCollection(_templateCollectionsPath);
-    this.directoryNavigator = new(templateCollections);
+    if (templateCollections != null)
+    {
+      this.directoryNavigator = new(templateCollections);
+    }
+    else
+    {
+      this.directoryNavigator = new(_baseDirectory);
+    }
 
     Console.WriteLine($"Please navigate to the template you wish to implement.");
 
-    this.templateNavigation();
+    await this.templateNavigation();
     return this.directoryNavigator.path;
   }
 
@@ -77,7 +99,7 @@ internal class TemplateNavigator
     resourceFile = null;
   }
 
-  private void templateNavigation()
+  private async Task templateNavigation()
   {
     while (this.directoryNavigator!.isTemplateInd == false)
     {
@@ -97,6 +119,11 @@ internal class TemplateNavigator
       {
         this.directoryNavigator = this.directoryNavigator.ParentNavigation;
       }
+      else if (template == navigateToRoot)
+      {
+        _baseDirectory = PathExtensions.GetRoot();
+        await SelectTemplate();
+      }
       else
       {
         this.directoryNavigator = this.directoryNavigator.navigationList.Find(x => x.name == template);
@@ -108,14 +135,6 @@ internal class TemplateNavigator
   {
     List<string> options = new();
     Console.WriteLine($"\n{this.directoryNavigator!.path}");
-    if (this.directoryNavigator!.ParentNavigation == null)
-    {
-      options.Add(exit);
-    }
-    else
-    {
-      options.Add(goBack);
-    }
 
     for (int i = 1; i < this.directoryNavigator.navigationList.Count + 1; i++)
     {
@@ -126,6 +145,17 @@ internal class TemplateNavigator
     {
       options.Add(showAllOptions);
     }
+
+    if (this.directoryNavigator!.ParentNavigation == null)
+    {
+      options.Add(exit);
+    }
+    else
+    {
+      options.Add(goBack);
+    }
+
+    options.Add(navigateToRoot);
 
     return options.ToArray();
   }
