@@ -11,7 +11,7 @@ internal class TemplateNavigator
   private string _baseDirectory = PathExtensions.GetRoot();
   private string _rootFolderName = "CodeTemplates";
   private string _templateCollectionsFileName = "TemplateCollections.tmplt";
-  private string _templateCollectionsPath;
+  private string _templateCollectionsPath => Path.Combine(_baseDirectory, _templateCollectionsFileName);
   private DirectoryNavigator? directoryNavigator;
   private const string exit = "Exit";
   private const string goBack = "Go Back";
@@ -21,7 +21,6 @@ internal class TemplateNavigator
   public TemplateNavigator(string? baseDirectory = null)
   {
     calculateBaseDirectory(baseDirectory);
-    _templateCollectionsPath = Path.Combine(_baseDirectory, _templateCollectionsFileName);
   }
 
   private void calculateBaseDirectory(string? baseDirectory = null)
@@ -32,7 +31,7 @@ internal class TemplateNavigator
     }
     try
     {
-      _baseDirectory = FindFileTypeHelper.GetFilePath(Environment.CurrentDirectory, _rootFolderName);
+      _baseDirectory = Environment.CurrentDirectory.FindDirectory(_rootFolderName);
     }
     catch { }
   }
@@ -41,7 +40,14 @@ internal class TemplateNavigator
   {
     await this.validateFolderExists();
     var templateCollections = TemplateCollection.GenerateTemplateCollection(_templateCollectionsPath);
-    this.directoryNavigator = new(templateCollections);
+    if (templateCollections != null)
+    {
+      this.directoryNavigator = new(templateCollections);
+    }
+    else
+    {
+      this.directoryNavigator = new(_baseDirectory);
+    }
 
     Console.WriteLine($"Please navigate to the template you wish to implement.");
 
@@ -115,7 +121,7 @@ internal class TemplateNavigator
       }
       else if (template == navigateToRoot)
       {
-        _templateCollectionsPath = Path.Combine(_baseDirectory, _templateCollectionsFileName);
+        _baseDirectory = PathExtensions.GetRoot();
         await SelectTemplate();
       }
       else

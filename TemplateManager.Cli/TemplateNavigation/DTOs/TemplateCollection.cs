@@ -14,8 +14,13 @@ namespace TemplateManager.Cli.TemplateNavigation.DTOs
     /// </summary>
     public string Path { get; set; }
 
-    public static List<TemplateCollection> GenerateTemplateCollection(string TemplateCollectionsLocation)
+    public static List<TemplateCollection>? GenerateTemplateCollection(string TemplateCollectionsLocation)
     {
+      if (File.Exists(TemplateCollectionsLocation) == false)
+      {
+        return null;
+      }
+
       using (StreamReader r = new StreamReader(TemplateCollectionsLocation))
       {
         string json = r.ReadToEnd();
