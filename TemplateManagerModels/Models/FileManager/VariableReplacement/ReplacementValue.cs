@@ -8,12 +8,6 @@ namespace TemplateManagerModels.Models.FileManager.VariableReplacement;
 public class ReplacementValue : ReplacementVariableAbstract
 {
   internal string? Value { get; private set; }
-  internal string KeyComment => $"{this.Key.TrimEnd('$')}:comment$";
-  internal string? ValueComment => Value?.AddSpacesToSentence() ?? string.Empty;
-  internal string KeyUpperCaseUnderscore => $"{this.Key.TrimEnd('$')}:uppercaseUnderscore$";
-  internal string? ValueUppercaseUnderscore => Value?.AddUnderscoresToSentence().ToUpper() ?? string.Empty;
-  internal string KeyUnderscore => $"{this.Key.TrimEnd('$')}:underscore$";
-  internal string? ValueUnderscore => Value?.AddUnderscoresToSentence() ?? string.Empty;
 
   public ReplacementValue(string key) :
     base(key, Enums.ReplacementVariableType.Value, TypeCode.String, true)
@@ -40,9 +34,10 @@ public class ReplacementValue : ReplacementVariableAbstract
   public override string ApplyReplacementVariable(string contents)
   {
     contents = contents.Replace(this.Key, this.Value);
-    contents = contents.Replace(this.KeyComment, this.ValueComment);
-    contents = contents.Replace(this.KeyUpperCaseUnderscore, this.ValueUppercaseUnderscore);
-    contents = contents.Replace(this.KeyUnderscore, this.ValueUnderscore);
+    contents = contents.Replace(this.Key.KeyComment(), this.Value.ValueComment());
+    contents = contents.Replace(this.Key.KeyUppercaseUnderscore(), this.Value.ValueUppercaseUnderscore());
+    contents = contents.Replace(this.Key.KeyUnderscore(), this.Value.ValueUnderscore());
+    contents = contents.Replace(this.Key.KeyLowercase(), this.Value.ValueLowercase());
     return contents;
   }
 

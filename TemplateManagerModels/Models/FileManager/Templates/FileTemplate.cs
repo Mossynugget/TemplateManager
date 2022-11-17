@@ -1,7 +1,9 @@
-﻿using TemplateManagerModels.Models.Dtos;
+﻿using TemplateManagerModels.Helpers;
+using TemplateManagerModels.Models.Dtos;
 using TemplateManagerModels.Models.Enums;
 using TemplateManagerModels.Models.FileManager.FileReplacementHelpers;
 using TemplateManagerModels.Models.FileManager.VariableReplacement;
+using TemplateManagerModels.Models.Helpers;
 
 namespace TemplateManagerModels.Models.FileManager.Templates;
 
@@ -38,6 +40,7 @@ internal class FileTemplate
 
   internal void ApplyReplacementVariableDictionary(ReplacementDictionary replacementDictionary)
   {
+    FileName ??= string.Empty;
     Contents = replacementDictionary.ApplyAllReplaceLists(Contents);
     FileName = replacementDictionary.ApplyAllReplaceLists(FileName);
 
@@ -51,7 +54,10 @@ internal class FileTemplate
 
   private void loadAdditionalReplacements(ReplacementDictionary replacementDictionary)
   {
-    Contents = Contents.Replace(Path.GetFileNameWithoutExtension(TemplateFilePath), FileName);
+    if (string.IsNullOrEmpty(Path.GetFileNameWithoutExtension(TemplateFilePath)) == false)
+    {
+      Contents = Contents.Replace(Path.GetFileNameWithoutExtension(TemplateFilePath), FileName);
+    }
     LoadSolutionPathVariables();
     calculateDestination(replacementDictionary);
     validateFolderExists(_finalPath);
@@ -83,9 +89,10 @@ internal class FileTemplate
 
   private void LoadSolutionPathVariables()
   {
-    if (Contents.Contains(ReplacementSettingType.Solution)
-      || FileName!.Contains(ReplacementSettingType.Solution)
-      || (CalulatedDestination?.Contains(ReplacementSettingType.Solution) ?? false))
+    if (ListExtensions.ContainsAny(new List<string?> { Contents, FileName, CalulatedDestination },
+      ReplacementSettingType.Solution
+      , ReplacementSettingType.SolutionPath
+      , ReplacementSettingType.Solution.ValueLowercase()))
     {
       var solutionPathString = CalculateSolutionPathName.GetSolutionPath(Destination);
       var directoryPath = Path.GetDirectoryName(solutionPathString);
@@ -97,6 +104,7 @@ internal class FileTemplate
       var solutionString = Path.GetFileNameWithoutExtension(solutionPathString);
 
       Contents = Contents.Replace(ReplacementSettingType.Solution, solutionString);
+      Contents = Contents.Replace(ReplacementSettingType.Solution.KeyLowercase(), solutionString.ValueLowercase());
       FileName = FileName?.Replace(ReplacementSettingType.Solution, solutionString);
       CalulatedDestination = CalulatedDestination?.Replace(ReplacementSettingType.Solution, solutionString);
     }
