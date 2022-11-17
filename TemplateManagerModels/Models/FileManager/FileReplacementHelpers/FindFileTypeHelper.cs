@@ -1,6 +1,6 @@
 ﻿namespace TemplateManagerModels.Models.FileManager.FileReplacementHelpers;
 
-internal static class FindFileTypeHelper
+public static class FindFileTypeHelper
 {
   /// <summary>
   /// A method used to replace the namespace variable in contents with the calculated namespace.

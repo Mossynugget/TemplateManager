@@ -2,23 +2,39 @@
 using System.Reflection;
 using TemplateManager.Cli.TemplateNavigation.DTOs;
 using TemplateManagerModels.Helpers;
+using TemplateManagerModels.Models.FileManager.FileReplacementHelpers;
 
 namespace TemplateManager.Cli.TemplateNavigation;
 
 internal class TemplateNavigator
 {
   private string _baseDirectory = PathExtensions.GetRoot();
+  private string _rootFolderName = "CodeTemplates";
   private string _templateCollectionsFileName = "TemplateCollections.tmplt";
   private string _templateCollectionsPath;
   private DirectoryNavigator? directoryNavigator;
   private const string exit = "Exit";
   private const string goBack = "Go Back";
   private const string showAllOptions = "Show All Options";
+  private const string navigateToRoot = "Navigate To Root";
 
   public TemplateNavigator(string? baseDirectory = null)
   {
-    _baseDirectory = baseDirectory ?? _baseDirectory;
+    calculateBaseDirectory(baseDirectory);
     _templateCollectionsPath = Path.Combine(_baseDirectory, _templateCollectionsFileName);
+  }
+
+  private void calculateBaseDirectory(string? baseDirectory = null)
+  {
+    if (string.IsNullOrEmpty(baseDirectory) == false)
+    {
+      _baseDirectory = baseDirectory;
+    }
+    try
+    {
+      _baseDirectory = FindFileTypeHelper.GetFilePath(Environment.CurrentDirectory, _rootFolderName);
+    }
+    catch { }
   }
 
   public async Task<string> SelectTemplate()
@@ -29,7 +45,7 @@ internal class TemplateNavigator
 
     Console.WriteLine($"Please navigate to the template you wish to implement.");
 
-    this.templateNavigation();
+    await this.templateNavigation();
     return this.directoryNavigator.path;
   }
 
@@ -77,7 +93,7 @@ internal class TemplateNavigator
     resourceFile = null;
   }
 
-  private void templateNavigation()
+  private async Task templateNavigation()
   {
     while (this.directoryNavigator!.isTemplateInd == false)
     {
@@ -96,6 +112,11 @@ internal class TemplateNavigator
       else if (template == goBack)
       {
         this.directoryNavigator = this.directoryNavigator.ParentNavigation;
+      }
+      else if (template == navigateToRoot)
+      {
+        _templateCollectionsPath = Path.Combine(_baseDirectory, _templateCollectionsFileName);
+        await SelectTemplate();
       }
       else
       {
@@ -126,6 +147,8 @@ internal class TemplateNavigator
     {
       options.Add(showAllOptions);
     }
+
+    options.Add(navigateToRoot);
 
     return options.ToArray();
   }
