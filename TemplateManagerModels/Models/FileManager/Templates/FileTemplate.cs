@@ -40,6 +40,7 @@ internal class FileTemplate
 
   internal void ApplyReplacementVariableDictionary(ReplacementDictionary replacementDictionary)
   {
+    FileName ??= string.Empty;
     Contents = replacementDictionary.ApplyAllReplaceLists(Contents);
     FileName = replacementDictionary.ApplyAllReplaceLists(FileName);
 
@@ -53,7 +54,10 @@ internal class FileTemplate
 
   private void loadAdditionalReplacements(ReplacementDictionary replacementDictionary)
   {
-    Contents = Contents.Replace(Path.GetFileNameWithoutExtension(TemplateFilePath), FileName);
+    if (string.IsNullOrEmpty(Path.GetFileNameWithoutExtension(TemplateFilePath)) == false)
+    {
+      Contents = Contents.Replace(Path.GetFileNameWithoutExtension(TemplateFilePath), FileName);
+    }
     LoadSolutionPathVariables();
     calculateDestination(replacementDictionary);
     validateFolderExists(_finalPath);
@@ -85,9 +89,10 @@ internal class FileTemplate
 
   private void LoadSolutionPathVariables()
   {
-    if (Contents.ContainsAny(ReplacementSettingType.Solution, ReplacementSettingType.Solution.ValueLowercase())
-      || FileName!.ContainsAny(ReplacementSettingType.Solution)
-      || (CalulatedDestination?.ContainsAny(ReplacementSettingType.Solution) ?? false))
+    if (ListExtensions.ContainsAny(new List<string?> { Contents, FileName, CalulatedDestination },
+      ReplacementSettingType.Solution
+      , ReplacementSettingType.SolutionPath
+      , ReplacementSettingType.Solution.ValueLowercase()))
     {
       var solutionPathString = CalculateSolutionPathName.GetSolutionPath(Destination);
       var directoryPath = Path.GetDirectoryName(solutionPathString);

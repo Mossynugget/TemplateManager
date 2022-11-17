@@ -135,14 +135,6 @@ internal class TemplateNavigator
   {
     List<string> options = new();
     Console.WriteLine($"\n{this.directoryNavigator!.path}");
-    if (this.directoryNavigator!.ParentNavigation == null)
-    {
-      options.Add(exit);
-    }
-    else
-    {
-      options.Add(goBack);
-    }
 
     for (int i = 1; i < this.directoryNavigator.navigationList.Count + 1; i++)
     {
@@ -152,6 +144,15 @@ internal class TemplateNavigator
     if (CanGetAllTemplates())
     {
       options.Add(showAllOptions);
+    }
+
+    if (this.directoryNavigator!.ParentNavigation == null)
+    {
+      options.Add(exit);
+    }
+    else
+    {
+      options.Add(goBack);
     }
 
     options.Add(navigateToRoot);

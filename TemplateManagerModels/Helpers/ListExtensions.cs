@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,12 +14,15 @@ public static class ListExtensions
   {
     return !source.Any(predicate);
   }
-  public static bool ContainsAny(this string haystack, params string[] needles)
+  public static bool ContainsAny(List<string?> haystacks, params string[] needles)
   {
-    foreach (string needle in needles)
+    foreach (string haystack in haystacks.Where(x => string.IsNullOrEmpty(x) == false))
     {
-      if (haystack.Contains(needle))
-        return true;
+      foreach (string needle in needles)
+      {
+        if (haystack.Contains(needle))
+          return true;
+      }
     }
 
     return false;
