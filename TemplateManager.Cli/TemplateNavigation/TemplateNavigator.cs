@@ -73,16 +73,16 @@ internal class TemplateNavigator
 
   private async Task GenerateExampleFiles()
   {
-    Directory.CreateDirectory($"{_baseDirectory}\\Examples\\");
+    Directory.CreateDirectory($"{_baseDirectory}\\Examples\\".GetPath());
 
     var assembly = Assembly.GetExecutingAssembly();
     var test = Assembly.GetExecutingAssembly().GetManifestResourceNames();
 
     this.WriteFileToDestination("TemplateManager.Cli.TemplateNavigation.TemplateExample.TemplateCollections.tmplt"
-        , $"{_baseDirectory}TemplateCollections.tmplt");
+        , $"{_baseDirectory}TemplateCollections.tmplt".GetPath());
 
     this.WriteFileToDestination("TemplateManager.Cli.TemplateNavigation.TemplateExample.TemplateOne.cs"
-        , $"{_baseDirectory}\\Examples\\ExampleFile.cs");
+        , $"{_baseDirectory}\\Examples\\ExampleFile.cs".GetPath());
   }
 
   private void WriteFileToDestination(string resourceName, string destination)

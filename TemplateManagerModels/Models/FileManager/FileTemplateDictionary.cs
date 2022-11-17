@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using TemplateManagerModels.Helpers;
 using TemplateManagerModels.Models.Dtos;
 using TemplateManagerModels.Models.Dtos.ImportGroup;
 using TemplateManagerModels.Models.FileManager.Templates;
@@ -67,9 +68,9 @@ internal class FileTemplateDictionary
   {
     foreach (var fileGroupDto in fileGroupDtos)
     {
-      string fullFilePath = Path.Combine(templateGroupDirectory, fileGroupDto.TemplateName);
+      string fullFilePath = Path.Combine(templateGroupDirectory.GetPath(), fileGroupDto.TemplateName.GetPath());
       var fileTemplate = new FileTemplate(fullFilePath);
-      fileTemplate.CalulatedDestination = fileGroupDto.Destination;
+      fileTemplate.CalulatedDestination = fileGroupDto.Destination.GetPath();
       fileTemplate.FileName = fileGroupDto.FileName;
       this.FileTemplateList.Add(fileTemplate);
       this.ReplacementDictionary.CreateReplacementLists(fileTemplate.Contents);

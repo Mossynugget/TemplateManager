@@ -28,7 +28,7 @@ internal static class CalculateNamespace
   {
     string projectAsNamespace = Path.GetFileNameWithoutExtension(projectFilePath);
     string projectPath = Path.GetDirectoryName(projectFilePath);
-    string pathAsNamespace = destination.Replace(projectPath, "").Replace("\\", ".").TrimEnd('.');
+    string pathAsNamespace = destination.Replace(projectPath, "").Replace("\\", ".").Replace("/",".").TrimEnd('.');
     return $"{projectAsNamespace}{pathAsNamespace}";
   }
 }

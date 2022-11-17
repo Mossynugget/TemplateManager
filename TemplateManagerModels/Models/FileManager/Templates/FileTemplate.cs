@@ -34,7 +34,7 @@ internal class FileTemplate
 
   internal void SetFileSettings(FileSettingsDto fileSettings)
   {
-    Destination = fileSettings.Destination;
+    Destination = fileSettings.Destination.GetPath();
     FileName = fileSettings.FileName ?? FileName;
   }
 
@@ -49,7 +49,7 @@ internal class FileTemplate
 
   internal async Task GenerateFileAsync()
   {
-    await File.WriteAllTextAsync(_finalPath, Contents).ConfigureAwait(false);
+    await File.WriteAllTextAsync(_finalPath.GetPath(), Contents).ConfigureAwait(false);
   }
 
   private void loadAdditionalReplacements(ReplacementDictionary replacementDictionary)
@@ -84,7 +84,8 @@ internal class FileTemplate
     CalulatedDestination = string.IsNullOrEmpty(CalulatedDestination) == false
       ? replacementDictionary.ReplaceValueContents(CalulatedDestination)
       : Destination;
-    CalulatedDestination = CalulatedDestination.Replace("\\\\", "\\");
+
+    CalulatedDestination = CalulatedDestination.GetPath();
   }
 
   private void LoadSolutionPathVariables()
