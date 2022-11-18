@@ -16,41 +16,41 @@ There is an option in the CLI that allows you to navigate to root in case you wa
 
 Templates are just a regular file in a CodeTemplates folder that you want to create a copy of. The power comes in the templatising of variable names.
 The ExampleFile contains most of the options available on a template level, there is also a section lower down explaining all of the options available.
-Note that all variables are denoting with a two dollar symbols ('&#0036;').
-An example is &#0036;EntityName&#0036;.
+Note that all variables are denoting with a two dollar symbols ('$').
+An example is $EntityName$.
 The following 2 sections will demonstrate how to create a file followed by how to create a file.
 
 ## Creating a file.
 
-An example of this being used is as follows, below is the collectio no variables. Note that anything wrapped in &#0036;&#0036; will be read as a variable.
+An example of this being used is as follows, below is the collectio no variables. Note that anything wrapped in $$ will be read as a variable.
 
 ```
 /*Usings removed for space*/
-namespace &#0036;setting:namespace&#0036;;
+namespace $setting:namespace$;
 
-public class &#0036;Action&#0036;&#0036;Domain&#0036; : EndpointBaseSync.WithRequest<&#0036;Action&#0036;&#0036;Domain&#0036;Request>.WithActionResult<&#0036;ReturnType&#0036;>
+public class $Action$$Domain$ : EndpointBaseSync.WithRequest<$Action$$Domain$Request>.WithActionResult<$ReturnType$>
 {
   private readonly ILogger _logger;
 
-  public &#0036;Action&#0036;&#0036;Domain&#0036;(ILogger<&#0036;Action&#0036;&#0036;Domain&#0036;> logger)
+  public $Action$$Domain$(ILogger<$Action$$Domain$> logger)
   {
     _logger = logger;
   }
 
   [AllowAnonymous]
-  [Http&#0036;select:RequestType:Get|Post|Delete|Patch|Put&#0036;("&#0036;Action&#0036;")]
+  [Http$select:RequestType:Get|Post|Delete|Patch|Put$("$Action$")]
   [SwaggerOperation(
-    Summary = "&#0036;Action&#0036; &#0036;Domain:comment&#0036;",
-    Description = "&#0036;Action&#0036; &#0036;Domain:comment&#0036;",
-    OperationId = "&#0036;Domain&#0036;.&#0036;Action&#0036;",
-    Tags = new[] { "&#0036;Domain&#0036;Endpoint" })]
-  public override ActionResult<&#0036;ReturnType&#0036;> Handle([FromQuery] &#0036;Action&#0036;&#0036;Domain&#0036;Request request)
+    Summary = "$Action$ $Domain:comment$",
+    Description = "$Action$ $Domain:comment$",
+    OperationId = "$Domain$.$Action$",
+    Tags = new[] { "$Domain$Endpoint" })]
+  public override ActionResult<$ReturnType$> Handle([FromQuery] $Action$$Domain$Request request)
   {
     return Ok();
   }
 }
 
-public class &#0036;Action&#0036;&#0036;Domain&#0036;Request
+public class $Action$$Domain$Request
 {
 }
 ```
@@ -59,18 +59,18 @@ public class &#0036;Action&#0036;&#0036;Domain&#0036;Request
 
 | Key | Description | Usage |
 |-------|-----|------|
-| &#0036;{Key}&#0036; |  left-aligned | &#0036;EntityName&#0036; |
-| &#0036;{Key}:comment&#0036; | The {Key} value split with spaces | &#0036;EntityName:comment&#0036; |
-| &#0036;{Key}:underscoreUppercase&#0036; | The {Key} value split with underscores and uppercased | &#0036;EntityName:comment&#0036; |
-| &#0036;{Key}:underscore&#0036; | The {Key} value split with underscores with unchanges case | &#0036;EntityName:comment&#0036; |
-| &#0036;{Key}:lowercase&#0036; | The {Key} value lowercased | &#0036;EntityName:comment&#0036; |
-| &#0036;setting:namespace&#0036; | Uses the path from src and replaces '\\' with '.' (This hasn't been tested outside of windows) | &#0036;setting:solution&#0036; |
-| &#0036;setting:projectName&#0036; | returns the name of the project name as is | &#0036;setting:projectName&#0036; |
-| &#0036;setting:solution&#0036; | Returns the name of the solution by navigating to the parent until a .sln is identified | &#0036;setting:solution&#0036; |
-| &#0036;setting:solutionPath&#0036; | Returns the navigation path to the solution from the user's root | &#0036;setting:solutionPath&#0036; |
-| &#0036;setting:src&#0036; | Returns the path by navigating to the parent until a src folder is identified. The output is inclusive of the src folder | &#0036;setting:src |
-| &#0036;if:{Key}&#0036;/&#0036;endif:{Key}&#0036; | Used to show or not show certain sections of code. Note that it takes spaces and linebreaks into account | &#0036;if:includeGet&#0036; getMethod &#0036;endif:includeGet&#0036; |
-| &#0036;select:{Key}:{Option1}&#124;{Option2}&#124;{Option3}&#0036; | Used to offer a select for variables to be used. | &#0036;select:RequestType:Get&#124;Post&#124;Put&#0036; |
+| \\$\\{Key}$ |  left-aligned | $EntityName$ |
+| ${Key}:comment$ | The {Key} value split with spaces | $EntityName:comment$ |
+| ${Key}:underscoreUppercase$ | The {Key} value split with underscores and uppercased | $EntityName:comment$ |
+| ${Key}:underscore$ | The {Key} value split with underscores with unchanges case | $EntityName:comment$ |
+| ${Key}:lowercase$ | The {Key} value lowercased | $EntityName:comment$ |
+| $setting:namespace$ | Uses the path from src and replaces '\\' with '.' (This hasn't been tested outside of windows) | $setting:solution$ |
+| $setting:projectName$ | returns the name of the project name as is | $setting:projectName$ |
+| $setting:solution$ | Returns the name of the solution by navigating to the parent until a .sln is identified | $setting:solution$ |
+| $setting:solutionPath$ | Returns the navigation path to the solution from the user's root | $setting:solutionPath$ |
+| $setting:src$ | Returns the path by navigating to the parent until a src folder is identified. The output is inclusive of the src folder | $setting:src |
+| $if:{Key}$/$endif:{Key}$ | Used to show or not show certain sections of code. Note that it takes spaces and linebreaks into account | $if:includeGet$ getMethod $endif:includeGet$ |
+| $select:{Key}:{Option1}&#124;{Option2}&#124;{Option3}$ | Used to offer a select for variables to be used. | $select:RequestType:Get&#124;Post&#124;Put$ |
 
 ## Create a template group
 
@@ -94,15 +94,15 @@ You can build a template group with the following code in the ArdalisEndpoint.tm
   ],
   "Files": [
     {
-      "FileName": "&#0036;Action&#0036;&#0036;Domain&#0036;.cs",
+      "FileName": "$Action$$Domain$.cs",
       "TemplateName": "Endpoints\\EndpointWithRequest.cs",
-      "Destination": "&#0036;setting:solutionPath&#0036;\\&#0036;setting:solution&#0036;.Api\\Endpoints\\&#0036;Domain&#0036;\\",
+      "Destination": "$setting:solutionPath$\\$setting:solution$.Api\\Endpoints\\$Domain$\\",
       "Type": "File"
     },
     {
-      "FileName": "&#0036;Action&#0036;&#0036;Domain&#0036;Test.cs",
+      "FileName": "$Action$$Domain$Test.cs",
       "TemplateName": "Endpoints\\EndpointWithRequestTest.cs",
-      "Destination": "&#0036;setting:solutionPath&#0036;\\&#0036;setting:solution&#0036;.Api.Tests\\Endpoints\\&#0036;Domain&#0036;\\",
+      "Destination": "$setting:solutionPath$\\$setting:solution$.Api.Tests\\Endpoints\\$Domain$\\",
       "Type": "File"
     },
   ]
