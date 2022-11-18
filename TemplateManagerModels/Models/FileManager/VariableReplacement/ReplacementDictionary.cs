@@ -38,6 +38,7 @@ internal class ReplacementDictionary
     contents = ReplaceIfContents(contents);
     contents = ReplaceValueContents(contents);
     contents = ReplaceSelectContents(contents);
+    contents = contents.Replace("_$_", string.Empty);
 
     return contents;
   }

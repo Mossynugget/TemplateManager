@@ -70,7 +70,10 @@ public class $Action$$Domain$Request
 | ```$setting:solutionPath$``` | Returns the navigation path to the solution from the user's root | ```$setting:solutionPath$``` |
 | ```$setting:src$``` | Returns the path by navigating to the parent until a src folder is identified. The output is inclusive of the src folder | ```$setting:src$``` |
 | ```$if:{Key}$/$endif:{Key}$``` | Used to show or not show certain sections of code. Note that it takes spaces and linebreaks into account | ```$if:includeGet$ getMethod $endif:includeGet$``` |
+| ```$else:{Key}$/$endelse:{Key}$``` | Used in the negative of the if. Else can not exist without the associated if. | ```$else:includeGet$ getMethod $endelse:includeGet$``` |
 | ```$select:{Key}:{Option1}|{Option2}|{Option3}$``` | Used to offer a select for variables to be used. | ```$select:RequestType:Get|Post|Put$``` |
+
+In situtations where you need a variable followed by text followed by another variabels (i.e. $if:IncludeX$X$endif:IncludeX$), you can use _$_ to break the search chain (i.e. $if:IncludeX$_$_X$endif:IncludeX$). The _$_ will be deleted afterwards.
 
 ## Create a template group
 

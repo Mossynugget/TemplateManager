@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using TemplateManagerModels.Models.Enums;
 
 namespace TemplateManagerModels.Models.FileManager.VariableReplacement;
@@ -7,10 +6,12 @@ namespace TemplateManagerModels.Models.FileManager.VariableReplacement;
 internal class ReplacementIf : ReplacementVariableAbstract, IReplacementVariable
 {
   internal bool Value { get; private set; } = false;
-  internal string IfString => $"$if:{Key}$";
-  internal string ElseString => $"$endif:{Key}$";
+  private string ifSearch = "if";
+  private string endIfSearch = "endif";
+  internal string IfString => $"${ifSearch}:{Key}$";
+  internal string EndIfString => $"${endIfSearch}:{Key}$";
   internal int IfLength => IfString.Length;
-  internal int EndifLength => ElseString.Length;
+  internal int EndifLength => EndIfString.Length;
 
   public ReplacementIf(string key) :
     base(key, ReplacementVariableType.If, TypeCode.Boolean, true)
@@ -26,7 +27,7 @@ internal class ReplacementIf : ReplacementVariableAbstract, IReplacementVariable
   {
     var replacementValues = new List<ReplacementIf>();
 
-    string regexExpressionStart = @"\$(if):([a-zA-Z-0-9]*)\$";
+    string regexExpressionStart = $@"\$(if):([a-zA-Z-0-9]*)\$";
     MatchCollection matchedIfStarts = Regex.Matches(contents, regexExpressionStart);
 
     for (int count = 0; count < matchedIfStarts.Count; count++)
@@ -45,10 +46,36 @@ internal class ReplacementIf : ReplacementVariableAbstract, IReplacementVariable
 
   public override string ApplyReplacementVariable(string contents)
   {
-    Dictionary<int, int> indexDictionary = GetIfVariableIndexDictionaryForContents(contents);
-    contents = ApplyIfStatements(contents, indexDictionary);
+    contents = ApplyIfTruthy(contents);
+    contents = ApplyIfFalsey(contents);
 
     return contents;
+  }
+
+  private string ApplyIfTruthy(string contents)
+  {
+    Dictionary<int, int> indexDictionary = GetIfVariableIndexDictionaryForContents(contents);
+    contents = ApplyIfStatements(contents, indexDictionary);
+    return contents;
+  }
+
+  private string ApplyIfFalsey(string contents)
+  {
+    this.Value = !this.Value;
+
+    AlterIf("else");
+    contents = ApplyIfTruthy(contents);
+    AlterIf();
+
+    this.Value = !this.Value;
+    
+    return contents;
+  }
+
+  private void AlterIf(string ifText = "if")
+  {
+    ifSearch = $"{ifText}";
+    endIfSearch = $"end{ifText}";
   }
 
   /// <summary>
@@ -58,8 +85,8 @@ internal class ReplacementIf : ReplacementVariableAbstract, IReplacementVariable
   {
     Dictionary<int, int> indexDictionary = new();
 
-    string regexExpressionStart = $@"\$(if):({this.Key})\$";
-    string regexExpressionEnd = $@"\$(endif):({this.Key})\$";
+    string regexExpressionStart = $@"\$({ifSearch}):({this.Key})\$";
+    string regexExpressionEnd = $@"\$({endIfSearch}):({this.Key})\$";
 
     MatchCollection matchedIfStarts = Regex.Matches(contents, regexExpressionStart);
     MatchCollection matchedIfEnds = Regex.Matches(contents, regexExpressionEnd);

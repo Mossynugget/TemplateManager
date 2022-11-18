@@ -7,7 +7,7 @@ using TemplateManagerModels.Helpers;
 using TemplateManagerModels.Models;
 using TemplateManagerModels.Models.Dtos;
 
-class TestClass
+class Startup
 {
   static async Task Main(string[] args)
   {
