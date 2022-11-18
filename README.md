@@ -60,10 +60,10 @@ public class $Action$$Domain$Request
 | Key | Description | Usage |
 |-------|-----|------|
 | ```${Key}$``` |  left-aligned | ```$EntityName$``` |
-| ```${Key}:comment$``` | The {Key} value split with spaces | ```$EntityName:comment$ |
-| ```${Key}:underscoreUppercase$``` | The {Key} value split with underscores and uppercased | ```$EntityName:comment$``` |
-| ```${Key}:underscore$``` | The {Key} value split with underscores with unchanges case | ```$EntityName:comment$``` |
-| ```${Key}:lowercase$``` | The {Key} value lowercased | ```$EntityName:comment$ |
+| ```${Key}:comment$``` | The {Key} value split with spaces | ```$EntityName:comment$``` |
+| ```${Key}:underscoreUppercase$``` | The {Key} value split with underscores and uppercased | ```$EntityName:underscoreUppercase$``` |
+| ```${Key}:underscore$``` | The {Key} value split with underscores with unchanges case | ```$EntityName:underscore$``` |
+| ```${Key}:lowercase$``` | The {Key} value lowercased | ```$EntityName:lowercase$``` |
 | ```$setting:namespace$``` | Uses the path from src and replaces '\\' with '.' (This hasn't been tested outside of windows) | ```$setting:solution$``` |
 | ```$setting:projectName$``` | returns the name of the project name as is | ```$setting:projectName$``` |
 | ```$setting:solution$``` | Returns the name of the solution by navigating to the parent until a .sln is identified | ```$setting:solution$``` |
@@ -114,9 +114,14 @@ You can build a template group with the following code in the ArdalisEndpoint.tm
 ## Development
 
 In order to install this package, navigate to the TemplateManager.Cli project folder and run the folliwng in a CLI:
+So from base you will run (for Windows):
+
+```
+cd .\TemplateManager.Cli\
 dotnet pack
 dotnet tool uninstall TemplateManager.Cli -g
 dotnet tool install -g -v n --add-source ./nupkg TemplateManager.Cli
+```
 
 ## Repository
 
