@@ -70,7 +70,7 @@ public class $Action$$Domain$Request
 | ```$setting:solutionPath$``` | Returns the navigation path to the solution from the user's root | ```$setting:solutionPath$``` |
 | ```$setting:src$``` | Returns the path by navigating to the parent until a src folder is identified. The output is inclusive of the src folder | ```$setting:src$``` |
 | ```$if:{Key}$/$endif:{Key}$``` | Used to show or not show certain sections of code. Note that it takes spaces and linebreaks into account | ```$if:includeGet$ getMethod $endif:includeGet$``` |
-| ```$select:{Key}:{Option1}&#124;{Option2}&#124;{Option3}$``` | Used to offer a select for variables to be used. | ```$select:RequestType:Get&#124;Post&#124;Put$``` |
+| ```$select:{Key}:{Option1}|{Option2}|{Option3}$``` | Used to offer a select for variables to be used. | ```$select:RequestType:Get|Post|Put$``` |
 
 ## Create a template group
 
