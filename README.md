@@ -16,13 +16,13 @@ There is an option in the CLI that allows you to navigate to root in case you wa
 
 Templates are just a regular file in a CodeTemplates folder that you want to create a copy of. The power comes in the templatising of variable names.
 The ExampleFile contains most of the options available on a template level, there is also a section lower down explaining all of the options available.
-Note that all variables are denoting with a two dollar symbols ('&#36;').
-An example is &#36;EntityName&#36;.
+Note that all variables are denoting with a two dollar symbols ('$').
+An example is ```$EntityName$```.
 The following 2 sections will demonstrate how to create a file followed by how to create a file.
 
 ## Creating a file.
 
-An example of this being used is as follows, below is the collectio no variables. Note that anything wrapped in &#36;&#36; will be read as a variable.
+An example of this being used is as follows, below is the collectio no variables. Note that anything wrapped in ```${variable}$``` will be read as a variable.
 
 ```
 /*Usings removed for space*/
@@ -59,18 +59,18 @@ public class $Action$$Domain$Request
 
 | Key | Description | Usage |
 |-------|-----|------|
-| &#36;{Key}&#36; |  left-aligned | &#36;EntityName&#36; |
-| &#36;{Key}:comment&#36; | The {Key} value split with spaces | &#36;EntityName:comment&#36; |
-| &#36;{Key}:underscoreUppercase&#36; | The {Key} value split with underscores and uppercased | &#36;EntityName:comment&#36; |
-| &#36;{Key}:underscore&#36; | The {Key} value split with underscores with unchanges case | &#36;EntityName:comment&#36; |
-| &#36;{Key}:lowercase&#36; | The {Key} value lowercased | &#36;EntityName:comment&#36; |
-| &#36;setting:namespace&#36; | Uses the path from src and replaces '\\' with '.' (This hasn't been tested outside of windows) | &#36;setting:solution&#36; |
-| &#36;setting:projectName&#36; | returns the name of the project name as is | &#36;setting:projectName&#36; |
-| &#36;setting:solution&#36; | Returns the name of the solution by navigating to the parent until a .sln is identified | &#36;setting:solution&#36; |
-| &#36;setting:solutionPath&#36; | Returns the navigation path to the solution from the user's root | &#36;setting:solutionPath&#36; |
-| &#36;setting:src&#36; | Returns the path by navigating to the parent until a src folder is identified. The output is inclusive of the src folder | &#36;setting:src&#36; |
-| &#36;if:{Key}&#36;/&#36;endif:{Key}&#36; | Used to show or not show certain sections of code. Note that it takes spaces and linebreaks into account | &#36;if:includeGet&#36; getMethod &#36;endif:includeGet&#36; |
-| &#36;select:{Key}:{Option1}&#124;{Option2}&#124;{Option3}&#36; | Used to offer a select for variables to be used. | &#36;select:RequestType:Get&#124;Post&#124;Put&#36; |
+| ```${Key}$``` |  left-aligned | ```$EntityName$``` |
+| ```${Key}:comment$``` | The {Key} value split with spaces | ```$EntityName:comment$ |
+| ```${Key}:underscoreUppercase$``` | The {Key} value split with underscores and uppercased | ```$EntityName:comment$``` |
+| ```${Key}:underscore$``` | The {Key} value split with underscores with unchanges case | ```$EntityName:comment$``` |
+| ```${Key}:lowercase$``` | The {Key} value lowercased | ```$EntityName:comment$ |
+| ```$setting:namespace$``` | Uses the path from src and replaces '\\' with '.' (This hasn't been tested outside of windows) | ```$setting:solution$``` |
+| ```$setting:projectName$``` | returns the name of the project name as is | ```$setting:projectName$``` |
+| ```$setting:solution$``` | Returns the name of the solution by navigating to the parent until a .sln is identified | ```$setting:solution$``` |
+| ```$setting:solutionPath$``` | Returns the navigation path to the solution from the user's root | ```$setting:solutionPath$``` |
+| ```$setting:src$``` | Returns the path by navigating to the parent until a src folder is identified. The output is inclusive of the src folder | ```$setting:src$``` |
+| ```$if:{Key}$/$endif:{Key}$``` | Used to show or not show certain sections of code. Note that it takes spaces and linebreaks into account | ```$if:includeGet$ getMethod $endif:includeGet$``` |
+| ```$select:{Key}:{Option1}&#124;{Option2}&#124;{Option3}$``` | Used to offer a select for variables to be used. | ```$select:RequestType:Get&#124;Post&#124;Put$``` |
 
 ## Create a template group
 
@@ -98,13 +98,13 @@ You can build a template group with the following code in the ArdalisEndpoint.tm
     {
       "FileName": "$Action$$Domain$.cs",
       "TemplateName": "Endpoints\\EndpointWithRequest.cs",
-      "Destination": "$setting:solutionPath$\&#36;setting:solution$.Api\\Endpoints\&#36;Domain$\\",
+      "Destination": "$setting:solutionPath$\$setting:solution$.Api\\Endpoints\$Domain$\\",
       "Type": "File"
     },
     {
       "FileName": "$Action$$Domain$Test.cs",
       "TemplateName": "Endpoints\\EndpointWithRequestTest.cs",
-      "Destination": "$setting:solutionPath$\&#36;setting:solution$.Api.Tests\\Endpoints\&#36;Domain$\\",
+      "Destination": "$setting:solutionPath$\$setting:solution$.Api.Tests\\Endpoints\$Domain$\\",
       "Type": "File"
     },
   ]
