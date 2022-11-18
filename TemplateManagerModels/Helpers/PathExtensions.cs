@@ -4,19 +4,25 @@ namespace TemplateManagerModels.Helpers;
 
 public static class PathExtensions
 {
+  private static bool isLinux => RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
+  private static bool isOSX => RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
+  private static bool isWindows => RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+
   public static string GetRoot()
   {
     return Path.Combine(Path.GetPathRoot(Environment.SystemDirectory), "CodeTemplates");
   }
 
-  private static bool isLinux()
+  public static string GetPath(this string path)
   {
-    return RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
-  }
-
-  private static bool isWindows()
-  {
-    return RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+    if (isLinux || isOSX)
+    {
+      return path.Replace("\\\\", "\\").Replace("\\", "/");
+    }
+    else
+    {
+      return path.Replace("\\\\", "\\").Replace("/", "\\");
+    }
   }
 
   public static string FindDirectory(this string route, string folderName)

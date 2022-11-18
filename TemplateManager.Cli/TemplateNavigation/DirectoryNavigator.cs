@@ -1,4 +1,5 @@
 ﻿using TemplateManager.Cli.TemplateNavigation.DTOs;
+using static TemplateManagerModels.Helpers.PathExtensions;
 
 namespace TemplateManager.Cli.TemplateNavigation;
 
@@ -18,7 +19,7 @@ internal class DirectoryNavigator
     this.nameOverride = "Route";
     foreach (var templateCollection in templateCollections)
     {
-      this.navigationList.Add(new(templateCollection.Path, this, nameOverride: templateCollection.Name));
+      this.navigationList.Add(new(templateCollection.Path.GetPath(), this, nameOverride: templateCollection.Name));
     }
   }
 
