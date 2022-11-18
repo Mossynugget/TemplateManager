@@ -1,24 +1,24 @@
 ﻿# Template Manager CLI
 
-This tool was built to speed up the development of projects using a standard structure such as the Mediator pattern with a consistent handler/request/unit test.
-The supported operating systems for this CLI is so far unknown, but it does work on windows machines.
+This tool was built to speed up the development of projects using a standard structure such as the Mediator pattern with a consistent handler/request/unit test.  
+The supported operating systems for this CLI is so far unknown, but it does work on windows machines.  
 
 ## Running the CLI
 
-Once this Nuget package is installed, you can run the command ```tmplt``` in most command prompts to trigger the template process.
-When you run the application for the first time, it will ask you if you want the CLI to create the CodeTemplates folder for you. This will be placed at {rootdrive}/CodeTemplates by default.
-In addition, it will place a json file inside of it with a link to the Example folder also in the CodeTemplates folder.
-This is to enable building up a template repository from many sources.
-In order to replace this functionality, you can create a "CodeTemplates" folder in any folder location, and when running ```tmplt``` in a folder navigating down from the folder containing CodeTemplates, it will search for templates from the first occurence of a CodeTemplate folder.
-There is an option in the CLI that allows you to navigate to root in case you want a template not specific to a solution.
+Once this Nuget package is installed, you can run the command ```tmplt``` in most command prompts to trigger the template process.  
+When you run the application for the first time, it will ask you if you want the CLI to create the CodeTemplates folder for you. This will be placed at {rootdrive}/CodeTemplates by default.  
+In addition, it will place a json file inside of it with a link to the Example folder also in the CodeTemplates folder.  
+This is to enable building up a template repository from many sources.  
+In order to replace this functionality, you can create a "CodeTemplates" folder in any folder location, and when running ```tmplt``` in a folder navigating down from the folder containing CodeTemplates, it will search for templates from the first occurence of a CodeTemplate folder.  
+There is an option in the CLI that allows you to navigate to root in case you want a template not specific to a solution.  
 
 ## Creating a template
 
-Templates are just a regular file in a CodeTemplates folder that you want to create a copy of. The power comes in the templatising of variable names.
-The ExampleFile contains most of the options available on a template level, there is also a section lower down explaining all of the options available.
-Note that all variables are denoting with a two dollar symbols ('$').
-An example is ```$EntityName$```.
-The following 2 sections will demonstrate how to create a file followed by how to create a file.
+Templates are just a regular file in a CodeTemplates folder that you want to create a copy of. The power comes in the templatising of variable names.  
+The ExampleFile contains most of the options available on a template level, there is also a section lower down explaining all of the options available.  
+Note that all variables are denoting with a two dollar symbols ('$').  
+An example is ```$EntityName$```.  
+The following 2 sections will demonstrate how to create a file followed by how to create a file.  
 
 ## Creating a file.
 
@@ -74,9 +74,9 @@ public class $Action$$Domain$Request
 
 ## Create a template group
 
-The template groups are used to identify groupings of files that must be used together to create a greater fileset.
-This is useful when you need to produce a file and an interface at the same time, or want to create your unit test at the same time as your handler.
-The following example shows an API endpoint and an associated test:
+The template groups are used to identify groupings of files that must be used together to create a greater fileset.  
+This is useful when you need to produce a file and an interface at the same time, or want to create your unit test at the same time as your handler.  
+The following example shows an API endpoint and an associated test:  
 
 Given the folder structure:
 
@@ -113,7 +113,7 @@ You can build a template group with the following code in the ArdalisEndpoint.tm
 
 ## Development
 
-In order to install this package, navigate to the TemplateManager.Cli project folder and run the folliwng in a CLI:
+In order to install this package, navigate to the TemplateManager.Cli project folder and run the folliwng in a CLI:  
 So from base you will run (for Windows):
 
 ```
@@ -125,9 +125,9 @@ dotnet tool install -g -v n --add-source ./nupkg TemplateManager.Cli
 
 ## Repository
 
-The repository for the code maintenance can be found at:
-[Template Manager on Github](https://github.com/Mossynugget/TemplateManager)
-**Please note** that it is currently un-unit tested, that is my next priority. It is a fairly major concern.
+The repository for the code maintenance can be found at:  
+[Template Manager on Github](https://github.com/Mossynugget/TemplateManager)  
+**Please note** that it is currently un-unit tested, that is my next priority. It is a fairly major concern.  
 
 ## Template collection
 
