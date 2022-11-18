@@ -80,11 +80,13 @@ The following example shows an API endpoint and an associated test:
 
 Given the folder structure:
 
+```
 ├── CodeTemplates
 │   ├── ArdalisEndpoint.tmplt
 │   ├── Endpoints
 │   │   ├── EndpointWithRequest.cs
 │   │   ├── EndpointWithRequestTest.cs
+```
 
 You can build a template group with the following code in the ArdalisEndpoint.tmplt:
 
