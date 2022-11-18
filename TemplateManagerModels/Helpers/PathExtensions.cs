@@ -21,7 +21,7 @@ public static class PathExtensions
     }
     else
     {
-      return path.Replace("\\\\", "\\");
+      return path.Replace("\\\\", "\\").Replace("/", "\\");
     }
   }
 
