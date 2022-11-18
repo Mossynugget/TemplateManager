@@ -47,6 +47,19 @@ public static class VariableExtensions
     return value?.ToLower() ?? string.Empty;
   }
 
+  public static string KeyCamelCase(this string key)
+  {
+    return key.KeyDerivative("camelCase");
+  }
+
+  public static string ValueCamelCase(this string? value)
+  {
+    if (string.IsNullOrEmpty(value)) 
+      return string.Empty;
+
+    return char.ToLower(value[0]) + value.Substring(1);
+  }
+
   public static string KeyDerivative(this string key, string identifier)
   {
     return $"{key.TrimEnd('$')}:{identifier}$";

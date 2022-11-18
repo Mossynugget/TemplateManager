@@ -64,6 +64,7 @@ public class $Action$$Domain$Request
 | ```${Key}:underscoreUppercase$``` | The {Key} value split with underscores and uppercased | ```$EntityName:underscoreUppercase$``` |
 | ```${Key}:underscore$``` | The {Key} value split with underscores with unchanges case | ```$EntityName:underscore$``` |
 | ```${Key}:lowercase$``` | The {Key} value lowercased | ```$EntityName:lowercase$``` |
+| ```${Key}:camelCase$``` | The {Key} value camel cased | ```$EntityName:camelCase``` |
 | ```$setting:namespace$``` | Uses the path from src and replaces '\\' with '.' (This hasn't been tested outside of windows) | ```$setting:solution$``` |
 | ```$setting:projectName$``` | returns the name of the project name as is | ```$setting:projectName$``` |
 | ```$setting:solution$``` | Returns the name of the solution by navigating to the parent until a .sln is identified | ```$setting:solution$``` |
