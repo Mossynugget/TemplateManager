@@ -9,7 +9,7 @@
     <ToolCommandName>tmplt</ToolCommandName>
     <PackageOutputPath>./nupkg</PackageOutputPath>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.6</Version>
+    <Version>1.0.7</Version>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
     <Title>Template Manager</Title>
     <PackageProjectUrl></PackageProjectUrl>
@@ -17,7 +17,7 @@
 Functions as a dotnet tool using Sharprompt.
 Allows for a configuration of replacement variables defined in the readme.</Description>
     <RepositoryUrl>https://github.com/Mossynugget/TemplateManager</RepositoryUrl>
-    <PackageTags>Template Manager;Templates;Tool;</PackageTags>
+    <PackageTags>TemplateManager;Templates;Tool;</PackageTags>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
   </PropertyGroup>
 
