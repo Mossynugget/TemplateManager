@@ -1,0 +1,13 @@
+﻿$VariablesOne$
+$VariablesOne$
+$VariablesOne:comment$
+$VariablesOne:underscore$
+$VariablesOne:uppercaseUnderscore$
+$VariablesOne:lowercase$
+$VariablesOne:camelCase$
+$if:includeTestStuff$ThisIsTest Stuff$endif:includeTestStuff$
+$else:includeTestStuff$_$_ThisShouldNotDisplay$endelse:includeTestStuff$
+$if:includeNegativeTestStuff$_$_ThisShouldNotDisplay$endif:includeNegativeTestStuff$
+$select:SelectOptions:Option1|Option2|Option3$
+$else:includeNegativeTestStuff$_$_ThisShouldDisplay$endelse:includeNegativeTestStuff$
+$VariablesTwo$

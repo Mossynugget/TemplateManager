@@ -1,4 +1,5 @@
-﻿using TemplateManagerModels.Helpers;
+﻿using System.Text;
+using TemplateManagerModels.Helpers;
 using TemplateManagerModels.Models.Dtos;
 using TemplateManagerModels.Models.Enums;
 using TemplateManagerModels.Models.FileManager.FileReplacementHelpers;
@@ -49,7 +50,7 @@ internal class FileTemplate
 
   internal async Task GenerateFileAsync()
   {
-    await File.WriteAllTextAsync(_finalPath.GetPath(), Contents).ConfigureAwait(false);
+    await File.WriteAllTextAsync(_finalPath.GetPath(), Contents, Encoding.UTF8).ConfigureAwait(false);
   }
 
   private void loadAdditionalReplacements(ReplacementDictionary replacementDictionary)
