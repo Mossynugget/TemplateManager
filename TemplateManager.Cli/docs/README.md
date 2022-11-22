@@ -134,6 +134,6 @@ The repository for the code maintenance can be found at:
 
 ## Template collection
 
-There is an early development of a (Template Library)[https://github.com/Mossynugget/TemplateManager/tree/main/TemplateLibrary]. To utilize them, please copy them out and edit them to your use within your own projects.  
+There is an early development of a [Template Library](https://github.com/Mossynugget/TemplateManager/tree/main/TemplateLibrary). To utilize them, please copy them out and edit them to your use within your own projects.  
 Please feel free to add new or edit edit existing templates to match a more global standard.  
 All contributions to the project will be greatly appreciated.
