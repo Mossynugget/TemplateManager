@@ -14,6 +14,7 @@ public static class ListExtensions
   {
     return !source.Any(predicate);
   }
+
   public static bool ContainsAny(List<string?> haystacks, params string[] needles)
   {
     foreach (string haystack in haystacks.Where(x => string.IsNullOrEmpty(x) == false))
