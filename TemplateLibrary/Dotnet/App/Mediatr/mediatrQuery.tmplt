@@ -1,0 +1,26 @@
+{
+  "ReplacementValues": [
+    {
+      "Key": "$RequestTypePlural$",
+      "Value": "Requests"
+    },
+    {
+      "Key": "$RequestType$",
+      "Value": "Request"
+    }
+  ],
+  "Files": [
+    {
+      "FileName": "$ContractName$.cs",
+      "TemplateName": Templates\\requestTemplate.cs",
+      "Destination": "$setting:solutionPath$\\$setting:solution$.App\\$Domain$\\Contracts\$RequestType$
+      "Type": "File"
+    },
+    {
+      "Destination": "$setting:solutionPath$\\$setting:solution$.App\\$Domain$\\Handlers\\$RequestType$Handlers",
+      "FileName": "$ContractName$Handler.cs",
+      "TemplateName": Templates\\handlerTemplate.cs",
+      "Type": "File"
+    },
+  ]
+}

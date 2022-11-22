@@ -61,7 +61,7 @@ public class $Action$$Domain$Request
 |-------|-----|------|
 | ```${Key}$``` |  left-aligned | ```$EntityName$``` |
 | ```${Key}:comment$``` | The {Key} value split with spaces | ```$EntityName:comment$``` |
-| ```${Key}:underscoreUppercase$``` | The {Key} value split with underscores and uppercased | ```$EntityName:underscoreUppercase$``` |
+| ```${Key}:uppercaseUnderscore$``` | The {Key} value split with underscores and uppercased | ```$EntityName:uppercaseUnderscore$``` |
 | ```${Key}:underscore$``` | The {Key} value split with underscores with unchanges case | ```$EntityName:underscore$``` |
 | ```${Key}:lowercase$``` | The {Key} value lowercased | ```$EntityName:lowercase$``` |
 | ```${Key}:camelCase$``` | The {Key} value camel cased | ```$EntityName:camelCase``` |
@@ -131,8 +131,9 @@ dotnet tool install -g -v n --add-source ./nupkg TemplateManager.Cli
 
 The repository for the code maintenance can be found at:  
 [Template Manager on Github](https://github.com/Mossynugget/TemplateManager)  
-**Please note** that it is currently un-unit tested, that is my next priority. It is a fairly major concern.  
 
 ## Template collection
 
-It hasn't been built out yet, but I'm hoping to set up a template collection repository. Please feel free to contribute to it once it is set up.
+There is an early development of a (Template Library)[https://github.com/Mossynugget/TemplateManager/tree/main/TemplateLibrary]. To utilize them, please copy them out and edit them to your use within your own projects.  
+Please feel free to add new or edit edit existing templates to match a more global standard.  
+All contributions to the project will be greatly appreciated.
