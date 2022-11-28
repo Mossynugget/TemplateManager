@@ -2,7 +2,7 @@
 using System.Reflection;
 using TemplateManager.Cli.TemplateNavigation.DTOs;
 using TemplateManagerModels.Helpers;
-using TemplateManagerModels.Models.FileManager.FileReplacementHelpers;
+using TemplateManager.Cli.InteractionPrompts;
 
 namespace TemplateManager.Cli.TemplateNavigation;
 
@@ -104,7 +104,7 @@ internal class TemplateNavigator
     while (this.directoryNavigator!.isTemplateInd == false)
     {
       string[] options = GetOptions();
-      var template = Prompt.Select("Select your template", options);
+      var template = options.ApplySelect();
 
       if (template == showAllOptions
         && CanGetAllTemplates())

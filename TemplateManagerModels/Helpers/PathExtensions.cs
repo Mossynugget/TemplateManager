@@ -4,10 +4,6 @@ namespace TemplateManagerModels.Helpers;
 
 public static class PathExtensions
 {
-  private static bool isLinux => RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
-  private static bool isOSX => RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
-  private static bool isWindows => RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
-
   public static string GetRoot()
   {
     return Path.Combine(Path.GetPathRoot(Environment.SystemDirectory), "CodeTemplates");
@@ -15,7 +11,7 @@ public static class PathExtensions
 
   public static string GetPath(this string path)
   {
-    if (isLinux || isOSX)
+    if (OsHelper.IsLinux || OsHelper.IsOSX)
     {
       return path.Replace("\\\\", "\\").Replace("\\", "/");
     }

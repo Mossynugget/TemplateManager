@@ -10,8 +10,11 @@ namespace TemplateManagerModels.Helpers;
 public static class ListExtensions
 {
   public static bool None<TSource>(this IEnumerable<TSource> source,
-                                     Func<TSource, bool> predicate)
+                                     Func<TSource, bool>? predicate = null)
   {
+    if (predicate == null)
+      return !source.Any();
+
     return !source.Any(predicate);
   }
 
