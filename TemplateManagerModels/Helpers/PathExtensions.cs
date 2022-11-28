@@ -6,7 +6,10 @@ public static class PathExtensions
 {
   public static string GetRoot()
   {
-    return Path.Combine(Path.GetPathRoot(Environment.SystemDirectory), "CodeTemplates");
+    var systemDirectory = OsHelper.IsLinux ? $"/home/{Environment.UserName}/" 
+      : Path.GetPathRoot(Environment.SystemDirectory);
+
+    return Path.Combine(systemDirectory, "CodeTemplates");
   }
 
   public static string GetPath(this string path)

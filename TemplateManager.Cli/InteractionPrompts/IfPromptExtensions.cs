@@ -1,7 +1,6 @@
 ﻿using Sharprompt;
 using TemplateManagerModels.Helpers;
 using TemplateManagerModels.Models.Dtos;
-using TemplateManagerModels.Models.Helpers;
 
 namespace TemplateManager.Cli.InteractionPrompts;
 
@@ -20,6 +19,15 @@ public static class IfPromptsExtensions
     {
       replacementDictionary.CmdIfs();
     }
+  }
+
+  public static bool ApplyIf(string question)
+  {
+    if (OsHelper.IsWindows || OsHelper.IsOSX)
+    {
+      return SharpromptIf(question);
+    }
+    return CmdIf(question);
   }
 
   private static void SharpromptIfs(this List<ReplacementVariableDto> replacementDictionary)
@@ -46,5 +54,17 @@ public static class IfPromptsExtensions
       bool responseBoolValue = response.ToUpperInvariant()[0] == 'Y';
       replacementIf.SetValue(responseBoolValue);
     }
+  }
+
+  private static bool SharpromptIf(string question)
+  {
+    return Prompt.Confirm(question);
+  }
+
+  private static bool CmdIf(string question)
+  {
+    Console.WriteLine(question);
+    var response = Console.ReadLine() ?? string.Empty;
+    return response.ToUpperInvariant()[0] == 'Y';
   }
 }
