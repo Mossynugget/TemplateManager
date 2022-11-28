@@ -2,8 +2,8 @@
 
 using Sharprompt;
 using System.Threading.Tasks;
+using TemplateManager.Cli.InteractionPrompts;
 using TemplateManager.Cli.TemplateNavigation;
-using TemplateManagerModels.Helpers;
 using TemplateManagerModels.Models;
 using TemplateManagerModels.Models.Dtos;
 
@@ -48,38 +48,22 @@ class Startup
     {
       var replacementDictionary = templateFileGenerator.GetReplacementDictionary();
 
-      ApplyIfStatements(replacementDictionary);
+      replacementDictionary
+        .Where(x => x.allowedType == TypeCode.Boolean)
+        .ToList()
+        .ApplyIfs();
 
-      foreach (var replacement in replacementDictionary.Where(x => x.allowedType != TypeCode.Boolean))
-      {
-        if (replacement.Options != null)
-        {
-          replacement.SetValue(Prompt.Select<string>($"Please select a {replacement.ReadableKey}", replacement.Options));
-        }
-        else
-        {
-          replacement.SetValue(Prompt.Input<string>($"Please enter a value for {replacement.ReadableKey}"));
-        }
-      }
+      replacementDictionary
+          .Where(x => x.allowedType != TypeCode.Boolean && x.Options != null)
+          .ToList()
+          .ApplySelects();
+
+      replacementDictionary
+          .Where(x => x.allowedType != TypeCode.Boolean && x.Options == null)
+          .ToList()
+          .ApplyValues();
 
       templateFileGenerator.MapReplacementDictionary(replacementDictionary);
-    }
-  }
-
-  private static void ApplyIfStatements(List<ReplacementVariableDto> replacementDictionary)
-  {
-    if (replacementDictionary.None(x => x.allowedType == TypeCode.Boolean)) return;
-
-    var selectedProperties = Prompt.MultiSelect("Which of these would you like to apply?",
-      replacementDictionary
-      .Where(x => x.allowedType == TypeCode.Boolean)
-      .Select(x => x.ReadableKey)
-      .ToArray(),
-      minimum: 0);
-
-    foreach (var replacementIf in replacementDictionary.Where(x => selectedProperties.Contains(x.ReadableKey)))
-    {
-      replacementIf.SetValue(true);
     }
   }
 }
