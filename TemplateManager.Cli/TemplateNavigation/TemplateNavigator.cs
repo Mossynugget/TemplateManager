@@ -62,7 +62,7 @@ internal class TemplateNavigator
       return;
     }
 
-    var yesNo = Prompt.Confirm($"The base directory \"({_baseDirectory})\" doesn't exist, would you like us to create it for you?");
+    var yesNo = IfPromptsExtensions.ApplyIf($"The base directory \"({_baseDirectory})\" doesn't exist, would you like us to create it for you?");
     if (yesNo)
     {
       await GenerateExampleFiles().ConfigureAwait(false);
@@ -79,7 +79,7 @@ internal class TemplateNavigator
     var test = Assembly.GetExecutingAssembly().GetManifestResourceNames();
 
     this.WriteFileToDestination("TemplateManager.Cli.TemplateNavigation.TemplateExample.TemplateCollections.tmplt"
-        , $"{_baseDirectory}TemplateCollections.tmplt".GetPath());
+        , $"{_baseDirectory}\\TemplateCollections.tmplt".GetPath());
 
     this.WriteFileToDestination("TemplateManager.Cli.TemplateNavigation.TemplateExample.TemplateOne.cs"
         , $"{_baseDirectory}\\Examples\\ExampleFile.cs".GetPath());
