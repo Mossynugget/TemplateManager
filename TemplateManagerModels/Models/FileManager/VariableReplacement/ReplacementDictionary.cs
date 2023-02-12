@@ -75,6 +75,11 @@ internal class ReplacementDictionary
 
   internal void CreateReplacementLists(string contents)
   {
+    if (string.IsNullOrEmpty(contents))
+    {
+      return;
+    }
+
     var replacementValueList = ReplacementValue.CreateVariableListFromContents(contents);
     ReplacementValueList.AddRange(replacementValueList.Where(rl => ReplacementValueList.None(rvl => rvl.Key == rl.Key)));
     var replacementIfList = ReplacementIf.CreateVariableListFromContents(contents);

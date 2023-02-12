@@ -8,5 +8,7 @@ public class FileGroupFileDto
 
     public string TemplateName { get; set; }
 
-    public string Type { get; set; }
+    public string FileType { get; set; }
+
+    public string LineIdentifier { get; set; }
 }

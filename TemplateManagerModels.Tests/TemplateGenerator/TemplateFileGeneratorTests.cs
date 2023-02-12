@@ -45,7 +45,7 @@ public class TemplateFileGeneratorTests
     }
     finally
     {
-      File.Delete(getTestFilePath(testResultPath, testResultFileName));
+      Directory.Delete(testResultPath, true);
     }
   }
 

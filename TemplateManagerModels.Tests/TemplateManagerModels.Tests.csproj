@@ -9,6 +9,30 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="TemplateGenerator\TestFileGroup\ExpectedResults\program.cs" />
+    <Compile Remove="TemplateGenerator\TestFileGroup\GroupFiles\Program.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="TemplateGenerator\TestFileGenerator\Mediator.tmplt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="TemplateGenerator\TestFileGroup\TestGroup.tmplt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="TemplateGenerator\TestFileGroup\ExpectedResults\program.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TemplateGenerator\TestFileGroup\GroupFiles\program.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.2" />
     <PackageReference Include="xunit" Version="2.4.2" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
@@ -26,10 +50,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="TemplateGenerator\TestFileGroup\TestFilesToCopy\program.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="TemplateGenerator\TestFileGenerator\InputFile.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="TemplateGenerator\TestFileGenerator\OutputFile.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TemplateGenerator\TestFileGroup\ExpectedResults\InputFile.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TemplateGenerator\TestFileGroup\GroupFiles\InputFile.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

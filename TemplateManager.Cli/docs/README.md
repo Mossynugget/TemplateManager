@@ -10,7 +10,7 @@ When you run the application for the first time, it will ask you if you want the
 In addition, it will place a json file inside of it with a link to the Example folder also in the CodeTemplates folder.  
 This is to enable building up a template repository from many sources.  
 In order to replace this functionality, you can create a "CodeTemplates" folder in any folder location, and when running ```tmplt``` in a folder navigating down from the folder containing CodeTemplates, it will search for templates from the first occurence of a CodeTemplate folder.  
-There is an option in the CLI that allows you to navigate to root in case you want a template not specific to a solution.  
+There is an option in the CLI that allows you to navigate to root in case you want a template not specific to a solution.
 
 ## Creating a template
 
@@ -18,7 +18,7 @@ Templates are just a regular file in a CodeTemplates folder that you want to cre
 The ExampleFile contains most of the options available on a template level, there is also a section lower down explaining all of the options available.  
 Note that all variables are denoting with a two dollar symbols ('$').  
 An example is ```$EntityName$```.  
-The following 2 sections will demonstrate how to create a file followed by how to create a file.  
+The following 2 sections will demonstrate how to create a file followed by how to create a file.
 
 ## Creating a file.
 
@@ -103,17 +103,30 @@ You can build a template group with the following code in the ArdalisEndpoint.tm
       "FileName": "$Action$$Domain$.cs",
       "TemplateName": "Endpoints\\EndpointWithRequest.cs",
       "Destination": "$setting:solutionPath$\$setting:solution$.Api\\Endpoints\$Domain$\\",
-      "Type": "File"
+      "FileType": "File"
     },
     {
       "FileName": "$Action$$Domain$Test.cs",
       "TemplateName": "Endpoints\\EndpointWithRequestTest.cs",
       "Destination": "$setting:solutionPath$\$setting:solution$.Api.Tests\\Endpoints\$Domain$\\",
-      "Type": "File"
+      "FileType": "File"
+    },
+    {
+      "FileName": "Startup.cs",
+      "TemplateName": "Endpoints\\RepositoryDI.cs",
+      "Destination": "$setting:solutionPath$\$setting:solution$.Api\\",
+      "LineIdentifier": "// Repository DI here"
+      "FileType": "Snippet"
     },
   ]
 }
 ```
+
+## Template Group File Types
+
+There are currently 2 options for file types.
+The default is ```File```, which will create a new file.
+The second option is the Snippet type which will insert the contents of the template into the line under the "LineIdentifier."
 
 ## Development
 
