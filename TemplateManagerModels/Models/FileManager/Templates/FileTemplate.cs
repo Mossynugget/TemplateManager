@@ -13,7 +13,9 @@ internal class FileTemplate
   internal readonly string TemplateFilePath;
   internal readonly string FileExtension;
   internal string? FileName;
+  internal string? LineIdentifier;
   internal string Contents;
+  internal string? FileType;
   internal string Destination = "D:\\Clients\\TemplatingTests\\subfolder\\";
   internal string? CalulatedDestination = null;
   private string _finalPath
@@ -50,7 +52,26 @@ internal class FileTemplate
 
   internal async Task GenerateFileAsync()
   {
+    if (FileType?.ToLower() == TemplateFileTypes.Snippet)
+    {
+      await applySnippet().ConfigureAwait(false);
+
+      return;
+    }
+
     await File.WriteAllTextAsync(_finalPath.GetPath(), Contents, Encoding.UTF8).ConfigureAwait(false);
+  }
+
+  private async Task applySnippet()
+  {
+    StreamReader reader = new StreamReader(_finalPath.GetPath());
+    var fileContents = reader.ReadToEnd();
+    reader.Dispose();
+
+    var contents = $"{LineIdentifier!}{Environment.NewLine}{Contents}";
+    fileContents = fileContents.Replace(LineIdentifier!, contents);
+
+    await File.WriteAllTextAsync(_finalPath.GetPath(), fileContents, Encoding.UTF8).ConfigureAwait(false);
   }
 
   private void loadAdditionalReplacements(ReplacementDictionary replacementDictionary)

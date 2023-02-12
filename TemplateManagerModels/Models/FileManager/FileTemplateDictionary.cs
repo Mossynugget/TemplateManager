@@ -70,8 +70,10 @@ internal class FileTemplateDictionary
     {
       string fullFilePath = Path.Combine(templateGroupDirectory.GetPath(), fileGroupDto.TemplateName.GetPath());
       var fileTemplate = new FileTemplate(fullFilePath);
-      fileTemplate.CalulatedDestination = fileGroupDto.Destination.GetPath();
+      fileTemplate.CalulatedDestination = fileGroupDto.Destination?.GetPath();
       fileTemplate.FileName = fileGroupDto.FileName;
+      fileTemplate.FileType = fileGroupDto.FileType;
+      fileTemplate.LineIdentifier = fileGroupDto.LineIdentifier;
       this.FileTemplateList.Add(fileTemplate);
       this.ReplacementDictionary.CreateReplacementLists(fileTemplate.Contents);
       this.ReplacementDictionary.CreateReplacementLists(fileTemplate.FileName);

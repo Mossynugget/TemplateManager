@@ -1,0 +1,1 @@
+﻿  IServiceProvider.AddThing($RequestType$);
