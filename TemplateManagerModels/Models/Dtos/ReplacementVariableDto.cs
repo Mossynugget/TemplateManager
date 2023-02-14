@@ -30,7 +30,7 @@ public class ReplacementVariableDto
     }
     else if (value.GetType().Name != this.allowedType.ToString())
     {
-      throw new InvalidOperationException("The type passed into the Replacement DTO was invalid.");
+      throw new InvalidOperationException($"The type passed into the Replacement DTO was invalid, expected {this.allowedType} but found {value.GetType().Name}");
     }
     else
     {

@@ -1,0 +1,20 @@
+{
+  "ReplacementValues": [
+    {
+      "Key": "$RequestType$",
+      "Value": "Queries"
+    }
+  ],
+  "Files": [
+    {
+      "TemplateName": "GroupFiles\\InputFile.txt",
+      "FileName": "OutputFile.txt"
+    },
+    {
+      "TemplateName": "GroupFiles\\program.cs",
+      "FileName": "program.cs",
+      "LineIdentifier": "// Code Snippet logic here",
+      "FileType": "snippet"
+    }
+  ]
+}
