@@ -3,6 +3,7 @@ TestOutput
 Test Output
 Test_Output
 TEST_OUTPUT
+test-output
 testoutput
 testOutput
 ThisIsTest Stuff

@@ -68,6 +68,7 @@ public class $Action$$Domain$Request
 | ```${Key}$``` |  left-aligned | ```$EntityName$``` |
 | ```${Key}:comment$``` | The {Key} value split with spaces | ```$EntityName:comment$``` |
 | ```${Key}:uppercaseUnderscore$``` | The {Key} value split with underscores and uppercased | ```$EntityName:uppercaseUnderscore$``` |
+| ```${Key}:lowercaseDashes$``` | The {Key} value split with dashes and lowercased | ```$EntityName:lowercaseDashes``` |
 | ```${Key}:underscore$``` | The {Key} value split with underscores with unchanged case | ```$EntityName:underscore$``` |
 | ```${Key}:lowercase$``` | The {Key} value lower cased | ```$EntityName:lowercase$``` |
 | ```${Key}:camelCase$``` | The {Key} value camel cased | ```$EntityName:camelCase``` |

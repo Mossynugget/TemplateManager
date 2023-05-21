@@ -3,6 +3,7 @@ $VariablesOne$
 $VariablesOne:comment$
 $VariablesOne:underscore$
 $VariablesOne:uppercaseUnderscore$
+$VariablesOne:lowercaseDashes$
 $VariablesOne:lowercase$
 $VariablesOne:camelCase$
 $if:includeTestStuff$ThisIsTest Stuff$endif:includeTestStuff$
