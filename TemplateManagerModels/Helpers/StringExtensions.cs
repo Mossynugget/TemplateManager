@@ -29,6 +29,11 @@ public static class StringExtensions
     return text.AddSpacesToSentence(preserveAcronyms, '_');
   }
 
+  public static string AddDashesToSentence(this string text, bool preserveAcronyms = false)
+  {
+    return text.AddSpacesToSentence(preserveAcronyms, '-');
+  }
+
   public static string FirstCharToLowerCase(this string str)
   {
     if (string.IsNullOrEmpty(str) || char.IsLower(str[0]))

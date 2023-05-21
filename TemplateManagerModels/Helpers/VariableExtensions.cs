@@ -1,10 +1,5 @@
 ﻿namespace TemplateManagerModels.Models.Helpers;
 
-using Newtonsoft.Json.Linq;
-using System.Reflection.PortableExecutable;
-using System.Runtime.CompilerServices;
-using System.Text;
-
 public static class VariableExtensions
 {
   public static string KeyComment(this string key)
@@ -58,6 +53,16 @@ public static class VariableExtensions
       return string.Empty;
 
     return char.ToLower(value[0]) + value.Substring(1);
+  }
+
+  public static string KeyLowercaseDashes(this string key)
+  {
+    return key.KeyDerivative("lowercaseDashes");
+  }
+
+  public static string ValueLowercaseDashes(this string? value)
+  {
+    return value?.AddDashesToSentence().ToLower() ?? string.Empty;
   }
 
   public static string KeyDerivative(this string key, string identifier)

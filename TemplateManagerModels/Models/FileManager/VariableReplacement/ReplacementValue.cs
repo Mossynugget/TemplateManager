@@ -37,6 +37,7 @@ public class ReplacementValue : ReplacementVariableAbstract
     contents = contents.Replace(this.Key.KeyComment(), this.Value.ValueComment());
     contents = contents.Replace(this.Key.KeyUppercaseUnderscore(), this.Value.ValueUppercaseUnderscore());
     contents = contents.Replace(this.Key.KeyUnderscore(), this.Value.ValueUnderscore());
+    contents = contents.Replace(this.Key.KeyLowercaseDashes(), this.Value.ValueLowercaseDashes());
     contents = contents.Replace(this.Key.KeyLowercase(), this.Value.ValueLowercase());
     contents = contents.Replace(this.Key.KeyCamelCase(), this.Value.ValueCamelCase());
     return contents;
