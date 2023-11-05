@@ -4,7 +4,6 @@ using TemplateManager.Models.Dtos;
 using TemplateManager.Models.Enums;
 using TemplateManager.Models.FileManager.FileReplacementHelpers;
 using TemplateManager.Models.FileManager.VariableReplacement;
-using TemplateManager.Models.Helpers;
 
 namespace TemplateManager.Models.FileManager.Templates;
 
