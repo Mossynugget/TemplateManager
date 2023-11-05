@@ -1,4 +1,4 @@
-﻿namespace TemplateManagerModels.Models.Helpers;
+﻿namespace TemplateManager.Models.Helpers;
 
 public static class VariableExtensions
 {

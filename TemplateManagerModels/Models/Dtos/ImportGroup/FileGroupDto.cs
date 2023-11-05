@@ -1,6 +1,6 @@
-﻿using TemplateManagerModels.Models.FileManager.VariableReplacement;
+﻿using TemplateManager.Models.FileManager.VariableReplacement;
 
-namespace TemplateManagerModels.Models.Dtos.ImportGroup;
+namespace TemplateManager.Models.Dtos.ImportGroup;
 
 public class FileGroupDto
 {

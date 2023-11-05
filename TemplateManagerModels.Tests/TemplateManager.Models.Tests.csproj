@@ -46,7 +46,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TemplateManagerModels\TemplateManagerModels.csproj" />
+    <ProjectReference Include="..\TemplateManagerModels\TemplateManager.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>

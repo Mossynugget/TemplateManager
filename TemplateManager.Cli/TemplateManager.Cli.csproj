@@ -53,10 +53,6 @@ Allows for a configuration of replacement variables defined in the readme.</Desc
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TemplateManagerModels\TemplateManagerModels.csproj" PrivateAssets="All" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="TemplateNavigation\TemplateExample\GroupExample\handlerTemplate.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
@@ -81,6 +77,10 @@ Allows for a configuration of replacement variables defined in the readme.</Desc
   <ItemGroup>
     <Folder Include="docs\" />
     <Folder Include="nupkg\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TemplateManagerModels\TemplateManager.Models.csproj" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>

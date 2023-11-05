@@ -1,8 +1,8 @@
-﻿using TemplateManagerModels.Helpers;
-using TemplateManagerModels.Models.Dtos;
-using TemplateManagerModels.Models.Enums;
+﻿using TemplateManager.Models.Helpers;
+using TemplateManager.Models.Dtos;
+using TemplateManager.Models.Enums;
 
-namespace TemplateManagerModels.Models.FileManager.VariableReplacement;
+namespace TemplateManager.Models.FileManager.VariableReplacement;
 
 internal class ReplacementDictionary
 {

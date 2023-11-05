@@ -1,6 +1,6 @@
-﻿using TemplateManagerModels.Models.FileManager.Templates;
+﻿using TemplateManager.Models.FileManager.Templates;
 
-namespace TemplateManagerModels.Models.Dtos
+namespace TemplateManager.Models.Dtos
 {
     public class FileSettingsDto
   {

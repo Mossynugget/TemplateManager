@@ -1,9 +1,9 @@
 ﻿using Microsoft.VisualBasic;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
-using TemplateManagerModels.Models.Helpers;
+using TemplateManager.Models.Helpers;
 
-namespace TemplateManagerModels.Models.FileManager.VariableReplacement;
+namespace TemplateManager.Models.FileManager.VariableReplacement;
 
 public class ReplacementValue : ReplacementVariableAbstract
 {

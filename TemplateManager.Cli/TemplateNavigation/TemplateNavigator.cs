@@ -1,7 +1,7 @@
 ﻿using Sharprompt;
 using System.Reflection;
 using TemplateManager.Cli.TemplateNavigation.DTOs;
-using TemplateManagerModels.Helpers;
+using TemplateManager.Models.Helpers;
 using TemplateManager.Cli.InteractionPrompts;
 
 namespace TemplateManager.Cli.TemplateNavigation;

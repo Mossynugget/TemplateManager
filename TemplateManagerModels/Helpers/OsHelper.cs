@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace TemplateManagerModels.Helpers;
+namespace TemplateManager.Models.Helpers;
 
 public static class OsHelper
 {

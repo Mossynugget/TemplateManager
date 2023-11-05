@@ -1,8 +1,8 @@
 ﻿using Sharprompt;
 using System;
-using TemplateManagerModels.Helpers;
-using TemplateManagerModels.Models.Dtos;
-using TemplateManagerModels.Models.Helpers;
+using TemplateManager.Models.Helpers;
+using TemplateManager.Models.Dtos;
+using TemplateManager.Models.Helpers;
 
 namespace TemplateManager.Cli.InteractionPrompts;
 

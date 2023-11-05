@@ -1,9 +1,7 @@
-using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using System.Reflection;
-using TemplateManagerModels.Helpers;
-using TemplateManagerModels.Models;
+using TemplateManager.Models.Helpers;
 
-namespace TemplateManagerModels.Tests.TemplateGenerator;
+namespace TemplateManager.Models.Tests.TemplateGenerator;
 
 public class TemplateFileGeneratorTests
 {

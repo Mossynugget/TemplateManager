@@ -1,5 +1,5 @@
 ﻿using TemplateManager.Cli.TemplateNavigation.DTOs;
-using static TemplateManagerModels.Helpers.PathExtensions;
+using static TemplateManager.Models.Helpers.PathExtensions;
 
 namespace TemplateManager.Cli.TemplateNavigation;
 

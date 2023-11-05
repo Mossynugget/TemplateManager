@@ -1,4 +1,4 @@
-﻿namespace TemplateManagerModels.Exceptions
+﻿namespace TemplateManager.Models.Exceptions
 {
   /// <summary>
   /// The invalid location variable exception used when there was a problem finding a location based variable.

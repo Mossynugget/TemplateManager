@@ -1,7 +1,7 @@
-﻿using TemplateManagerModels.Models.Dtos;
-using TemplateManagerModels.Models.FileManager;
+﻿using TemplateManager.Models.Dtos;
+using TemplateManager.Models.FileManager;
 
-namespace TemplateManagerModels.Models;
+namespace TemplateManager.Models;
 
 public class TemplateFileGenerator
 {

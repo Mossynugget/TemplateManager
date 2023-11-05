@@ -1,4 +1,4 @@
-﻿namespace TemplateManagerModels.Models.Helpers;
+﻿namespace TemplateManager.Models.Helpers;
 
 using System.Reflection.PortableExecutable;
 using System.Runtime.CompilerServices;
