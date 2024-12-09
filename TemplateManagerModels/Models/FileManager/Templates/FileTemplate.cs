@@ -43,6 +43,7 @@ internal class FileTemplate
   internal void ApplyReplacementVariableDictionary(ReplacementDictionary replacementDictionary)
   {
     FileName ??= string.Empty;
+    Destination = replacementDictionary.ApplyAllReplaceLists(Destination);
     Contents = replacementDictionary.ApplyAllReplaceLists(Contents);
     FileName = replacementDictionary.ApplyAllReplaceLists(FileName);
 

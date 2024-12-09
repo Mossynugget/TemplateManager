@@ -68,10 +68,11 @@ public class $Action$$Domain$Request
 | ```${Key}$``` |  left-aligned | ```$EntityName$``` |
 | ```${Key}:comment$``` | The {Key} value split with spaces | ```$EntityName:comment$``` |
 | ```${Key}:uppercaseUnderscore$``` | The {Key} value split with underscores and uppercased | ```$EntityName:uppercaseUnderscore$``` |
-| ```${Key}:lowercaseDashes$``` | The {Key} value split with dashes and lowercased | ```$EntityName:lowercaseDashes``` |
+| ```${Key}:lowercaseDashes$``` | The {Key} value split with dashes and lowercased | ```$EntityName:lowercaseDashes$``` |
 | ```${Key}:underscore$``` | The {Key} value split with underscores with unchanged case | ```$EntityName:underscore$``` |
 | ```${Key}:lowercase$``` | The {Key} value lower cased | ```$EntityName:lowercase$``` |
-| ```${Key}:camelCase$``` | The {Key} value camel cased | ```$EntityName:camelCase``` |
+| ```${Key}:camelCase$``` | The {Key} value camel cased | ```$EntityName:camelCase$``` |
+| ```${Key}:pascalCase$``` | The {Key} value pascal cased | ```$EntityName:pascalCase$``` |
 | ```$setting:namespace$``` | Uses the path from src and replaces '\\' with '.' (This hasn't been tested outside of windows) | ```$setting:solution$``` |
 | ```$setting:projectName$``` | returns the name of the project name as is | ```$setting:projectName$``` |
 | ```$setting:solution$``` | Returns the name of the solution by navigating to the parent until a .sln is identified (Currently very C# specific) | ```$setting:solution$``` |

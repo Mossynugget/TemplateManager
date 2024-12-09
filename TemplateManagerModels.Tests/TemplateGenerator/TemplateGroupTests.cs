@@ -17,18 +17,20 @@ public class TemplateGroupTests
   public async Task FileGroupTest()
   {
     string testResultPath = Path.Combine(testFilePath, Guid.NewGuid().ToString().Replace("-", string.Empty));
+    string testResultSubpath = Path.Combine(testResultPath, "$VariablesOne:uppercaseUnderscore$");
+    string testResultSubpathUnvariablized = Path.Combine(testResultPath, "TEST_OUTPUT");
 
     string testFile = getTestFilePath(testFilePath, testGroupFileName);
-    Directory.CreateDirectory(testResultPath);
+    Directory.CreateDirectory(testResultSubpathUnvariablized);
 
-    File.Copy(programCsToCopy, $"{testResultPath}\\{programCsFileName}", true);
+    File.Copy(programCsToCopy, $"{testResultSubpathUnvariablized}\\{programCsFileName}", true);
 
     TemplateFileGenerator templateFileGenerator = new(testFile);
     var fileSettingsDtoList = templateFileGenerator.GetFileTemplateSettings();
-    fileSettingsDtoList[0].Destination = getTestFilePath(testResultPath, string.Empty);
+    fileSettingsDtoList[0].Destination = getTestFilePath(testResultSubpath, string.Empty);
     fileSettingsDtoList[0].FileName = Path.GetFileNameWithoutExtension(testResultFileName);
 
-    fileSettingsDtoList[1].Destination = getTestFilePath(testResultPath, string.Empty);
+    fileSettingsDtoList[1].Destination = getTestFilePath(testResultSubpath, string.Empty);
     fileSettingsDtoList[1].FileName = Path.GetFileNameWithoutExtension(programCsFileName);
     templateFileGenerator.MapFileTemplateSettings(fileSettingsDtoList);
 
@@ -47,9 +49,9 @@ public class TemplateGroupTests
       await templateFileGenerator.GenerateFiles();
 
       string programExpectedResult = getFileContents(Path.Combine(expectedResultsFolderPath, programCsFileName).GetPath());
-      string programResult = getFileContents(Path.Combine(testResultPath, programCsFileName).GetPath());
+      string programResult = getFileContents(Path.Combine(testResultSubpathUnvariablized, programCsFileName).GetPath());
       string inputExpectedResult = getFileContents(Path.Combine(expectedResultsFolderPath, inputFileName).GetPath());
-      string outputResult = getFileContents(Path.Combine(testResultPath, testResultFileName).GetPath());
+      string outputResult = getFileContents(Path.Combine(testResultSubpathUnvariablized, testResultFileName).GetPath());
 
       Assert.Equal(programExpectedResult, programResult);
       Assert.Equal(inputExpectedResult, outputResult);

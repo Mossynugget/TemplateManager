@@ -25,7 +25,7 @@ public class TemplateFileGeneratorTests
     var replacementDictionary = templateFileGenerator.GetReplacementDictionary();
 
     replacementDictionary[0].SetValue("TestOutput");
-    replacementDictionary[1].SetValue("AlsoTestOutput");
+    replacementDictionary[1].SetValue("alsoTestOutput");
     replacementDictionary[2].SetValue(true);
     replacementDictionary[3].SetValue(false);
     replacementDictionary[4].SetValue("Option2");

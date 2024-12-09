@@ -40,6 +40,7 @@ public class ReplacementValue : ReplacementVariableAbstract
     contents = contents.Replace(this.Key.KeyLowercaseDashes(), this.Value.ValueLowercaseDashes());
     contents = contents.Replace(this.Key.KeyLowercase(), this.Value.ValueLowercase());
     contents = contents.Replace(this.Key.KeyCamelCase(), this.Value.ValueCamelCase());
+    contents = contents.Replace(this.Key.KeyPascalCase(), this.Value.ValuePascalCase());
     return contents;
   }
 
