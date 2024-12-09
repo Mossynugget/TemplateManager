@@ -9,7 +9,7 @@
     <ToolCommandName>tmplt</ToolCommandName>
     <PackageOutputPath>./nupkg</PackageOutputPath>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.15</Version>
+    <Version>8.0.1</Version>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
     <Title>Template Manager</Title>
     <PackageProjectUrl></PackageProjectUrl>
