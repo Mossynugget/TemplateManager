@@ -1,7 +1,7 @@
-﻿using TemplateManagerModels.Exceptions;
-using TemplateManagerModels.Models.Enums;
+﻿using TemplateManager.Models.Exceptions;
+using TemplateManager.Models.Enums;
 
-namespace TemplateManagerModels.Models.FileManager.FileReplacementHelpers;
+namespace TemplateManager.Models.FileManager.FileReplacementHelpers;
 
 internal static class CalculateSolutionPathName
 {

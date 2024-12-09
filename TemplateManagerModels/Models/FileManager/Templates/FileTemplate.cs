@@ -1,12 +1,11 @@
 ﻿using System.Text;
-using TemplateManagerModels.Helpers;
-using TemplateManagerModels.Models.Dtos;
-using TemplateManagerModels.Models.Enums;
-using TemplateManagerModels.Models.FileManager.FileReplacementHelpers;
-using TemplateManagerModels.Models.FileManager.VariableReplacement;
-using TemplateManagerModels.Models.Helpers;
+using TemplateManager.Models.Helpers;
+using TemplateManager.Models.Dtos;
+using TemplateManager.Models.Enums;
+using TemplateManager.Models.FileManager.FileReplacementHelpers;
+using TemplateManager.Models.FileManager.VariableReplacement;
 
-namespace TemplateManagerModels.Models.FileManager.Templates;
+namespace TemplateManager.Models.FileManager.Templates;
 
 internal class FileTemplate
 {
@@ -44,6 +43,7 @@ internal class FileTemplate
   internal void ApplyReplacementVariableDictionary(ReplacementDictionary replacementDictionary)
   {
     FileName ??= string.Empty;
+    Destination = replacementDictionary.ApplyAllReplaceLists(Destination);
     Contents = replacementDictionary.ApplyAllReplaceLists(Contents);
     FileName = replacementDictionary.ApplyAllReplaceLists(FileName);
 

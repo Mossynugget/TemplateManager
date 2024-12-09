@@ -6,9 +6,10 @@ TEST_OUTPUT
 test-output
 testoutput
 testOutput
+AlsoTestOutput
 ThisIsTest Stuff
 
 
 Option2
 ThisShouldDisplay
-AlsoTestOutput
+alsoTestOutput

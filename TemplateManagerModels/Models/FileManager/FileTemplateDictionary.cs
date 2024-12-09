@@ -1,11 +1,11 @@
 ﻿using Newtonsoft.Json;
-using TemplateManagerModels.Helpers;
-using TemplateManagerModels.Models.Dtos;
-using TemplateManagerModels.Models.Dtos.ImportGroup;
-using TemplateManagerModels.Models.FileManager.Templates;
-using TemplateManagerModels.Models.FileManager.VariableReplacement;
+using TemplateManager.Models.Helpers;
+using TemplateManager.Models.Dtos;
+using TemplateManager.Models.Dtos.ImportGroup;
+using TemplateManager.Models.FileManager.Templates;
+using TemplateManager.Models.FileManager.VariableReplacement;
 
-namespace TemplateManagerModels.Models.FileManager;
+namespace TemplateManager.Models.FileManager;
 
 internal class FileTemplateDictionary
 {

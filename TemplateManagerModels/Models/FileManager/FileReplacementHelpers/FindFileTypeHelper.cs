@@ -1,4 +1,4 @@
-﻿namespace TemplateManagerModels.Models.FileManager.FileReplacementHelpers;
+﻿namespace TemplateManager.Models.FileManager.FileReplacementHelpers;
 
 public static class FindFileTypeHelper
 {

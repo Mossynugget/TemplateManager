@@ -1,4 +1,4 @@
-﻿namespace TemplateManagerModels.Models.Dtos.ImportGroup;
+﻿namespace TemplateManager.Models.Dtos.ImportGroup;
 
 public class FileGroupFileDto
 {

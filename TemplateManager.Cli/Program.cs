@@ -4,8 +4,8 @@ using Sharprompt;
 using System.Threading.Tasks;
 using TemplateManager.Cli.InteractionPrompts;
 using TemplateManager.Cli.TemplateNavigation;
-using TemplateManagerModels.Models;
-using TemplateManagerModels.Models.Dtos;
+using TemplateManager.Models;
+using TemplateManager.Models.Dtos;
 
 class Startup
 {

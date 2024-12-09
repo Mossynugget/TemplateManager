@@ -1,4 +1,4 @@
-﻿namespace TemplateManagerModels.Tests.TemplateGenerator.TestFileGroup.TestOutput;
+﻿namespace TemplateManager.Models.Tests.TemplateGenerator.TestFileGroup.TestOutput;
 
 internal class program
 {

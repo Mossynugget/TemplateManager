@@ -6,6 +6,7 @@ $VariablesOne:uppercaseUnderscore$
 $VariablesOne:lowercaseDashes$
 $VariablesOne:lowercase$
 $VariablesOne:camelCase$
+$VariablesTwo:pascalCase$
 $if:includeTestStuff$ThisIsTest Stuff$endif:includeTestStuff$
 $else:includeTestStuff$_$_ThisShouldNotDisplay$endelse:includeTestStuff$
 $if:includeNegativeTestStuff$_$_ThisShouldNotDisplay$endif:includeNegativeTestStuff$

@@ -1,9 +1,9 @@
 ﻿using System.Text.RegularExpressions;
 using System.Xml.Linq;
-using TemplateManagerModels.Models.Enums;
-using TemplateManagerModels.Models.Helpers;
+using TemplateManager.Models.Enums;
+using TemplateManager.Models.Helpers;
 
-namespace TemplateManagerModels.Models.FileManager.VariableReplacement;
+namespace TemplateManager.Models.FileManager.VariableReplacement;
 
 internal class ReplacementSelect : ReplacementVariableAbstract
 {

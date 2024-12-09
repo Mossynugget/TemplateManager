@@ -1,6 +1,6 @@
-﻿using TemplateManagerModels.Models.Enums;
+﻿using TemplateManager.Models.Enums;
 
-namespace TemplateManagerModels.Models.FileManager.FileReplacementHelpers;
+namespace TemplateManager.Models.FileManager.FileReplacementHelpers;
 
 internal static class CalculateNamespace
 {

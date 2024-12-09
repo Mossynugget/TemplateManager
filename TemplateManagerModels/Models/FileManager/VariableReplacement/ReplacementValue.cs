@@ -1,9 +1,9 @@
 ﻿using Microsoft.VisualBasic;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
-using TemplateManagerModels.Models.Helpers;
+using TemplateManager.Models.Helpers;
 
-namespace TemplateManagerModels.Models.FileManager.VariableReplacement;
+namespace TemplateManager.Models.FileManager.VariableReplacement;
 
 public class ReplacementValue : ReplacementVariableAbstract
 {
@@ -40,6 +40,7 @@ public class ReplacementValue : ReplacementVariableAbstract
     contents = contents.Replace(this.Key.KeyLowercaseDashes(), this.Value.ValueLowercaseDashes());
     contents = contents.Replace(this.Key.KeyLowercase(), this.Value.ValueLowercase());
     contents = contents.Replace(this.Key.KeyCamelCase(), this.Value.ValueCamelCase());
+    contents = contents.Replace(this.Key.KeyPascalCase(), this.Value.ValuePascalCase());
     return contents;
   }
 

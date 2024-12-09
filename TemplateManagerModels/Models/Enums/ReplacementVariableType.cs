@@ -1,4 +1,4 @@
-﻿namespace TemplateManagerModels.Models.Enums;
+﻿namespace TemplateManager.Models.Enums;
 
 public enum ReplacementVariableType
 {

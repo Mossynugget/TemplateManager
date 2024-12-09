@@ -1,7 +1,7 @@
 ﻿using System.Text.RegularExpressions;
-using TemplateManagerModels.Models.Enums;
+using TemplateManager.Models.Enums;
 
-namespace TemplateManagerModels.Models.FileManager.VariableReplacement;
+namespace TemplateManager.Models.FileManager.VariableReplacement;
 
 internal class ReplacementIf : ReplacementVariableAbstract, IReplacementVariable
 {

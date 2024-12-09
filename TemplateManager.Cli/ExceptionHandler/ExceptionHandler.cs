@@ -1,4 +1,4 @@
-﻿using TemplateManagerModels.Exceptions;
+﻿using TemplateManager.Models.Exceptions;
 
 namespace TemplateManager.Cli.ExceptionHandler
 {

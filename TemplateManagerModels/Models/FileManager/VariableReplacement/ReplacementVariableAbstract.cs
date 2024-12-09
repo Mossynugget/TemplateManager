@@ -1,6 +1,6 @@
-﻿using TemplateManagerModels.Models.Enums;
+﻿using TemplateManager.Models.Enums;
 
-namespace TemplateManagerModels.Models.FileManager.VariableReplacement;
+namespace TemplateManager.Models.FileManager.VariableReplacement;
 
 public abstract class ReplacementVariableAbstract : IReplacementVariable
 {

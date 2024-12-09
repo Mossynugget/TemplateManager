@@ -1,8 +1,8 @@
-﻿using TemplateManagerModels.Models.Enums;
-using TemplateManagerModels.Models.FileManager.VariableReplacement;
-using TemplateManagerModels.Models.Helpers;
+﻿using TemplateManager.Models.Enums;
+using TemplateManager.Models.FileManager.VariableReplacement;
+using TemplateManager.Models.Helpers;
 
-namespace TemplateManagerModels.Models.Dtos;
+namespace TemplateManager.Models.Dtos;
 
 public class ReplacementVariableDto
 {

@@ -1,4 +1,4 @@
-﻿namespace TemplateManagerModels.Exceptions
+﻿namespace TemplateManager.Models.Exceptions
 {
   /// <summary>
   /// The invalid variable exception.

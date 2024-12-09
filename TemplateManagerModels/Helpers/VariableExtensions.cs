@@ -1,4 +1,4 @@
-﻿namespace TemplateManagerModels.Models.Helpers;
+﻿namespace TemplateManager.Models.Helpers;
 
 public static class VariableExtensions
 {
@@ -53,6 +53,19 @@ public static class VariableExtensions
       return string.Empty;
 
     return char.ToLower(value[0]) + value.Substring(1);
+  }
+
+  public static string KeyPascalCase(this string key)
+  {
+    return key.KeyDerivative("pascalCase");
+  }
+
+  public static string ValuePascalCase(this string? value)
+  {
+    if (string.IsNullOrEmpty(value))
+      return string.Empty;
+
+    return char.ToUpper(value[0]) + value.Substring(1);
   }
 
   public static string KeyLowercaseDashes(this string key)
